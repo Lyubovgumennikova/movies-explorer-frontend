@@ -1,5 +1,6 @@
 .header {
   width: calc(100% - 140px);
+  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -1,5 +1,6 @@
 .promo{
   /* margin-top: 26px; */
+  width: 1280px;
   box-sizing: border-box;
   padding: 20px 40px 0 40px;
   /* width: 358px;
@@ -10,7 +11,8 @@
 }
 
 .promo__container {
-  max-width: 1200px;
+  width: 100%;
+  /* max-width: 1200px; */
   min-height: 493px;
   background: #F5F5F5;
   margin: 0 auto;

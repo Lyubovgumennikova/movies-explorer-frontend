@@ -5,7 +5,7 @@
 
 .aboutProject__container {
   display: grid;
-  gap: 40px;
+  gap: 26px 40px;
   grid-template-columns: repeat(2, 1fr);
   box-sizing: border-box;
   padding-top: 70px;
@@ -31,9 +31,9 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 22px;
-  line-height: 27px;
-  letter-spacing: -0.04em;
+  font-size: 14px;
+  line-height: 20px;
+  /* letter-spacing: -0.04em; */
 }
 
 .aboutProject__container-grid {

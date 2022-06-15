@@ -1,7 +1,7 @@
 import React from "react";
-import Header from '../Header/Header';
-import Navigation from "../Navigation/Navigation";
-import Footer from '../Footer/Footer';
+// import Header from '../Header/Header';
+// import Navigation from "../Navigation/Navigation";
+// import Footer from '../Footer/Footer';
 import Movies from "../Movies/Movies";
 // import Preloader from '../Preloader/Preloader';
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -31,9 +31,9 @@ function App() {
   return (
     <div className="page">
       <Router>
-      <Header>
+      {/* <Header>
       <Navigation />
-      </Header>
+      </Header> */}
         <Routes>
           <Route exact path="/" element={<Main />} />
           {/* <Route exact path='/' exact element={<Navigation />} /> */}
@@ -43,7 +43,7 @@ function App() {
           <Route path="/saved-movies" element={<SavedMovies />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </div>
   );

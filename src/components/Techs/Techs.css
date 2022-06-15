@@ -1,11 +1,12 @@
 .techs__section {
-  max-width: 1280px;
+  width: calc(100% - 140px);
+  /* width: 100%; */
   margin: 0 auto;
   display: flex;
   flex-direction:column;
   justify-content: center;
   box-sizing: border-box;
-  padding: 100px 70px;
+  padding: 100px 0;
   background-color: #F5F5F5;
   outline: 1px solid red;
 }
@@ -47,7 +48,7 @@
   /* align-content: center; */
   box-sizing: border-box;
   padding-top: 100px;
-  padding-bottom: 100px;
+  /* padding-bottom: 100px; */
 /* align-items: center; */
 
 }
