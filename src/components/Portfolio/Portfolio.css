@@ -1,0 +1,117 @@
+.portfolio__article {
+  margin: 0;
+  padding-bottom: 23px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+  color:  #A0A0A0;;
+}
+
+.portfolio__link-dox {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .portfolio__navLink {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  text-decoration: none;
+} */
+
+.portfolio__title {
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 19px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 50px;
+  letter-spacing: -0.04em;
+}
+
+/* .about-me-list__title {
+  margin: 0 0 50px 0;
+  max-width: 250px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #A0A0A0;
+} */
+
+.portfolio__link {
+  max-width: 29px;
+  width: 100%;
+  align-self: center;
+}
+
+.portfolio__line {
+  margin: 0;
+  border-top: 0;
+  color: #E8E8E8;
+}
+
+/* .about-me-list__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.about-me-list__item {
+  border-bottom: 1px solid #E8E8E8;;
+}
+
+.about-me-list__item:last-of-type {
+  border-bottom: unset;
+}
+
+.about-me-list__link {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 1.67;
+  letter-spacing: -0.04em;
+  color: #000000;
+  padding: 20px 0;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.about-me-list__link:hover {
+  opacity: .7;
+} */
+
+@media screen and (max-width: 1023px) {
+  .about-me-list__link {
+    font-size: 28px;
+    line-height: 1.79;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-me-list__title {
+    font-size: 14px;
+    line-height: 1.43;
+    max-width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .about-me-list__link {
+    font-size: 18px;
+    line-height: 1.56;
+  }
+}

@@ -1,0 +1,116 @@
+.aboutMi__section {
+  max-width: 1280px;
+  /* margin: 0 auto;
+  box-sizing: border-box; */
+  padding: 110px 70px 125px 70px;
+}
+
+.aboutMi__container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "name avatar"
+    "about avatar"
+    "post avatar"
+    "link avatar";
+    /* max-width: 600px; */
+  padding-top: 30px;
+  padding-bottom: 100px;
+
+}
+
+.aboutMi__title {
+  grid-area: name;
+  max-width: 600px;
+  margin: 0;
+  padding-bottom: 18px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+}
+
+.aboutMi__article {
+  grid-area: about;
+  max-width: 600px;
+  margin: 0;
+  padding-bottom: 26px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.aboutMi__text{
+  grid-area: post;
+  max-width: 600px;
+  margin: 0;
+  padding-bottom: 99px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.aboutMi__avatar {
+  grid-area: avatar;
+  max-width: 270px;
+  width: 100%;
+  border-radius: 10px;
+  justify-self: end;
+}
+
+.aboutMi__container-navLink {
+  grid-area:link;
+  margin: 0;
+  display: grid;
+  max-width: 132px;
+  padding: 0;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 20px;
+  /* grid-auto-flow: dense;
+  flex-direction: row-reverse; */
+
+}
+
+.aboutMi__navLink {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity .3s ease;
+  flex-direction: row-reverse;
+}
+.about-me-article__header {
+  padding-bottom: 10px;
+}
+
+.aboutMi__link-section {
+  grid-area:link;
+  flex-direction: row-reverse;
+}
+
+@media screen and (max-width: 1023px) {
+  .about-me-article {
+    padding: 90px 50px 70px 50px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .about-me-article {
+    padding: 70px 14px 50px 14px;
+  }
+
+  .about-me-article__items-section {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
