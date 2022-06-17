@@ -5,9 +5,11 @@ import Navigation from "../Navigation/Navigation";
 import Input from "../Input/Input";
 import Form from "../Form/Form";
 import NewInput from "../NewInput/NewInput";
+import SandboxForm from "../Forms/Forms"
 
-function Register({ onRegister, ...props }) {
+function Register({ onRegister, isSubmitted,  }) {
   const [newEntry, setNewEntry] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -24,54 +26,59 @@ function Register({ onRegister, ...props }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const { email, password } = newEntry;
+    const { name, email, password } = newEntry;
     onRegister({
+      name,
       email,
       password,
     });
   }
 
   return (
-    <div className="register">
-      <Header />
-      <Form
-        name="register"
-        title="Добро пожаловать!"
-        buttonText="Зарегистрироваться"
-        isSubmitted={props.isSubmitted}
-        setIsSubmitted={props.setIsSubmitted}
-        onSubmit={handleSubmit}
-      >
-        <Input
-          type="name"
-          name="Имя"
-          className="popup__input popup__input_auth"
-          // placeholder="Имя"
-          onChange={handleChange}
-          // value={newEntry.password}
-        />
-        <Input
-          type="email"
-          name="email"
-          className="popup__input popup__input_auth"
-          // placeholder="Email"
-          onChange={handleChange}
-          // value={newEntry.email}
-        />
-        {/* <span id="email-error" className="popup__input-error"></span> */}
-        <Input
-          type="password"
-          name="password"
-          className="popup__input popup__input_auth"
-          // placeholder="Пароль"
-          onChange={handleChange}
-          // value={newEntry.password}
-        />
-        {/* <span id="password-error" className="popup__input-error"></span> */}
-      </Form>
-      <NewInput text="Уже&nbsp;зарегистрированы&#63;" link="Войти" />
-    </div>
-  );
+    <SandboxForm/>
+  )
+
+  // return (
+  //   <div className="register">
+  //     <Header />
+  //     <Form
+  //       name="register"
+  //       title="Добро пожаловать!"
+  //       buttonText="Зарегистрироваться"
+  //       isSubmitted={isSubmitted}
+  //       setIsSubmitted={setIsSubmitted}
+  //       onSubmit={handleSubmit}
+  //     >
+  //       <Input
+  //         type="name"
+  //         name="Имя"
+  //         className="popup__input popup__input_auth"
+  //         // placeholder="Имя"
+  //         onChange={handleChange}
+  //         // value={newEntry.name}
+  //       />
+  //       <Input
+  //         type="email"
+  //         name="E-mail"
+  //         className="popup__input popup__input_auth"
+  //         // placeholder="Email"
+  //         onChange={handleChange}
+  //         // value={newEntry.email}
+  //       />
+  //       {/* <span id="email-error" className="popup__input-error"></span> */}
+  //       <Input
+  //         type="password"
+  //         name="Пароль"
+  //         className="popup__input popup__input_auth"
+  //         // placeholder="Пароль"
+  //         onChange={handleChange}
+  //         // value={newEntry.password}
+  //       />
+  //       {/* <span id="password-error" className="popup__input-error"></span> */}
+  //     </Form>
+  //     <NewInput text="Уже&nbsp;зарегистрированы&#63;" link="Войти" />
+  //   </div>
+  // );
 }
 
 export default Register;

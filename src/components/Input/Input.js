@@ -2,8 +2,31 @@ import React, { useEffect, useState } from "react";
 // import Placeholder from "../Preloader/Preloader";
 import "./Input.css";
 
-function Input({ type, placeholder, name, maxLength, handleChange, ...props }) {
+function Input({
+  type,
+  name,
+  // value,
+  maxLength,
+  // handleChange,
+  errorText,
+  onChange,
+
+}) {
   const [validationMessage, setValidationMessage] = useState("");
+  const [isValid, setIsValidity] = useState(false);
+  const [value, setValue] = useState("");
+  const [error, setError] = useState("");
+
+  function handleSubmit(e) {
+    const input = e.target;
+    setValue(input.value);
+    setIsValidity(input.validity.valid);
+    if (!isValid) {
+      setError(input.validationMessage);
+    } else {
+      setError('');
+    }
+  }
 
   useEffect(() => {
     // setInputValue(fieldsEnumeration(""));
@@ -16,7 +39,7 @@ function Input({ type, placeholder, name, maxLength, handleChange, ...props }) {
       <label className="input__label">{name}</label>
       <input
         type={type}
-        placeholder={placeholder}
+        // placeholder={placeholder}
         id={name}
         label={name}
         className={`${
@@ -26,13 +49,15 @@ function Input({ type, placeholder, name, maxLength, handleChange, ...props }) {
         }`}
         minLength="2"
         maxLength={maxLength}
-        onChange={props.onChange}
+        onChange={handleSubmit}
         // onChange={(e) => handleChange(e.target.value)}
-        value={props.value}
+        value={value}
         // ref={inputRef}
         required
       />
-      <span id="{name}-error" className="text-field__input_error"></span>
+      <span role="status" aria-live="polite" className="message__error">
+        {error}
+      </span>
 
       {/* <span
         className={FORM_STYLE_SETTINGS.errorText}

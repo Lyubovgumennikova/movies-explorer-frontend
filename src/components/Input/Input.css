@@ -55,6 +55,10 @@
   color: #EE3465;
 }
 
+.message__error {
+  color: #EE3465;
+}
+
 .popup__input:first-child {
   margin-top: 24px;
 }
