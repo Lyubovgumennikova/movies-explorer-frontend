@@ -3,6 +3,52 @@
   align-items: center;
 }
 
+.header__link_conteiner {
+  align-items: center;
+}
+
+.navigation__link {
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: right;
+  color: #000000;
+  text-decoration: none;
+}
+
+.navigation__booton {
+  width: 76px;
+  height: 32px;
+  padding: 8px 20px;
+  margin-left: 30px;
+  background: rgba(52, 86, 243, 1);
+  background-position: center;
+  font-family: Inter;
+  font-weight: 500;
+  font-style: normal;
+  /* font-style: Medium; */
+  /* font-style: 500; */
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 3px;
+align-self: center;
+color: #FFFFFF;
+text-decoration: none;
+  /* background-repeat: no-repeat;
+  cursor: pointer; */
+}
+
+.navigation__link:hover {
+  opacity: 0.8;
+}
+
+.navigation__booton:hover {
+  opacity: 0.8;
+}
+
 .navigation__nav-list {
   list-style: none;
   display: flex;

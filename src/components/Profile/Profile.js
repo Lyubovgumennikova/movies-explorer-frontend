@@ -1,8 +1,11 @@
 // import CurrentUserContext from '../../contexts/CurrentUserContext';
+import React from "react";
 import Header from "../Header/Header";
 import Navigation from "../Navigation/Navigation";
-import Footer from "../Footer/Footer";
-import React from 'react';
+import Form from "../Form/Form";
+import Input from "../Input/Input";
+import NewInput from "../NewInput/NewInput";
+import "./Profile.css";
 // import ProfileForm from '../ProfileForm/ProfileForm';
 // import useFormWithValidation from '../../hooks/useFormValidation';
 // import UPDATE_PROFILE_ERRORS_TEXTS from '../../constants/update-profile-errors-texts';
@@ -13,11 +16,12 @@ function Profile({
   isLoadingUpdateCurrentUser,
   updUserResStatus,
 }) {
-
   // const currentUserData = React.useContext(CurrentUserContext);
 
-  const [isUpdateUserProfileError, setIsUpdateUserProfileError] = React.useState(false);
-  const [updateUserProfileErrorText, setUpdateUserProfileErrorText] = React.useState('');
+  const [isUpdateUserProfileError, setIsUpdateUserProfileError] =
+    React.useState(false);
+  const [updateUserProfileErrorText, setUpdateUserProfileErrorText] =
+    React.useState("");
   const [formIsValid, setFormIsValid] = React.useState(false);
 
   // const {
@@ -40,33 +44,34 @@ function Profile({
   const handleToggleEditableProfile = () => {
     setIsEdited(!isEdited);
     setIsUpdateUserProfileError(false);
-    setUpdateUserProfileErrorText('');
+    setUpdateUserProfileErrorText("");
   };
 
   const SUBMIT_BUTTON_SETTINGS = {
-    type: 'submit',
-    title: 'Сохранить',
+    type: "submit",
+    title: "Сохранить",
   };
 
   const INPUTS_DATA = [
     {
       key: 1,
-      type: 'text',
-      id: 'name',
-      label: 'Имя',
-      placeholder: 'Имя',
-      name: 'name',
+      type: "text",
+      id: "name",
+      label: "Имя",
+      placeholder: "Имя",
+      name: "name",
       required: true,
-      regexp: '[a-zA-Z -]{2,30}',
-      customErrorMessage: 'Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -',
+      regexp: "[a-zA-Z -]{2,30}",
+      customErrorMessage:
+        "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
     },
     {
       key: 2,
-      type: 'email',
-      id: 'email',
-      label: 'Почта',
-      placeholder: 'Почта',
-      name: 'email',
+      type: "email",
+      id: "email",
+      label: "Почта",
+      placeholder: "Почта",
+      name: "email",
       required: true,
     },
   ];
@@ -74,15 +79,15 @@ function Profile({
   // const TITLE_TEXT = `Привет, ${currentUserData.name || ''}!`;
 
   const PROFILE_STYLE_SETTINGS = {
-    main: 'profile',
+    main: "profile",
   };
 
   const PROFILE_EDIT_BUTTON_SETTINGS = {
-    title: 'Редактировать',
+    title: "Редактировать",
   };
 
   const PROFILE_SIGNOUT_BUTTON_SETTINGS = {
-    title: 'Выйти из аккаунта',
+    title: "Выйти из аккаунта",
   };
 
   // React.useEffect(() => {
@@ -115,14 +120,14 @@ function Profile({
           break;
         case 200:
           setIsUpdateUserProfileError(false);
-          setUpdateUserProfileErrorText('');
+          setUpdateUserProfileErrorText("");
           break;
         default:
           setIsUpdateUserProfileError(true);
           // setUpdateUserProfileErrorText(UPDATE_PROFILE_ERRORS_TEXTS.BASE_ERROR);
           break;
-      };
-    };
+      }
+    }
   };
 
   React.useEffect(() => {
@@ -130,32 +135,48 @@ function Profile({
   });
 
   return (
-    <main
-      className={PROFILE_STYLE_SETTINGS.main}
-    >
-      <Header />
-      <Navigation />
-      <Footer />
-      {/* <ProfileForm
-        titleText={TITLE_TEXT}
-        inputsData={INPUTS_DATA}
-        onChange={handleChange}
-        values={values}
-        errors={errors}
-        onSubmit={handleSubmit}
-        submitButtonSettings={SUBMIT_BUTTON_SETTINGS}
-        formIsValid={formIsValid}
-        isEdited={isEdited}
-        onToggleEditableProfile={handleToggleEditableProfile}
-        profileEditButtonSettings={PROFILE_EDIT_BUTTON_SETTINGS}
-        profileSignoutButtonSettings={PROFILE_SIGNOUT_BUTTON_SETTINGS}
-        profileUpdateErrorText={updateUserProfileErrorText}
-        isUpdateUserProfileError={isUpdateUserProfileError}
-        onSignOut={onSignOut}
-        isLoadingData={isLoadingUpdateCurrentUser}
-      /> */}
-    </main>
-  )
+    <div className="profile">
+      <Header>
+        <Navigation />
+      </Header>
+      <Form
+        name="Login"
+        title="Привет, {name}!"
+        buttonText="Войти"
+        // isSubmitted={isSubmitted}
+        // setIsSubmitted={setIsSubmitted}
+        // onSubmit={handleSubmit}
+      >
+        <Input
+          type="email"
+          label="email"
+          required
+          name="email"
+          className="popup__input popup__input_auth"
+          // placeholder="Email"
+          maxLength="30"
+          // onChange={handleChange} //={setEmail}
+          // value={isincluded.email}
+        />
+
+        <span id="email-error" className="popup__input-error"></span>
+        <Input
+          type="password"
+          required
+          name="password"
+          className="popup__input popup__input_auth"
+          // placeholder="Пароль"
+          // onChange={handleChange} //={setPassword}
+          // value={isincluded.password}
+        />
+        <span id="password-error" className="popup__input-error"></span>
+      </Form>
+      <NewInput
+        className="popup__input-error"
+        link="Выйти из аккаунта"
+      />
+    </div>
+  );
 }
 
 export default Profile;

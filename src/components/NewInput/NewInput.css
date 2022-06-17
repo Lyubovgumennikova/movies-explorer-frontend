@@ -1,0 +1,15 @@
+.login__input-text {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #a0a0a0;
+  text-align: center;
+}
+
+.login__input-text_link {
+  text-decoration: none;
+  color: #3456f3;
+  padding-left: 6px;
+}

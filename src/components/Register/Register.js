@@ -1,69 +1,75 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import Navigation from "../Navigation/Navigation";
-import Footer from "../Footer/Footer";
-// import Form from "./Form";
+import Input from "../Input/Input";
+import Form from "../Form/Form";
+import NewInput from "../NewInput/NewInput";
 
-function Register({ onRegister, ...props}) {
-  // const [newEntry, setNewEntry] = useState({
-  //   email: '',
-  //   password: '',
-  // })
+function Register({ onRegister, ...props }) {
+  const [newEntry, setNewEntry] = useState({
+    email: "",
+    password: "",
+  });
 
-//   function handleChange(e) {
-//     const {name, value} = e.target;
+  function handleChange(e) {
+    const { name, value } = e.target;
 
-//     setNewEntry(old => ({
-//       ...old,
-//       [name]: value
-//     }))
-//   }
+    setNewEntry((old) => ({
+      ...old,
+      [name]: value,
+    }));
+  }
 
-// function handleSubmit(e) {
-//   e.preventDefault();
+  function handleSubmit(e) {
+    e.preventDefault();
 
-//   const {email, password} = newEntry;
-//   onRegister({
-//     email,
-//     password,
-//   });
-// }
+    const { email, password } = newEntry;
+    onRegister({
+      email,
+      password,
+    });
+  }
 
-return (
-    <div className="popup__field">
-       {/* <Form
+  return (
+    <div className="register">
+      <Header />
+      <Form
         name="register"
+        title="Добро пожаловать!"
         buttonText="Зарегистрироваться"
         isSubmitted={props.isSubmitted}
         setIsSubmitted={props.setIsSubmitted}
         onSubmit={handleSubmit}
-        >
-        <input
+      >
+        <Input
+          type="name"
+          name="Имя"
+          className="popup__input popup__input_auth"
+          // placeholder="Имя"
+          onChange={handleChange}
+          // value={newEntry.password}
+        />
+        <Input
           type="email"
           name="email"
-          className= 'popup__input popup__input_auth'
-          placeholder="Email"
+          className="popup__input popup__input_auth"
+          // placeholder="Email"
           onChange={handleChange}
-          value={newEntry.email}
+          // value={newEntry.email}
         />
-        <span id="email-error" className="popup__input-error"></span>
-        <input
+        {/* <span id="email-error" className="popup__input-error"></span> */}
+        <Input
           type="password"
           name="password"
-          className= 'popup__input popup__input_auth'
-          placeholder="Пароль"
+          className="popup__input popup__input_auth"
+          // placeholder="Пароль"
           onChange={handleChange}
-          value={newEntry.password}
+          // value={newEntry.password}
         />
-        <span id="password-error" className="popup__input-error"></span>
-      </Form> */}
-      <p className="popup__auth">
-        Уже зарегистрированы?
-        <Link to="/signin" className="popup__auth">
-          Войти
-        </Link>
-      </p>
+        {/* <span id="password-error" className="popup__input-error"></span> */}
+      </Form>
+      <NewInput text="Уже&nbsp;зарегистрированы&#63;" link="Войти" />
     </div>
   );
 }
