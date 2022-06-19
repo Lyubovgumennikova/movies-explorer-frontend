@@ -5,37 +5,33 @@ function Form({
   name,
   children,
   buttonText,
-  // isSubmitted,
+  isSubmitted,
   onSubmit,
   title,
   formIsValid,
-  isLoadingData
-  // ...props
+  isLoadingData,
+  styleSettings,
+  validationMessage,
+  isValid,
+  // value,
+
+  ...props
 }) {
-  const [isValid, setIsValid] = useState(false);
-  // const [value, setValue] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  function handleFormSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
-    e.preventDefault();
-    setIsSubmitted(true)
-    // handleSubmit()
-  }
-
 
 
   return (
-    <form className="form" onSubmit={onSubmit} noValidate>
+    <form className= {styleSettings.form}   onSubmit={onSubmit} noValidate>
       <h1 className="form__title">{title}</h1>
       {children}
       <button
         type="submit"
-        className={`${
-          !formIsValid || isLoadingData
-            ? `form__submit-button`
-            : `form__submit-button form__submit-button_disabled`
-        }`}
+        // disabled
+        // className={`${
+        //   !isValid
+        //     ? `form__submit-button`
+        //     : `form__submit-button form__submit-button_disabled`
+        // }`}
+        className= {styleSettings.button}
       >
         {isSubmitted ? "Выполняется..." : buttonText}
       </button>

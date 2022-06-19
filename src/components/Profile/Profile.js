@@ -1,7 +1,7 @@
 // import CurrentUserContext from '../../contexts/CurrentUserContext';
 import React from "react";
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
@@ -17,12 +17,22 @@ function Profile({
   updUserResStatus,
 }) {
   // const currentUserData = React.useContext(CurrentUserContext);
+  const FOPM_STYLES = {
+    form: "form__profile",
+    group: "profile__group",
+    label: "profile__label",
+    input: "text-field__profile",
+    valid: "text-field__profile_valid",
+    button: "form__submit-button_profile",
+    // button: "form__submit-button",
+    link: "profile__input-text_link"
+  };
 
-  const [isUpdateUserProfileError, setIsUpdateUserProfileError] =
-    React.useState(false);
-  const [updateUserProfileErrorText, setUpdateUserProfileErrorText] =
-    React.useState("");
-  const [formIsValid, setFormIsValid] = React.useState(false);
+  // const [isUpdateUserProfileError, setIsUpdateUserProfileError] =
+  //   React.useState(false);
+  // const [updateUserProfileErrorText, setUpdateUserProfileErrorText] =
+  //   React.useState("");
+  // const [formIsValid, setFormIsValid] = React.useState(false);
 
   // const {
   //   values,
@@ -39,13 +49,13 @@ function Profile({
   //   resetForm(currentUserData);
   // };
 
-  const [isEdited, setIsEdited] = React.useState(false);
+  // const [isEdited, setIsEdited] = React.useState(false);
 
-  const handleToggleEditableProfile = () => {
-    setIsEdited(!isEdited);
-    setIsUpdateUserProfileError(false);
-    setUpdateUserProfileErrorText("");
-  };
+  // const handleToggleEditableProfile = () => {
+  //   setIsEdited(!isEdited);
+  //   setIsUpdateUserProfileError(false);
+  //   setUpdateUserProfileErrorText("");
+  // };
 
   const SUBMIT_BUTTON_SETTINGS = {
     type: "submit",
@@ -106,74 +116,49 @@ function Profile({
   //   }
   // }, [currentUserData, values])
 
-  const errorHandler = () => {
-    if (updUserResStatus) {
-      switch (updUserResStatus) {
-        case 400:
-        case 404:
-          setIsUpdateUserProfileError(true);
-          // setUpdateUserProfileErrorText(UPDATE_PROFILE_ERRORS_TEXTS.BAD_REQUEST);
-          break;
-        case 500:
-          setIsUpdateUserProfileError(true);
-          // setUpdateUserProfileErrorText(UPDATE_PROFILE_ERRORS_TEXTS.INTERNAL_SERVER_ERROR)
-          break;
-        case 200:
-          setIsUpdateUserProfileError(false);
-          setUpdateUserProfileErrorText("");
-          break;
-        default:
-          setIsUpdateUserProfileError(true);
-          // setUpdateUserProfileErrorText(UPDATE_PROFILE_ERRORS_TEXTS.BASE_ERROR);
-          break;
-      }
-    }
-  };
-
-  React.useEffect(() => {
-    errorHandler();
-  });
-
   return (
     <div className="profile">
       <Header>
-        <Navigation />
+        <AuthNavigation />
       </Header>
       <Form
         name="Login"
         title="Привет, {name}!"
-        buttonText="Войти"
+        styleSettings={FOPM_STYLES}
+        buttonText="Редактировать"
+
         // isSubmitted={isSubmitted}
         // setIsSubmitted={setIsSubmitted}
         // onSubmit={handleSubmit}
       >
+{/* <div class="input-group"></div> */}
         <Input
-          type="email"
-          label="email"
           required
-          name="email"
-          className="popup__input popup__input_auth"
-          // placeholder="Email"
+          type="name"
+          name="Имя"
+          styleSettings={FOPM_STYLES}
           maxLength="30"
           // onChange={handleChange} //={setEmail}
           // value={isincluded.email}
         />
 
-        <span id="email-error" className="popup__input-error"></span>
+
+        <hr class="portfolio__line" />
         <Input
-          type="password"
           required
-          name="password"
-          className="popup__input popup__input_auth"
+          type="email"
+          name="E-mail"
+          styleSettings={FOPM_STYLES}
           // placeholder="Пароль"
           // onChange={handleChange} //={setPassword}
           // value={isincluded.password}
         />
-        <span id="password-error" className="popup__input-error"></span>
+        {/* <span id="password-error" className="popup__input-error"></span> */}
       </Form>
       <NewInput
-        className="popup__input-error"
-        link="Выйти из аккаунта"
+        styleSettings={FOPM_STYLES}
+        linkText="Выйти из аккаунта"
+        linkPath="/signup"
       />
     </div>
   );

@@ -1,18 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
 import Input from "../Input/Input";
 import Form from "../Form/Form";
 import NewInput from "../NewInput/NewInput";
-import SandboxForm from "../Forms/Forms"
+import "./Register.css";
 
-function Register({ onRegister, isSubmitted,  }) {
+function Register({ onRegister, isSubmitted, setIsSubmitted }) {
   const [newEntry, setNewEntry] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const FOPM_STYLES = {
+    form: "form",
+    group: "form__group",
+    label: "input__label",
+    input: "text-field__input",
+    valid: "text-field__input_valid",
+    button: "form__submit-button",
+    link: "login__input-text_link"
+  };
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -35,50 +43,47 @@ function Register({ onRegister, isSubmitted,  }) {
   }
 
   return (
-    <SandboxForm/>
-  )
-
-  // return (
-  //   <div className="register">
-  //     <Header />
-  //     <Form
-  //       name="register"
-  //       title="Добро пожаловать!"
-  //       buttonText="Зарегистрироваться"
-  //       isSubmitted={isSubmitted}
-  //       setIsSubmitted={setIsSubmitted}
-  //       onSubmit={handleSubmit}
-  //     >
-  //       <Input
-  //         type="name"
-  //         name="Имя"
-  //         className="popup__input popup__input_auth"
-  //         // placeholder="Имя"
-  //         onChange={handleChange}
-  //         // value={newEntry.name}
-  //       />
-  //       <Input
-  //         type="email"
-  //         name="E-mail"
-  //         className="popup__input popup__input_auth"
-  //         // placeholder="Email"
-  //         onChange={handleChange}
-  //         // value={newEntry.email}
-  //       />
-  //       {/* <span id="email-error" className="popup__input-error"></span> */}
-  //       <Input
-  //         type="password"
-  //         name="Пароль"
-  //         className="popup__input popup__input_auth"
-  //         // placeholder="Пароль"
-  //         onChange={handleChange}
-  //         // value={newEntry.password}
-  //       />
-  //       {/* <span id="password-error" className="popup__input-error"></span> */}
-  //     </Form>
-  //     <NewInput text="Уже&nbsp;зарегистрированы&#63;" link="Войти" />
-  //   </div>
-  // );
+    <div className="register">
+      <Header />
+      <Form
+        name="register"
+        title="Добро пожаловать!"
+        buttonText="Зарегистрироваться"
+        styleSettings={FOPM_STYLES}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
+        onSubmit={handleSubmit}
+      >
+        <Input
+          type="name"
+          name="Имя"
+          styleSettings={FOPM_STYLES}
+          onChange={handleChange}
+          value={newEntry.name}
+        />
+        <Input
+          type="email"
+          name="E-mail"
+          styleSettings={FOPM_STYLES}
+          onChange={handleChange}
+          value={newEntry.email}
+        />
+        <Input
+          type="password"
+          name="Пароль"
+          styleSettings={FOPM_STYLES}
+          onChange={handleChange}
+          value={newEntry.password}
+        />
+      </Form>
+      <NewInput
+        styleSettings={FOPM_STYLES}
+        text="Уже&nbsp;зарегистрированы&#63;"
+        linkText="Войти"
+        linkPath="/signin"
+      />
+    </div>
+  );
 }
 
 export default Register;

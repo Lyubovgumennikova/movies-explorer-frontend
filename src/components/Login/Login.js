@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
-// import Footer from "../Footer/Footer";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Login.css";
 
-function Login({ onLogin, isSubmitted, setIsSubmitted, ...props }) {
+function Login({ onLogin, isSubmitted, setIsSubmitted }) {
+  const FOPM_STYLES = {
+    form: "form",
+    group: "form__group",
+    label: "input__label",
+    input: "text-field__input",
+    valid: "text-field__input_valid",
+    button: "form__submit-button",
+    link: "login__input-text_link",
+  };
+
   const [isincluded, setIsincluded] = useState({
     email: "",
     password: "",
@@ -43,6 +50,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, ...props }) {
         name="Login"
         title="Рады видеть!"
         buttonText="Войти"
+        styleSettings={FOPM_STYLES}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
@@ -51,28 +59,25 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, ...props }) {
           type="email"
           required
           name="E-mail"
-          // className="popup__input popup__input_auth"
-          // placeholder="Email"
+          styleSettings={FOPM_STYLES}
           maxLength="30"
-          onChange={handleChange} //={setEmail}
-          // value={isincluded.email}
+          onChange={handleChange}
+          value={isincluded.email}
         />
-        {/* <span id="email-error" className="popup__input-error"></span> */}
         <Input
           type="password"
           required
           name="Пароль"
-          label="email"
-          // className="popup__input popup__input_auth"
-          // placeholder="Пароль"
-          onChange={handleChange} //={setPassword}
-          // value={isincluded.password}
+          styleSettings={FOPM_STYLES}
+          onChange={handleChange}
+          value={isincluded.password}
         />
-        {/* <span id="password-error" className="popup__input-error"></span> */}
       </Form>
       <NewInput
+        styleSettings={FOPM_STYLES}
         text="Ещё&nbsp;не&nbsp;зарегистрированы&#63;"
-        link="Регистрация"
+        linkText="Регистрация"
+        linkPath="/signup"
       />
     </div>
   );

@@ -4,7 +4,8 @@ import React from "react";
 // import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
+// import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 import MoviesCard from "../MoviesCard/MoviesCard";
 // import Notification from "../Notification/Notification";
@@ -48,9 +49,10 @@ function Movies({
 
   return (
     <main>
-      <Header />
-      <Navigation />
-      <Footer />
+      <Header>
+        <AuthNavigation />
+      </Header>
+
       {/* <SearchForm onSubmit={handleSubmit} />
       {!isLoadingData && isNoMoviesFound && (
         <Notification text={NO_MOVIES_FOUND_TEXT.BASE_TEXT} />
@@ -66,6 +68,7 @@ function Movies({
         onDeleteSavedMovie={onDeleteSavedMovie}
       />
       <MoviesCard />
+      <Footer />
     </main>
   );
 }

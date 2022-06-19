@@ -42,6 +42,9 @@
   grid-template-columns: 228px auto;
   grid-template-rows: 36px;
   box-sizing: border-box;
+  /* justify-content: center;
+  align-content: center; */
+
   /* align-items: stretch; */
   /* justify-items: center; */
 }
@@ -49,8 +52,9 @@
 .aboutProject__grid-article,
 .aboutProject__grid-article_a {
   margin: 0;
+  padding-top: 9px;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   font-family: "Inter", Arial, sans-serif;
   font-weight: 400;
   font-style: normal;

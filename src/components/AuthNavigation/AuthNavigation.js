@@ -3,8 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 // import AccountLink from '../AccountLink/AccountLink';
 
-// const Navigation = React.memo(() => {
-  function Navigation() {
+function AuthNavigation() {
   // const NAVIGATION_LINKS = [
   //   {
   //     id: 1,
@@ -39,14 +38,16 @@ import { Link, NavLink } from "react-router-dom";
 
   return (
     <div className="header__link_conteiner">
-      <Link className="navigation__link" to="/signup">
-        Регистрация
-      </Link>
-      <Link className="navigation__booton" to="/signin">
-        Войти
-      </Link>
+      <NavLink className="navigation__link" to="/movies">
+      Фильмы
+      </NavLink>
+      <NavLink className="navigation__link" to="/saved-movies">
+      Сохранённые фильмы
+      </NavLink>
+      <NavLink className="navigation__link" to="/profile">
+      Аккаунт
+      </NavLink>
     </div>
-
     // <nav
     //   className="navigation"
     // >
@@ -68,4 +69,4 @@ import { Link, NavLink } from "react-router-dom";
   );
 };
 
-export default Navigation;
+export default AuthNavigation;

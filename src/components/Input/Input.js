@@ -5,67 +5,54 @@ import "./Input.css";
 function Input({
   type,
   name,
-  // value,
   maxLength,
-  // handleChange,
-  errorText,
-  onChange,
-
+  styleSettings,
 }) {
-  const [validationMessage, setValidationMessage] = useState("");
-  const [isValid, setIsValidity] = useState(false);
+  const [isValid, setIsValid] = useState(false);
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
 
-  function handleSubmit(e) {
+  function handleChange(e) {
     const input = e.target;
+    // const name = input.name;
+    // const value = input.type === 'checkbox' ? input.checked : input.value;
+
+
     setValue(input.value);
-    setIsValidity(input.validity.valid);
+    setIsValid(input.validity.valid);
     if (!isValid) {
       setError(input.validationMessage);
     } else {
-      setError('');
+      setError("");
     }
+
+    // setNewEntry((old) => ({
+    //   ...old,
+    //   [name]: value,
+    // }));
+    // setIsValid(input.closest('form').checkValidity());
   }
 
-  useEffect(() => {
-    // setInputValue(fieldsEnumeration(""));
-    // setIsValid(fieldsEnumeration(false));
-    setValidationMessage("");
-  }, [setValidationMessage]);
-
   return (
-    <div className="input">
-      <label className="input__label">{name}</label>
+    <div className={styleSettings.group}>
+      <label className={styleSettings.label}>{name}</label>
       <input
         type={type}
-        // placeholder={placeholder}
         id={name}
-        label={name}
         className={`${
-          validationMessage
-            ? `text-field__input `
-            : `text-field__input text-field__input_valid `
+          isValid
+            ? styleSettings.input
+            : styleSettings.valid
         }`}
         minLength="2"
         maxLength={maxLength}
-        onChange={handleSubmit}
-        // onChange={(e) => handleChange(e.target.value)}
+        onChange={handleChange}
         value={value}
-        // ref={inputRef}
         required
       />
       <span role="status" aria-live="polite" className="message__error">
         {error}
       </span>
-
-      {/* <span
-        className={FORM_STYLE_SETTINGS.errorText}
-        aria-live="polite"
-      >
-        {item.regexp && errors[item.name] && item.customErrorMessage}
-        {errors[item.name]}
-      </span> */}
     </div>
   );
 }

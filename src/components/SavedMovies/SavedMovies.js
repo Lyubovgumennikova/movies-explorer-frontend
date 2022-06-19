@@ -3,7 +3,8 @@ import React from "react";
 // import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
-import Navigation from "../Navigation/Navigation";
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
+// import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 import MoviesCard from "../MoviesCard/MoviesCard";
 // import Notification from "../Notification/Notification";
@@ -50,9 +51,10 @@ function SavedMovies({
 
   return (
     <main>
-      <Header />
-      <Navigation />
-      <Footer />
+      <Header>
+        <AuthNavigation />
+      </Header>
+
       {/* <SearchForm onSubmit={handleSubmit} />
       {!isLoadingData && isSavedMoviesEmpty && (
         <Notification text={NO_MOVIES_FOUND_TEXT.SAVED_IS_EMPTY} />
@@ -63,12 +65,13 @@ function SavedMovies({
       {isMoviesApiError && (
         <Notification text={MOVIES_ERRORS_TEXTS.BASE_ERROR} />
       )} */}
-      <MoviesCardList
+      {/* <MoviesCardList
         data={savedMovies}
         // locationPathname={location.pathname}
         // onDeleteSavedMovie={onDeleteSavedMovie}
       />
-      <MoviesCard />
+      <MoviesCard /> */}
+      <Footer />
     </main>
   );
 }
