@@ -1,6 +1,5 @@
 .header {
   width: calc(100% - 140px);
-  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,11 +9,7 @@
   margin-top: 18px;
   margin-bottom: 18px;
   height: 38px;
-width: 38px;
-/* left: 280px; */
-/* top: 348px; */
-border-radius: 0px;
-
+  width: 38px;
 }
 
 .header__logo:hover {
@@ -23,19 +18,19 @@ border-radius: 0px;
 
 @media (max-width: 999px) {
   .header__logo {
-      margin: 28px 0 33px 27px;
-      width: 103px;
+    margin: 28px 0 33px 27px;
+    width: 103px;
   }
 }
 
 @media (max-width: 1279px) {
   .header {
-      width: calc(100% - (6*19px));
+    width: calc(100% - (6 * 19px));
   }
 }
 
 @media (max-width: 994px) {
   .header {
-      width: 100%;
+    width: 100%;
   }
 }

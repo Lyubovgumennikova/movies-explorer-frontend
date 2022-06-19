@@ -1,7 +1,5 @@
 .aboutMi__section {
   max-width: 1280px;
-  /* margin: 0 auto;
-  box-sizing: border-box; */
   padding: 110px 70px 106px 70px;
 }
 
@@ -13,10 +11,8 @@
     "about avatar"
     "post avatar"
     "link avatar";
-    /* max-width: 600px; */
   padding-top: 66px;
   padding-bottom: 101px;
-
 }
 
 .aboutMi__title {
@@ -24,7 +20,7 @@
   max-width: 600px;
   margin: 0;
   padding-bottom: 18px;
-  font-family: 'Inter';
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 50px;
@@ -37,7 +33,7 @@
   max-width: 600px;
   margin: 0;
   padding-bottom: 26px;
-  font-family: 'Inter';
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -49,7 +45,7 @@
   max-width: 600px;
   margin: 0;
   padding-bottom: 99px;
-  font-family: 'Inter';
+  font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -72,9 +68,6 @@
   padding: 0;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 20px;
-  /* grid-auto-flow: dense;
-  flex-direction: row-reverse; */
-
 }
 
 .aboutMi__navLink {
@@ -89,13 +82,9 @@
   transition: opacity .3s ease;
   flex-direction: row-reverse;
 }
-.about-me-article__header {
-  padding-bottom: 10px;
-}
 
-.aboutMi__link-section {
-  grid-area:link;
-  flex-direction: row-reverse;
+.aboutMi__navLink:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 1023px) {

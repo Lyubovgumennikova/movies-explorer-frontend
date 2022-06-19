@@ -1,5 +1,6 @@
 import React from "react";
-import NavLink from "../NavLink/NavLink";
+import NavReview from "../NavReview/NavReview";
+import "./Footer.css"
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -23,9 +24,8 @@ function Footer() {
         >
           Яндекс.Практикум
         </a>
-        <NavLink styleSettings={FOOTER_STYLES}/>
+        <NavReview styleSettings={FOOTER_STYLES}/>
         </nav>
-
       </div>
     </footer>
   );

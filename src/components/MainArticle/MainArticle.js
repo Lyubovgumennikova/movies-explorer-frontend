@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./MainArticle.css"
 function MainArticle({article}) {
   return (
   <h2 className="main__article">

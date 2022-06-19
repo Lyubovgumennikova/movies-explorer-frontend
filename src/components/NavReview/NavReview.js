@@ -1,6 +1,6 @@
 import React from "react";
 
-function NavLink({ styleSettings }) {
+function NavReview({ styleSettings }) {
   return (
     <ul className={styleSettings.container}>
       <a
@@ -23,4 +23,4 @@ function NavLink({ styleSettings }) {
   );
 }
 
-export default NavLink;
+export default NavReview;

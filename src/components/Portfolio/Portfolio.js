@@ -1,23 +1,11 @@
 import React from "react";
 import "./Portfolio.css";
-// import Modal from '../Modal/Modal';
-// import MobileNavigation from '../MobileNavigation/MobileNavigation';
-// import MobileAccountNavList from '../MobileAccountNavList/MobileAccountNavList';
 import icon from "../../images/icon.svg";
 
-function Portfolio({ isOpen, onClose }) {
-  const STYLE_SETTINGS = {
-    overlay: "menu-modal",
-    container: "menu-modal__container",
-    content: "menu-modal__content",
-    header: "menu-modal__header",
-    closeButton: "menu-modal__close-button",
-    main: "menu-modal__main",
-    footer: "menu-modal__footer",
-  };
+function Portfolio() {
 
   return (
-    <>
+    <div className="portfolio">
       <h2 className="portfolio__article">Портфолио</h2>
       <nav className="portfolio__link-dox">
         <h2 className="portfolio__title">Статичный сайт</h2>
@@ -54,7 +42,7 @@ function Portfolio({ isOpen, onClose }) {
           <img className="portfolio__link" src={icon} alt="Кликни" />
         </a>
       </nav>
-    </>
+    </div>
   );
 }
 

@@ -1,20 +1,15 @@
 @import "./vendor/normalize.css";
 @import "./vendor/fonts/inter.css";
 @import "./components/App/App.css";
-@import "./components/Header/Header.css";
-@import "./components/Navigation/Navigation.css";
+/* @import "./components/Header/Header.css"; */
+/* @import "./components/Navigation/Navigation.css"; */
 @import "./components/Main/Main.css";
 @import "./components/Login/Login.css";
 @import "./components/Register/Register.css";
-@import "./components/Movies/Movies.css";
-@import "./components/Footer/Footer.css";
-@import "./components/LogoLink/LogoLink.css";
-@import "./components/Promo/Promo.css";
-/* @import "./components/NavTab/NavTab.css"; */
-/* @import "./components/AboutProject/AboutProject.css"; */
-@import "./components/MainArticle/MainArticle.css";
-@import "./components/Techs/Techs.css";
-/* @import "./components/AboutMe/AboutMe.css"; */
+/* @import "./components/Movies/Movies.css"; */
+/* @import "./components/Footer/Footer.css"; */
+/* @import "./components/LogoLink/LogoLink.css"; */
+
 
 /* * {
   outline: 1px solid red;

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import MoviesCard from '../MoviesCard/MoviesCard';
+import MoviesCard from "../MoviesCard/MoviesCard";
 // import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
 
 // import useCurrentSize from '../../hooks/useCurrentSize';
@@ -11,7 +11,6 @@ function MoviesCardList({
   onSaveMovie,
   onDeleteSavedMovie,
 }) {
-
   const SIZE_WIDTH_LARGE = 1024;
   const SIZE_WIDTH_MEDIUM = 768;
   const SIZE_WIDTH_SMALL = 320;
@@ -46,34 +45,34 @@ function MoviesCardList({
   // };
 
   const handleShowMoreMoviesButtonClick = () => {
-    setMoviesToRender(data.slice(ZERO_NUMBER, moviesToRender.length + numberMoviesToAdd));
+    setMoviesToRender(
+      data.slice(ZERO_NUMBER, moviesToRender.length + numberMoviesToAdd)
+    );
     if (moviesToRender.length >= data.length - numberMoviesToAdd) {
       setIsShowButtonActive(false);
     }
-  }
+  };
 
   // React.useEffect(() => {
   //   countNumberMoviesToRender();
   // }, [size.width])
 
   React.useEffect(() => {
-    if (locationPathname === '/movies') {
+    if (locationPathname === "/movies") {
       setMoviesToRender(data.slice(ZERO_NUMBER, numberMoviesToRender));
       if (data.length <= numberMoviesToRender) {
         setIsShowButtonActive(false);
       } else {
         setIsShowButtonActive(true);
-      };
-    } else if (locationPathname === '/saved-movies') {
+      }
+    } else if (locationPathname === "/saved-movies") {
       setMoviesToRender(data);
       setIsShowButtonActive(false);
     }
-  }, [data, numberMoviesToRender])
+  }, [data, numberMoviesToRender]);
 
   const moviesCardsMarkup = moviesToRender.map((item) => (
-    <li
-      key={item.id || item._id}
-    >
+    <li key={item.id || item._id}>
       <MoviesCard
         data={item}
         locationPathname={locationPathname}
@@ -81,18 +80,26 @@ function MoviesCardList({
         onDeleteSavedMovie={onDeleteSavedMovie}
       />
     </li>
-  ))
+  ));
 
   const MOVIES_CARD_LIST_STYLE_SETTINGS = {
-    list: 'movies-card-list',
+    list: "movies-card-list",
   };
 
   return (
     <>
-    <h1> MoviesCardList</h1>
-      <ul
-        className={MOVIES_CARD_LIST_STYLE_SETTINGS.list}
-      >
+      {/* <section className="elements">
+        {cards.map((card) => (
+          <MoviesCard
+            key={card._id}
+            card={card}
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
+          />
+        ))}
+      </section> */}
+      <ul className={MOVIES_CARD_LIST_STYLE_SETTINGS.list}>
         {moviesCardsMarkup}
       </ul>
       {/* {locationPathname === '/movies' && isShowButtonActive ? (
@@ -101,7 +108,7 @@ function MoviesCardList({
         />
       ) : null} */}
     </>
-  )
+  );
 }
 
 export default MoviesCardList;
