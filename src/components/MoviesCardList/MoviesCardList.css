@@ -11,6 +11,41 @@
   justify-items: center;
 }
 
+.show-more__button {
+  width: 100%;
+  min-height: 36px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.25;
+  color: #000000;
+  text-align: center;
+  background: rgba(249, 249, 249, 1);
+  border-radius: 6px;
+  border: unset;
+  cursor: pointer;
+  transition: background .3s ease;
+}
+
+.show-more__button:hover {
+  background: rgba(249, 249, 249, .8);
+}
+
+@media screen and (max-width: 1023px) {
+  .show-more {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .show-more {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 @media screen and (max-width: 1279px) {
   .movies-card-list {
     padding-left: 30px;

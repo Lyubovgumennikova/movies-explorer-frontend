@@ -19,7 +19,8 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
     input: "text-field__input",
     valid: "text-field__input_valid",
     button: "form__submit-button",
-    link: "login__input-text_link"
+    link: "login__input-text_link",
+    error: "message__error",
   };
 
   function handleChange(e) {
@@ -32,6 +33,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
   }
 
   function handleSubmit(e) {
+    console.log("ljhg")
     e.preventDefault();
 
     const { name, email, password } = newEntry;

@@ -6,7 +6,7 @@ import NewInput from "../NewInput/NewInput";
 import "./Login.css";
 
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
-  const FOPM_STYLES = {
+  const FORM_STYLES = {
     form: "form",
     group: "form__group",
     label: "input__label",
@@ -14,6 +14,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     valid: "text-field__input_valid",
     button: "form__submit-button",
     link: "login__input-text_link",
+    error: "message__error",
   };
 
   const [isincluded, setIsincluded] = useState({
@@ -30,6 +31,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   }
 
   function handleSubmit(e) {
+    console.log("ljhg")
     e.preventDefault();
 
     const { email, password } = isincluded;
@@ -42,7 +44,9 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
       password,
     });
   }
-
+//  const handleSubmit = () => {
+//     return console.log("ljhg")
+//   };
   return (
     <div className="login">
       <Header />
@@ -50,7 +54,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
         name="Login"
         title="Рады видеть!"
         buttonText="Войти"
-        styleSettings={FOPM_STYLES}
+        styleSettings={FORM_STYLES}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
@@ -59,7 +63,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           type="email"
           required
           name="E-mail"
-          styleSettings={FOPM_STYLES}
+          styleSettings={FORM_STYLES}
           maxLength="30"
           onChange={handleChange}
           value={isincluded.email}
@@ -68,13 +72,13 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           type="password"
           required
           name="Пароль"
-          styleSettings={FOPM_STYLES}
+          styleSettings={FORM_STYLES}
           onChange={handleChange}
           value={isincluded.password}
         />
       </Form>
       <NewInput
-        styleSettings={FOPM_STYLES}
+        styleSettings={FORM_STYLES}
         text="Ещё&nbsp;не&nbsp;зарегистрированы&#63;"
         linkText="Регистрация"
         linkPath="/signup"

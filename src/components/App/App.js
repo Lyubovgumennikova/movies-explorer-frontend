@@ -33,6 +33,9 @@ import { useNavigate } from "react-router-dom";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [moviesData, setMoviesData] = useState([]);
+
+
   // const navigate = useNavigate();
   // const navigate = useHistory();
   // const history = useHistory ();

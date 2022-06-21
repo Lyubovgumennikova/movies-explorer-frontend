@@ -1,12 +1,13 @@
 import React from "react";
 // import { useLocation } from "react-router-dom";
-// import SearchForm from "../SearchForm/SearchForm";
+import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
 // import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import "./SavedMovies.css"
 // import Notification from "../Notification/Notification";
 // import MOVIES_ERRORS_TEXTS from "../../constants/movies-errors-texts";
 // import NO_MOVIES_FOUND_TEXT from "../../constants/no-movies-found-text";
@@ -19,12 +20,14 @@ function SavedMovies({
   handleSearchSavedMoviesData,
   getSavedMoviesResStatus,
   isNoSavedMoviesFound,
+  // handleChange,
 }) {
   // const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
 
-  // const handleSubmit = (data) => {
-  //   handleSearchSavedMoviesData(data);
-  // };
+  const handleSubmit = (data) => {
+    console.log("submtn")
+    handleSearchSavedMoviesData(data);
+  };
 
   // let location = useLocation();
 
@@ -49,14 +52,17 @@ function SavedMovies({
   //   handleSearchSavedMoviesData();
   // }, []);
 
+ const handleClick = () => console.log("rkfnr")
+
   return (
     <main>
       <Header>
         <AuthNavigation />
       </Header>
 
-      {/* <SearchForm onSubmit={handleSubmit} />
-      {!isLoadingData && isSavedMoviesEmpty && (
+
+      <SearchForm onSubmit={handleSubmit} handleChange={(evt) => console.log(evt.target.value)}  handleClick={handleClick}/>
+      {/* {!isLoadingData && isSavedMoviesEmpty && (
         <Notification text={NO_MOVIES_FOUND_TEXT.SAVED_IS_EMPTY} />
       )}
       {!isLoadingData && isNoSavedMoviesFound && (
@@ -77,3 +83,4 @@ function SavedMovies({
 }
 
 export default SavedMovies;
+//{handleChange}

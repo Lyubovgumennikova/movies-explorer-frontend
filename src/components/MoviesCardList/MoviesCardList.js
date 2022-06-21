@@ -1,53 +1,35 @@
-import React from "react";
-
+import React, { useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-// import ShowMoreButton from '../ShowMoreButton/ShowMoreButton';
-
-// import useCurrentSize from '../../hooks/useCurrentSize';
+import Button from "../Button/Button";
+import "./MoviesCardList.css";
 
 function MoviesCardList({
   locationPathname,
   data,
   onSaveMovie,
-  onDeleteSavedMovie,
+  onDeleteMovie,
 }) {
-  const SIZE_WIDTH_LARGE = 1024;
-  const SIZE_WIDTH_MEDIUM = 768;
-  const SIZE_WIDTH_SMALL = 320;
+  const [moviesToRender, setMoviesToRender] = useState([]);
+  const [isShowButtonActive, setIsShowButtonActive] = useState(false);
+  // const [numberMoviesToRender, setNumberMoviesToRender] = useState(0);
+  const [numberMoviesToAdd, setNumberMoviesToAdd] = useState(0);
 
-  const NUMBER_MOVIES_TO_RENDER_LARGE = 12;
-  const NUMBER_MOVIES_TO_RENDER_MEDIUM = 8;
-  const NUMBER_MOVIES_TO_RENDER_SMALL = 5;
+  const FORM_STYLES = {
+    form: "form",
+    group: "form__group",
+    label: "input__label",
+    input: "text-field__input",
+    valid: "text-field__input_valid",
+    gbutton: "form__submit-button",
+    link: "login__input-text_link",
+    error: "message__error",
+    button: "show-more__button",
 
-  const NUMBER_MOVIES_TO_ADD_LARGE = 3;
-  const NUMBER_MOVIES_TO_ADD_MEDIUM = 2;
+  };
 
-  const ZERO_NUMBER = 0;
-
-  const [moviesToRender, setMoviesToRender] = React.useState([]);
-  const [isShowButtonActive, setIsShowButtonActive] = React.useState(false);
-  const [numberMoviesToRender, setNumberMoviesToRender] = React.useState(0);
-  const [numberMoviesToAdd, setNumberMoviesToAdd] = React.useState(0);
-
-  // const size = useCurrentSize();
-
-  // const countNumberMoviesToRender = () => {
-  //   if (size.width >= SIZE_WIDTH_LARGE) {
-  //     setNumberMoviesToRender(NUMBER_MOVIES_TO_RENDER_LARGE);
-  //     setNumberMoviesToAdd(NUMBER_MOVIES_TO_ADD_LARGE);
-  //   } else if (size.width < SIZE_WIDTH_LARGE && size.width >= SIZE_WIDTH_MEDIUM) {
-  //     setNumberMoviesToRender(NUMBER_MOVIES_TO_RENDER_MEDIUM);
-  //     setNumberMoviesToAdd(NUMBER_MOVIES_TO_ADD_MEDIUM);
-  //   } else if (size.width < SIZE_WIDTH_MEDIUM && size.width >= SIZE_WIDTH_SMALL) {
-  //     setNumberMoviesToRender(NUMBER_MOVIES_TO_RENDER_SMALL);
-  //     setNumberMoviesToAdd(NUMBER_MOVIES_TO_ADD_MEDIUM);
-  //   };
-  // };
-
-  const handleShowMoreMoviesButtonClick = () => {
-    setMoviesToRender(
-      data.slice(ZERO_NUMBER, moviesToRender.length + numberMoviesToAdd)
-    );
+  const handleShowButtonClick = () => {
+    console.log("rkfnr");
+    setMoviesToRender(data.slice(moviesToRender.length + numberMoviesToAdd));
     if (moviesToRender.length >= data.length - numberMoviesToAdd) {
       setIsShowButtonActive(false);
     }
@@ -57,57 +39,48 @@ function MoviesCardList({
   //   countNumberMoviesToRender();
   // }, [size.width])
 
-  React.useEffect(() => {
-    if (locationPathname === "/movies") {
-      setMoviesToRender(data.slice(ZERO_NUMBER, numberMoviesToRender));
-      if (data.length <= numberMoviesToRender) {
-        setIsShowButtonActive(false);
-      } else {
-        setIsShowButtonActive(true);
-      }
-    } else if (locationPathname === "/saved-movies") {
-      setMoviesToRender(data);
-      setIsShowButtonActive(false);
-    }
-  }, [data, numberMoviesToRender]);
-
-  const moviesCardsMarkup = moviesToRender.map((item) => (
-    <li key={item.id || item._id}>
-      <MoviesCard
-        data={item}
-        locationPathname={locationPathname}
-        onSaveMovie={onSaveMovie}
-        onDeleteSavedMovie={onDeleteSavedMovie}
-      />
-    </li>
-  ));
-
-  const MOVIES_CARD_LIST_STYLE_SETTINGS = {
-    list: "movies-card-list",
-  };
+  // React.useEffect(() => {
+  //   if (locationPathname === "/movies") {
+  //     setMoviesToRender(data.slice(ZERO_NUMBER, numberMoviesToRender));
+  //     if (data.length <= numberMoviesToRender) {
+  //       setIsShowButtonActive(false);
+  //     } else {
+  //       setIsShowButtonActive(true);
+  //     }
+  //   } else if (locationPathname === "/saved-movies") {
+  //     setMoviesToRender(data);
+  //     setIsShowButtonActive(false);
+  //   }
+  // }, [data, numberMoviesToRender]);
 
   return (
-    <>
-      {/* <section className="elements">
-        {cards.map((card) => (
-          <MoviesCard
-            key={card._id}
-            card={card}
-            onCardClick={onCardClick}
-            onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
-          />
-        ))}
-      </section> */}
-      <ul className={MOVIES_CARD_LIST_STYLE_SETTINGS.list}>
-        {moviesCardsMarkup}
-      </ul>
-      {/* {locationPathname === '/movies' && isShowButtonActive ? (
-        <ShowMoreButton
-          onClick={handleShowMoreMoviesButtonClick}
+    <section className="movies-card-list">
+      {moviesToRender.map((card) => (
+        <MoviesCard
+          key={card._id} //item.id || item._id
+          card={card}
+          locationPathname={locationPathname}
+          onSaveMovie={onSaveMovie}
+          onDeleteMovie={onDeleteMovie}
         />
-      ) : null} */}
-    </>
+      ))}
+      {/* {moviesToRender.map((card) => (
+        <MoviesCard
+          key={card._id} //item.id || item._id
+          card={card}
+          locationPathname={locationPathname}
+          onSaveMovie={onSaveMovie}
+          onDeleteMovie={onDeleteMovie}
+        />
+      ))} */}
+      {/* {locationPathname === "/movies" && isShowButtonActive ? ( */}
+      <Button
+        onClick={handleShowButtonClick}
+        styleSettings={FORM_STYLES}
+        buttonText="Ещё "
+      />
+      {/* ) : null} */}
+    </section>
   );
 }
 

@@ -10,16 +10,29 @@ import Footer from "../Footer/Footer";
 import "./Movies.css"
 
 
-function Movies({}) {
+function Movies({isLoadingData, moviesData, onSubmit, onSaveMovie, onDeleteMovie}) {
+  // const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
+
+  const handleSubmit = (data) => {
+    onSubmit(data);
+  }
+  const handleClick = () => console.log("rkffffnr")
   return (
     <main className="movies">
       <Header>
         <AuthNavigation />
       </Header>
-      <SearchForm />
-      <Preloader />
-      <MoviesCardList />
-      <MoviesCard />
+      <SearchForm onSubmit={handleSubmit} handleClick={handleClick}/>
+      {isLoadingData && (
+        <Preloader />
+      )}
+      <MoviesCardList
+       data={moviesData}
+      //  locationPathname={location.pathname}
+      //  onSaveMovie={onSaveMovie}
+      //  onDeleteSavedMovie={onDeleteMovie}
+      />
+
       <Footer />
     </main>
   );

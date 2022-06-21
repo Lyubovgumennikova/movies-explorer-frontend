@@ -35,24 +35,28 @@ function Input({
 
   return (
     <div className={styleSettings.group}>
-      <label className={styleSettings.label}>{name}</label>
+      <label className={styleSettings.label}>{name}
       <input
         type={type}
         id={name}
-        className={`${
-          isValid
-            ? styleSettings.input
-            : styleSettings.valid
-        }`}
+        className= {styleSettings.input}
+
+        // className={`${
+        //   isValid
+        //     ? styleSettings.input
+        //     : styleSettings.valid
+        // }`}
         minLength="2"
         maxLength={maxLength}
         onChange={handleChange}
         value={value}
+        isValid={isValid}
         required
       />
-      <span role="status" aria-live="polite" className="message__error">
+      <span role="status" aria-live="polite" className={styleSettings.error}>
         {error}
       </span>
+      </label>
     </div>
   );
 }

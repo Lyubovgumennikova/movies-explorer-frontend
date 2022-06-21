@@ -7,18 +7,35 @@ import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 
-function Profile({}) {
+function Profile({isValid}) {
   // const currentUserData = React.useContext(CurrentUserContext);
   const FOPM_STYLES = {
     form: "profile__form",
     group: "profile__group",
     label: "profile__label",
+    // input:  `${isValid
+    //     ? "profile__text-field"
+    //     : "profile__text-field_valid"
+    // }`,
     input: "profile__text-field",
     valid: "profile__text-field_valid",
     button: "profile__form_submit-button",
     // button: "form__submit-button",
     link: "profile__input-text_link",
+    error: "message__error"
   };
+
+  function handleSubmit(e) {
+    console.log("lkjds")
+    e.preventDefault();
+
+    // const { name, email, password } = newEntry;
+    // onRegister({
+    //   name,
+    //   email,
+    //   password,
+    // });
+  }
 
   return (
     <div className="profile">
@@ -32,7 +49,7 @@ function Profile({}) {
         buttonText="Редактировать"
         // isSubmitted={isSubmitted}
         // setIsSubmitted={setIsSubmitted}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <Input
           required
