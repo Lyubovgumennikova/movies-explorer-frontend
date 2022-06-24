@@ -7,32 +7,42 @@ import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Footer from "../Footer/Footer";
-import "./Movies.css"
+import "./Movies.css";
+import Button from "../Button/Button";
+import { useLocation } from "react-router-dom";
 
-
-function Movies({isLoadingData, moviesData, onSubmit, onSaveMovie, onDeleteMovie}) {
-  // const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
-
+function Movies({
+  isLoadingData,
+  moviesData,
+  onSubmit,
+  onSaveMovie,
+  onDeleteMovie,
+  searchQuery,
+  isSubmitted,
+  handleChange,
+}) {
   const handleSubmit = (data) => {
     onSubmit(data);
-  }
-  const handleClick = () => console.log("rkffffnr")
+  };
+
   return (
     <main className="movies">
       <Header>
         <AuthNavigation />
       </Header>
-      <SearchForm onSubmit={handleSubmit} handleClick={handleClick}/>
-      {isLoadingData && (
-        <Preloader />
-      )}
+      <SearchForm onSubmit={handleSubmit} />
+       {/* {isLoadingData
+       <Preloader />} */}
       <MoviesCardList
-       data={moviesData}
-      //  locationPathname={location.pathname}
-      //  onSaveMovie={onSaveMovie}
-      //  onDeleteSavedMovie={onDeleteMovie}
+        data={moviesData}
+        locationPathname={useLocation.pathname}
+        searchQuery={searchQuery}
+        onSaveMovie={onSaveMovie}
+        onDeleteSavedMovie={onDeleteMovie}
+        isSubmitted={isSubmitted}
+        handleChange={handleChange}
+        onSubmit={onSubmit}
       />
-
       <Footer />
     </main>
   );

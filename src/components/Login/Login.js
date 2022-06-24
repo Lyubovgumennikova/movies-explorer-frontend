@@ -4,6 +4,7 @@ import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Login.css";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   const FORM_STYLES = {
@@ -16,7 +17,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     link: "login__input-text_link",
     error: "message__error",
   };
-
+  let navigate = useNavigate();
   const [isincluded, setIsincluded] = useState({
     email: "",
     password: "",
@@ -32,17 +33,19 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
 
   function handleSubmit(e) {
     console.log("ljhg")
-    e.preventDefault();
+    // <Navigate to="/movies" replace={true} />
+    navigate("/movies");
+    // e.preventDefault();
 
-    const { email, password } = isincluded;
+    // const { email, password } = isincluded;
 
-    if (!email || !password) {
-      return;
-    }
-    onLogin({
-      email,
-      password,
-    });
+    // if (!email || !password) {
+    //   return;
+    // }
+    // onLogin({
+    //   email,
+    //   password,
+    // });
   }
 //  const handleSubmit = () => {
 //     return console.log("ljhg")

@@ -7,17 +7,28 @@ import Input from "../Input/Input";
 // import useFormWithValidation from "../../hooks/useFormValidation";
 import "./SearchForm.css";
 import icon from "../../images/icon__movie.svg";
-import { toHaveTextContent } from "@testing-library/jest-dom/dist/matchers";
+
 import Button from "../Button/Button";
 
-function SearchForm({ onSubmit, handleSubmit, handleChange, onClick, handleClick}) {
+function SearchForm({
+  onSubmit,
+  setSearchQuery,
+  // handleChange,
+  isSubmitted,
+  // values,
+  searchQuery,
+}) {
   // const { values, handleChange, resetForm } = useFormWithValidation({});
-  // const { values, handleChange, resetForm } = useState({});
-  // const handleSubmit = (evt) => {
-  //   evt.preventDefault();
-  //   onSubmit(values);
-  //   resetForm();
-  // };
+  const { values, handleChange, resetForm } = useState({});
+
+  const handleSubmit = (evt) => {
+    console.log("searc")
+    console.log(setSearchQuery)
+    console.log(searchQuery)
+    evt.preventDefault();
+    onSubmit(values);
+    setSearchQuery("");
+  };
 
   const FORM_STYLES = {
     form: "search-form",
@@ -33,58 +44,62 @@ function SearchForm({ onSubmit, handleSubmit, handleChange, onClick, handleClick
     checkboxOnFocus: "search-form__checkbox-label_focus",
   };
 
-  const SEARCH_TEXT_INPUT_SETTINGS = {
-    type: "text",
-    id: "search-text",
-    ariaLabel: "поиск фильма",
-    placeholder: "Фильм",
-    name: "search",
-    maxLength: 30,
-    required: false,
-  };
+  // const SEARCH_TEXT_INPUT_SETTINGS = {
+  //   type: "text",
+  //   id: "search-text",
+  //   ariaLabel: "поиск фильма",
+  //   placeholder: "Фильм",
+  //   name: "search",
+  //   maxLength: 30,
+  //   required: false,
+  // };
 
-  const SHORTFILM_FILTER_CHECKBOX_INPUT_SETTINGS = {
-    type: "checkbox",
-    id: "filter-shortfilm",
-    label: "Короткометражки",
-    name: "shortfilm",
-    required: false,
-  };
+  // const SHORTFILM_FILTER_CHECKBOX_INPUT_SETTINGS = {
+  //   type: "checkbox",
+  //   id: "filter-shortfilm",
+  //   label: "Короткометражки",
+  //   name: "shortfilm",
+  //   required: false,
+  // };
 
-  const SUBMIT_BUTTON_SETTINGS = {
-    className: "",
-    type: "submit",
-    title: "Найти",
-  };
+  // const SUBMIT_BUTTON_SETTINGS = {
+  //   className: "",
+  //   type: "submit",
+  //   title: "Найти",
+  // };
   // const handleClick = () => console.log("rkfnr")
 
   return (
-    <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
+    <form className={FORM_STYLES.form} onSubmit={handleSubmit} >
       <div className="searchForm__group">
         <input
           placeholder="Фильм"
           type="text"
-          //  value="button"
-          // settings={SEARCH_TEXT_INPUT_SETTINGS}
+          // value={value}
           className={FORM_STYLES.textInput}
+          // handleChange={handleChange}
+          // onChange={e => handleChange(e.target.value)}
+          value={values.search}
+          //   name={props.settings.name}
+          // required={props.settings.required}
           onChange={handleChange}
-          // value={values.search}
+          // value={props.value}
+          // checked={props.value || ''}
         />
         <Button
           // className={FORM_STYLES.submitButton}
           styleSettings={FORM_STYLES}
-          type="search"
-          // type="submit"
+          // type="search"
+          type="submut"
           title="Найти"
-          onClick={handleClick}
+          // onClick={handleClick}
           // onClick={handleClick}
           // handleClick={() => console.log("rkfnr")}
           // onClick={onClick}
-          buttonText = {<img src={icon} className="search-form__icon" alt="Найти" />}
+          buttonText={
+            <img src={icon} className="search-form__icon" alt="Найти" />
+          }
         />
-
-
-
       </div>
 
       <Input

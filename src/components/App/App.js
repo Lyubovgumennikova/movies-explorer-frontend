@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-// import Header from '../Header/Header';
-// import Navigation from "../Navigation/Navigation";
+import Header from "../Header/Header";
+import Navigation from "../Navigation/Navigation";
 // import Footer from '../Footer/Footer';
 import Movies from "../Movies/Movies";
 // import Preloader from '../Preloader/Preloader';
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
-// import api from '../../utils/Api';
+import api from "../../utils/Api";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // import ImagePopup from './ImagePopup';
 // import EditProfilePopup from './EditProfilePopup';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // import EditAvatarPopup from './EditAvatarPopup';
 // import AddPlacePopup from './AddPlacePopup';
 // import DeleteCardPopup from './DeleteCardPopup';
@@ -25,33 +25,167 @@ import Login from "../Login/Login";
 //   useHistory,
 //   useLocation,
 // } from 'react-router-dom';
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
-import { useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  useNavigate,
+  useLocation,
+  useMatch,
+  matchPath,
+} from "react-router-dom";
+import NotFound from "../NotFound/NotFound";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [moviesData, setMoviesData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  // const [movieData, setMovieData] = useState([]);
+  //   country: data.country || "Нет данных",
+  //   director: data.director || "Нет данных",
+  //   duration: data.duration || 0,
+  //   year: data.year || "Нет данных",
+  //   description: data.description || "Нет данных",
+  //   image: data.image,
+  //   trailerLink: data.trailerLink,
+  //   thumbnail: data.thumbnail,
+  //   nameRU: data.nameRU || "Нет данных",
+  //   nameEN: data.nameEN || "Нет данных",
+  //   movieId: data.id,
+  // });
 
-
-  // const navigate = useNavigate();
+  // const location = useLocation();
+  // let navigate = useNavigate();
   // const navigate = useHistory();
   // const history = useHistory ();
-  const history = createBrowserHistory();
+  // const history = createBrowserHistory();
+  // import { useLocation, matchPath } from "react-router";
+  // const { pathname } = useLocation();
 
+  // const exclusionRoutesPath = [
+  //   '/signin',
+  //   '/signup',
+  // ];
+  // const exclusionRoutesPath = matchPath("/signin", pathname);
+  // '/signin',
+  // '/signup',
+
+  // const handleSearchMoviesData = (searchQueries = {}) => {
+  //   const localMoviesData = JSON.parse(localStorage.getItem('movies'));
+  //   if (localMoviesData) {
+  //     // const filteredMovies = searchFilter(searchQueries, localMoviesData);
+
+  //     if (filteredMovies.length === 0) {
+  //       setIsNoMoviesFound(true);
+  //     } else {
+  //       setIsNoMoviesFound(false);
+  //     }
+
+  //     localStorage.setItem('filtered-previously-movies', JSON.stringify(markAsSaved(filteredMovies)));
+
+  //     setMoviesData(markAsSaved(filteredMovies));
+  //   }
+  // };
+
+  const handleSaveFavoriteMovie = (data) => {
+    const token = localStorage.getItem('jwt');
+    // if (token) {
+    //   mainApi.saveMovie(data, token)
+    //     .then((res) => {
+    //     })
+    //     .catch((err) => {
+    //       setOpenNotificationModal();
+    //       setNotificationText(`${SAVE_MOVIE_ERROR_TEXTS.BASE_TEXT} ${err}`)
+    //       console.log(err);
+    //     })
+    //     .finally(() => {
+    //       handleSearchSavedMoviesData();
+    //     })
+    // } else {
+    //   history.push('/signin');
+    // };
+  };
+
+  const handleDeleteSavedMovie = (id) => {
+    const token = localStorage.getItem('jwt');
+
+    // if (token) {
+    //   mainApi.deleteSavedMovie(id, token)
+    //     .then((res) => {
+    //       markAsUnsaved(id);
+    //     })
+    //     .catch((err) => {
+    //       setOpenNotificationModal();
+    //       setNotificationText(`${DELETE_MOVIE_ERROR_TEXTS.BASE_TEXT} ${err}`)
+    //       console.log(err);
+    //     })
+    //     .finally(() => {
+    //       const isAfterDelete = true;
+    //       handleSearchSavedMoviesData(isAfterDelete);
+    //     )
+    // };
+  }
+
+  function handleClick() {
+    console.log("APP");
+    // Navigate("/movies");
+    setSearchQuery("git");
+  }
   const handleLogin = (data) => {
     // Navigate("/movies");
     // setIsLoggedIn(true);
     // history("/movies");
-    <Navigate to="/movies" replace={true} />;
+    // navigate("/movies");
+    // Navigate("/movies");
+    // <Navigate to="/movies" replace={true} />;
+    // <navigate(to="/movies", {replace:true})
   };
 
+  const handleSubmit = (evt) => {
+    console.log(setSearchQuery)
+    console.log(searchQuery)
+    evt.preventDefault();
+    // onSubmit(value);
+    setIsSubmitted(true);
+    // setSearchQuery("");
+  };
+
+  useEffect(() => {
+    console.log("useEffect");
+    if (isSubmitted) {
+      // setIsLoggedIn(true)
+      api.getMoviesData(searchQuery).then((items) => {
+        setMoviesData(items);
+
+        setIsSubmitted(false);
+        // setSearchQuery("");
+      });
+    }
+
+    // api.search(searchQuery).then(data => {
+    //   console.log(data)
+    // })
+    // const handleWindowLoad = () => {
+    //   setIsLoadingData(false);
+    // };
+
+    // window.addEventListener('load', handleWindowLoad);
+
+    // return () => window.removeEventListener('load', handleWindowLoad);
+  }, [searchQuery, isSubmitted]);
 
   return (
     <div className="page">
       <Router>
+        {/* { useMatch(exclusionRoutesPath)? (
+          <Header>
+      <Navigation />
+      </Header>
+      ) : null} */}
+
         {/* <Header>
       <Navigation />
       </Header> */}
@@ -63,10 +197,34 @@ function App() {
             path="/signin"
             element={<Login onLogin={handleLogin} loggedIn={isLoggedIn} />}
           />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route
+            path="/movies"
+            element={<Movies
+            handleChange={searchQuery}
+            isLoadingData={isLoadingData}
+            // onSubmit={onSubmit}
+            onSaveMovie={handleSaveFavoriteMovie}
+            onDeleteSavedMovie={handleDeleteSavedMovie}
+            moviesData={moviesData}
+            // loggedIn={loggedIn}
+            // component={Movies}
+            // isNoMoviesFound={isNoMoviesFound}
+            // isLoadingData={isLoadingMoviesData}
+            // resStatus={moviesApiResStatus}
+            //
+            //
+            //
+            //
+
+            />}
+          />
+          <Route
+            path="/saved-movies"
+            element={<SavedMovies  />}
+          />
           <Route path="/profile" element={<Profile />} />
-        </Routes>
+          <Route path="/*" element={<NotFound />} />
+          </Routes>
         {/* <Footer /> */}
       </Router>
     </div>

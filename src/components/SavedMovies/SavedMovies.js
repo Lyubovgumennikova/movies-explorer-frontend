@@ -7,7 +7,8 @@ import AuthNavigation from "../AuthNavigation/AuthNavigation";
 // import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import "./SavedMovies.css"
+import "./SavedMovies.css";
+import Preloader from "../Preloader/Preloader";
 // import Notification from "../Notification/Notification";
 // import MOVIES_ERRORS_TEXTS from "../../constants/movies-errors-texts";
 // import NO_MOVIES_FOUND_TEXT from "../../constants/no-movies-found-text";
@@ -20,12 +21,15 @@ function SavedMovies({
   handleSearchSavedMoviesData,
   getSavedMoviesResStatus,
   isNoSavedMoviesFound,
+  onClick,
   // handleChange,
+  moviesData,
+  isSubmitted,
 }) {
   // const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
 
   const handleSubmit = (data) => {
-    console.log("submtn")
+    console.log("submtn");
     handleSearchSavedMoviesData(data);
   };
 
@@ -52,16 +56,15 @@ function SavedMovies({
   //   handleSearchSavedMoviesData();
   // }, []);
 
- const handleClick = () => console.log("rkfnr")
+  const handleClick = () => console.log("rkfnr");
 
   return (
-    <main>
+    <main className="savedMovies">
       <Header>
         <AuthNavigation />
       </Header>
 
-
-      <SearchForm onSubmit={handleSubmit} handleChange={(evt) => console.log(evt.target.value)}  handleClick={handleClick}/>
+      <SearchForm onSubmit={handleSubmit} />
       {/* {!isLoadingData && isSavedMoviesEmpty && (
         <Notification text={NO_MOVIES_FOUND_TEXT.SAVED_IS_EMPTY} />
       )}
@@ -71,12 +74,18 @@ function SavedMovies({
       {isMoviesApiError && (
         <Notification text={MOVIES_ERRORS_TEXTS.BASE_ERROR} />
       )} */}
-      {/* <MoviesCardList
+      <MoviesCardList
         data={savedMovies}
         // locationPathname={location.pathname}
-        // onDeleteSavedMovie={onDeleteSavedMovie}
+        onDeleteSavedMovie={onDeleteSavedMovie}
       />
-      <MoviesCard /> */}
+       {/* {isLoadingData ? (
+          <Preloader />
+        ) : (
+          moviesData.map((movieCard) => (
+            <MoviesCard key={movieCard._id} {...movieCard} />
+          ))
+        )} */}
       <Footer />
     </main>
   );
