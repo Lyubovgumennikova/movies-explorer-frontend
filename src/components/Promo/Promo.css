@@ -1,5 +1,5 @@
 .promo{
-  width: 1280px;
+  width: 100% ;
   box-sizing: border-box;
   padding: 20px 40px 0 40px;
   flex-direction: column;
@@ -45,7 +45,9 @@
   .promo__title {
     width: 680px;
     font-size: 40px;
-    line-height: 1.30;
+    line-height: 52px;
+    margin-top: 350px;
+    margin-bottom: 314px;
   }
 }
 
@@ -59,16 +61,11 @@
     padding-bottom: 17px;
   }
 
-  .promo__tezt {
-    width: 292px;
-    font-size: 29px;
-    line-height: 1.28;
-  }
-}
-
-@media screen and (max-width: 319px) {
   .promo__title {
-    width: 100%;
-    font-size: 20px;
+    max-width: 292px;
+    margin-top: 220px;
+    margin-bottom: 212px;
+    font-size: 29px;
+    line-height: 37px;
   }
 }

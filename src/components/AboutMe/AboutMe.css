@@ -1,4 +1,4 @@
-.aboutMi__section {
+.aboutMi {
   max-width: 1280px;
   padding: 110px 70px 106px 70px;
 }
@@ -88,8 +88,35 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .about-me-article {
-    padding: 90px 50px 70px 50px;
+  .aboutMi {
+    padding: 90px 50px 72px 50px;
+  }
+  .aboutMi__container {
+    padding-bottom: 90px;
+  }
+
+  .aboutMi__title {
+    padding-bottom: 16px;
+    font-size: 40px;
+    line-height: 40px;
+  }
+
+  .aboutMi__article {
+    max-width: 500px;
+    padding-bottom: 20px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .aboutMi__text{
+    max-width: 400px;
+    padding-bottom: 87px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .aboutMi__avatar {
+    max-width: 255px;
   }
 }
 

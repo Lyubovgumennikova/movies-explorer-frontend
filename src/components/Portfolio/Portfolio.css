@@ -43,9 +43,12 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .about-me-list__link {
+  .portfolio__title {
     font-size: 28px;
-    line-height: 1.79;
+  }
+
+  .portfolio__link {
+    max-width: 27px;
   }
 }
 

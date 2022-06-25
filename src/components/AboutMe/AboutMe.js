@@ -13,7 +13,7 @@ function AboutMe(props) {
   };
 
   return (
-    <section className="aboutMi__section">
+    <section className="aboutMi">
       <MainArticle article={TITLE_TEXT} />
       <div className="aboutMi__container">
         <h3 className="aboutMi__title">Любовь</h3>

@@ -28,7 +28,7 @@
   font-weight: 500;
   font-style: normal;
   font-size: 12px;
-  line-height: 1.33;
+  line-height: 16px;
   color: #000000;
   text-decoration: none;
   background-color: #E8E8E8;
@@ -39,19 +39,13 @@
 }
 
 @media screen and (max-width: 767px) {
-  .navigation-tab__list {
+  .navTab__list {
     grid-template-columns: repeat(3, 82px);
     gap: 6px;
   }
 
-  .navigation-tab__list-link {
+  .navTab__list-link {
     font-size: 10px;
-    line-height: 1.6;
-  }
-}
-
-@media screen and (max-width: 319px) {
-  .navigation-tab__list {
-    grid-template-columns: repeat(2, 1fr);
+    padding: 5px 0;
   }
 }

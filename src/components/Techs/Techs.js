@@ -6,7 +6,7 @@ function Techs() {
   const TITLE_TEXT = "Технологии";
 
   return (
-    <section className="techs__section">
+    <section className="techs">
       <MainArticle article={TITLE_TEXT} />
       <h3 className="techs__title">7 технологий</h3>
       <p className="techs__text">
