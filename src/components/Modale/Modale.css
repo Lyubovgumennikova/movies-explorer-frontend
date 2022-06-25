@@ -2,8 +2,9 @@
 
   display: none;
 }
-
-
+.popup {
+  display: none;
+}
 
 @media screen and (max-width: 1023px) {
   .popup {
@@ -30,8 +31,10 @@
     width: 70%;
     height: 100vh;
     display: flex;
+    /* justify-content: space-between; */
     flex-direction: column;
     align-items: center;
+/* margin-bottom: 90px; */
   }
 
   .modale__button_close{
@@ -98,7 +101,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .menu-modal__container {
+  .modale__container {
     top: 0%;
     left: 50%;
     transform: translateX(-50%);

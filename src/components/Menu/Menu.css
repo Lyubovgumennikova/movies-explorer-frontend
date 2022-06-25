@@ -39,6 +39,8 @@
    display: grid;
    gap: 28px;
    /* align-items: center; */
+   margin-top: 105px;
+   margin-bottom: 620px;
    text-align: center;
    /* justify-content: center;
    align-content: center; */
@@ -92,7 +94,8 @@
     height: 100vh;
   }
 
-  .menu-modal__content {
-    padding: 13px 13px 48px 13px;
+  .menuNavigation__container {
+    margin-top: 99px;
+    margin-bottom: 444px;
   }
 }

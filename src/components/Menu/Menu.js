@@ -41,10 +41,7 @@ function Menu({ isOpen, onClose, name, children }) {
   // };
 
   return (
-    <Modale  isOpen={isOpen} onClose={onClose}
-    // className={`menu ${isOpen ? "menu-modal" : ""}`}
-    // onClick={handleOverlayClose}
-    >
+    <Modale  isOpen={isOpen} onClose={onClose} >
 
       <div className="menuNavigation__container">
       <h1 className="">Главная</h1>

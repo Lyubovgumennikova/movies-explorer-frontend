@@ -42,7 +42,11 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .authNavigation__link {
+  /* .authNavigation__link {
+    display: none;
+  } */
+
+  .authNavigation__navList {
     display: none;
   }
 }
