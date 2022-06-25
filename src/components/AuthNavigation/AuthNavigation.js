@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./AuthNavigation.css";
-import accaunt from "../../images/icon-account.svg";
+import AccauntLink from "../AccauntLink/AccauntLink";
 
 function AuthNavigation() {
   return (
@@ -15,14 +15,7 @@ function AuthNavigation() {
             Сохранённые фильмы
           </NavLink>
         </div>
-        <Link className="authNavigation__accauntLink" to="/profile">
-          <img
-            className="authNavigation__accauntLink_icon"
-            src={accaunt}
-            alt="accaunt"
-          />
-          Аккаунт
-        </Link>
+        <AccauntLink />
       </ul>
     </nav>
   );

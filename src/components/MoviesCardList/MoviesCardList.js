@@ -18,15 +18,15 @@ function MoviesCardList({
   // const [numberOfAddMovies, setNumberOfAddMovies] = useState(0);
 
   const FORM_STYLES = {
-    form: "form",
-    group: "form__group",
-    label: "input__label",
-    input: "text-field__input",
-    valid: "text-field__input_valid",
-    gbutton: "form__submit-button",
-    link: "login__input-text_link",
-    error: "message__error",
-    button: "show-more__button",
+    // form: "form",
+    // group: "form__group",
+    // label: "input__label",
+    // input: "text-field__input",
+    // valid: "text-field__input_valid",
+    // gbutton: "form__submit-button",
+    // link: "login__input-text_link",
+    // error: "message__error",
+    button: "moviesCardList__button",
   };
 const startIndex = 0 ;
 const numberOfAddMovies = 6
@@ -61,7 +61,7 @@ const numberOfAddMovies = 6
 
   return (
     <section className="moviesCardList">
-      <ul className="movies-card-list">
+      <ul className="moviesCardList__conteiner">
 
         {/* {moviesToRender.map((item) => ( */}
         {[...Array(12).keys()].map((item) => (
@@ -76,13 +76,13 @@ const numberOfAddMovies = 6
         ))}
       </ul>
 
-      {!locationPathname === "/movies" && isShowButtonActive ? (
+      {/* {!locationPathname === "/movies" && isShowButtonActive ? ( */}
         <Button
           onClick={handleShowButtonClick}
           styleSettings={FORM_STYLES}
           buttonText="Ещё "
         />
-        ) : null}
+        {/* ) : null} */}
     </section>
   );
 }

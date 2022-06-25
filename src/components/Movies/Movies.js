@@ -10,6 +10,8 @@ import Footer from "../Footer/Footer";
 import "./Movies.css";
 import Button from "../Button/Button";
 import { useLocation } from "react-router-dom";
+import MenuButton from "../MenuButton/MenuButton";
+// import Button from "../Button/Button";
 
 function Movies({
   isLoadingData,
@@ -20,6 +22,7 @@ function Movies({
   searchQuery,
   isSubmitted,
   handleChange,
+  onOpenMenu,
 }) {
   const handleSubmit = (data) => {
     onSubmit(data);
@@ -29,6 +32,9 @@ function Movies({
     <main className="movies">
       <Header>
         <AuthNavigation />
+        <MenuButton
+            onOpenMenu={onOpenMenu}
+          />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
        {/* {isLoadingData

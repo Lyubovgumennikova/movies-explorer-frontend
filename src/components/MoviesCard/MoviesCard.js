@@ -64,9 +64,9 @@ function MoviesCard({
   };
 
   const MOVIES_CARD_STYLE_SETTINGS = {
-    article: "movies-card-article",
-    header: "movies-card-article__header",
-    textContainer: "movies-card-article__text-container",
+    // article: "movies-card-article",
+    // header: "movies-card-article__header",
+    // textContainer: "movies-card-article__text-container",
     title: "movies-card-article__title",
     subtitle: "movies-card-article__subtitle",
     imageSection: "movies-card-article__image-section",
@@ -78,17 +78,17 @@ function MoviesCard({
   };
 
   return (
-    <article className="movies-card-article">
-      <div className="movies-card-article__header">
-        <p className="movies-card-article__title">
+    <article className="moviesCard__article">
+      <div className="moviesCard__article_header">
+        <p className="moviesCard__title">
           {movieData.nameRU || movieData.nameEN}
           {/* {data.nameRU} */}
         </p>
-        <p className="movies-card-article__subtitle">{movieData.duration}</p>
+        <p className="moviesCard__subtitle">{movieData.duration}</p>
         <button
           aria-label="remove"
           type="button"
-          className="movies-card-article__favorite-button" //{cardLikeButtonClassName}
+          className="moviesCard__button" //{cardLikeButtonClassName}
           onClick={handleClickButton}
         ></button>
       </div>
@@ -99,7 +99,7 @@ function MoviesCard({
         rel="noreferrer"
       >
         <img
-          className= "movies-card-article__image"
+          className= "moviesCard__image"
           alt={movieData.nameRU || movieData.nameEN}
           src={movieData.image}
         />

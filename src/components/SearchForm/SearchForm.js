@@ -31,17 +31,13 @@ function SearchForm({
   };
 
   const FORM_STYLES = {
-    form: "search-form",
+    form: "searchForm",
+    textInput: "searchForm__text",
+    button: "searchForm__submitButton",
     group: "searchForm__checkbox",
-    icon: "search-form__icon",
-    textInput: "search-form__text-input",
-    button: "search-form__submit-button",
-    submitButton: "search-form__submit-button",
-    input: "search-form__checkbox-input",
-    error: "search-form__checkbox-slider",
-    label: "search-form__checkbox-label",
-    checkboxSlider: "search-form__checkbox-slider",
-    checkboxOnFocus: "search-form__checkbox-label_focus",
+    input: "searchForm__checkbox_input",
+    error: "searchForm__checkbox_slider",
+    label: "searchForm__checkbox_label",
   };
 
   // const SEARCH_TEXT_INPUT_SETTINGS = {
@@ -85,6 +81,7 @@ function SearchForm({
           onChange={handleChange}
           // value={props.value}
           // checked={props.value || ''}
+          // required: false
         />
         <Button
           // className={FORM_STYLES.submitButton}
@@ -97,7 +94,7 @@ function SearchForm({
           // handleClick={() => console.log("rkfnr")}
           // onClick={onClick}
           buttonText={
-            <img src={icon} className="search-form__icon" alt="Найти" />
+            <img src={icon} className="searchForm__submitButton_icon" alt="Найти" />
           }
         />
       </div>

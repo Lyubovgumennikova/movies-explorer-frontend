@@ -36,11 +36,13 @@ import {
   matchPath,
 } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
+import Menu from "../Menu/Menu";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [moviesData, setMoviesData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   // const [movieData, setMovieData] = useState([]);
@@ -129,6 +131,15 @@ function App() {
     // };
   }
 
+  const handleOpenMenuClick = () => {
+    setMenuIsOpen(true);
+  };
+
+
+  const setCloseMenu = () => {
+    setMenuIsOpen(false);
+  };
+
   function handleClick() {
     console.log("APP");
     // Navigate("/movies");
@@ -206,6 +217,7 @@ function App() {
             onSaveMovie={handleSaveFavoriteMovie}
             onDeleteSavedMovie={handleDeleteSavedMovie}
             moviesData={moviesData}
+            onOpenMenu={handleOpenMenuClick}
             // loggedIn={loggedIn}
             // component={Movies}
             // isNoMoviesFound={isNoMoviesFound}
@@ -226,6 +238,10 @@ function App() {
           <Route path="/*" element={<NotFound />} />
           </Routes>
         {/* <Footer /> */}
+        <Menu
+            isOpen={menuIsOpen}
+            onClose={setCloseMenu}
+          />
       </Router>
     </div>
   );

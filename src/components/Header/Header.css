@@ -16,21 +16,14 @@
   opacity: 0.8;
 }
 
-@media (max-width: 999px) {
-  .header__logo {
-    margin: 28px 0 33px 27px;
-    width: 103px;
-  }
-}
-
 @media (max-width: 1279px) {
   .header {
-    width: calc(100% - (6 * 19px));
+    width: calc(100% - (2 * 30px));
   }
 }
 
-@media (max-width: 994px) {
+@media (max-width: 767px) {
   .header {
-    width: 100%;
+    width: calc(100% - (2 * 14px));
   }
 }
