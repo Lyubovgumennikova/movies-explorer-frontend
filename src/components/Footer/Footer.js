@@ -14,7 +14,7 @@ function Footer() {
         Учебный проект Яндекс.Практикум х BeatFilm.
       </h2>
       <div className="footer__container ">
-        <p className="footer__navLink">&#169;{year}</p>
+        <p className="footer__navLink_data">&#169;{year}</p>
         <nav className="footer__link-dox">
         <a
           className="footer__navLink"

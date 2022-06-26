@@ -121,12 +121,50 @@
 }
 
 @media screen and (max-width: 767px) {
-  .about-me-article {
-    padding: 70px 14px 50px 14px;
+  .aboutMi {
+    padding: 70px 14px 52px 14px;
   }
 
-  .about-me-article__items-section {
-    padding-top: 30px;
-    padding-bottom: 30px;
+  .aboutMi__container {
+    grid-template-columns: repeat(1, 1fr);
+    padding-top: 60px;
+    padding-bottom: 69px;
+    grid-template-areas:
+    "avatar"
+    "name"
+    "about"
+    "post "
+    "link ";
+  }
+
+  .aboutMi__avatar {
+    max-width: 292px;
+    height: 352px;
+  }
+
+  .aboutMi__title {
+    max-width: 400px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .aboutMi__article {
+    max-width: 500px;
+    padding-bottom: 20px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .aboutMi__text{
+    max-width: 400px;
+    padding-bottom: 40px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .aboutMi__container-navLink {
+    gap: 26px;
   }
 }

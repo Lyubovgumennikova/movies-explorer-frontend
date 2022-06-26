@@ -53,15 +53,17 @@
 }
 
 @media screen and (max-width: 767px) {
-  .about-me-list__title {
+  .portfolio__article {
+    padding-bottom: 20px;
     font-size: 14px;
-    line-height: 1.43;
-    max-width: 100%;
-    margin-bottom: 40px;
   }
 
-  .about-me-list__link {
+  .portfolio__link {
+    max-width: 18px;
+  }
+
+  .portfolio__title {
     font-size: 18px;
-    line-height: 1.56;
+    line-height: 28px;
   }
 }
