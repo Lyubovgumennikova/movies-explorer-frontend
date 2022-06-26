@@ -30,24 +30,24 @@ function Movies({
 
   return (
     <main className="movies">
-      <Header>
-        <AuthNavigation />
-        <MenuButton
-            onOpenMenu={onOpenMenu}
-          />
-      </Header>
       <SearchForm onSubmit={handleSubmit} />
-       {/* {isLoadingData
-       <Preloader />} */}
+      {/* {isLoadingData && (
+        <Preloader />
+      )} */}
+      {/* {isMoviesApiError && (
+        <Notification
+          text={MOVIES_ERRORS_TEXTS.BASE_ERROR}
+        />
+      )} */}
       <MoviesCardList
         data={moviesData}
         locationPathname={useLocation.pathname}
-        searchQuery={searchQuery}
+        // searchQuery={searchQuery}
         onSaveMovie={onSaveMovie}
         onDeleteSavedMovie={onDeleteMovie}
-        isSubmitted={isSubmitted}
-        handleChange={handleChange}
-        onSubmit={onSubmit}
+        // isSubmitted={isSubmitted}
+        // handleChange={handleChange}
+        // onSubmit={onSubmit}
       />
       <Footer />
     </main>

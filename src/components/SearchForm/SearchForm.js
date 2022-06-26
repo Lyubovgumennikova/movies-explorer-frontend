@@ -22,12 +22,12 @@ function SearchForm({
   const { values, handleChange, resetForm } = useState({});
 
   const handleSubmit = (evt) => {
-    console.log("searc")
-    console.log(setSearchQuery)
-    console.log(searchQuery)
+    console.log(evt.target);
+
     evt.preventDefault();
     onSubmit(values);
-    setSearchQuery("");
+    console.log(values);
+    // setSearchQuery("");
   };
 
   const FORM_STYLES = {
@@ -63,10 +63,9 @@ function SearchForm({
   //   type: "submit",
   //   title: "Найти",
   // };
-  // const handleClick = () => console.log("rkfnr")
 
   return (
-    <form className={FORM_STYLES.form} onSubmit={handleSubmit} >
+    <form className={FORM_STYLES.form}>
       <div className="searchForm__group">
         <input
           placeholder="Фильм"
@@ -75,13 +74,11 @@ function SearchForm({
           className={FORM_STYLES.textInput}
           // handleChange={handleChange}
           // onChange={e => handleChange(e.target.value)}
-          value={values.search}
+          // value={values.search}
           //   name={props.settings.name}
           // required={props.settings.required}
           onChange={handleChange}
-          // value={props.value}
-          // checked={props.value || ''}
-          // required: false
+          value={values.search}
         />
         <Button
           // className={FORM_STYLES.submitButton}
@@ -89,12 +86,16 @@ function SearchForm({
           // type="search"
           type="submut"
           title="Найти"
-          // onClick={handleClick}
+          onClick={handleSubmit}
           // onClick={handleClick}
           // handleClick={() => console.log("rkfnr")}
           // onClick={onClick}
           buttonText={
-            <img src={icon} className="searchForm__submitButton_icon" alt="Найти" />
+            <img
+              src={icon}
+              className="searchForm__submitButton_icon"
+              alt="Найти"
+            />
           }
         />
       </div>

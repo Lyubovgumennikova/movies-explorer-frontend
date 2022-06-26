@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Button from "../Button/Button";
 import "./MoviesCardList.css";
@@ -9,62 +9,55 @@ function MoviesCardList({
   data,
   onSaveMovie,
   onDeleteMovie,
-  moviesData,
+  // moviesData,
   isLoadingData,
 }) {
-  const [moviesToRender, setMoviesToRender] = useState([]);
-  const [isShowButtonActive, setIsShowButtonActive] = useState(false);
+  // const [moviesToRender, setMoviesToRender] = useState([]);
+  // const [isShowButtonActive, setIsShowButtonActive] = useState(false);
   // const [numberMoviesToRender, setNumberMoviesToRender] = useState(0);
   // const [numberOfAddMovies, setNumberOfAddMovies] = useState(0);
 
   const FORM_STYLES = {
-    // form: "form",
-    // group: "form__group",
-    // label: "input__label",
-    // input: "text-field__input",
-    // valid: "text-field__input_valid",
-    // gbutton: "form__submit-button",
-    // link: "login__input-text_link",
-    // error: "message__error",
     button: "moviesCardList__button",
   };
-const startIndex = 0 ;
-const numberOfAddMovies = 6
-  const handleShowButtonClick = () => {
-    // a.slice(startIndex, startIndex + amountOfItems)
-    data.slice(startIndex, moviesToRender.length + numberOfAddMovies);
-    // setMoviesToRender(data.slice(startIndex, moviesToRender.length + numberOfAddMovies));
-    // if (moviesToRender.length >= data.length - numberOfAddMovies) {
+
+  const PAGE_SIZE = 2;
+  const [index, setIndex] = useState(0);
+  const [visibleData, setVisibleData] = useState([]);
+  const [isShowButtonActive, setIsShowButtonActive] = useState(false);
+
+  useEffect(() => {
+    // if (locationPathname === '/movies') {
+    // setVisibleData(data.slice(PAGE_SIZE, index));
+    // if (data.length <= index) {
+    //   setIsShowButtonActive(false);
+    // } else {
+    //   setIsShowButtonActive(true);
+    // }
+    // } else if (locationPathname === '/saved-movies') {
+    //   setVisibleData(data);
     //   setIsShowButtonActive(false);
     // }
+
+    const numberOfItems = PAGE_SIZE * (index + 6);
+    const newArray = [];
+    for (let i = 0; i < data.length; i++) {
+      if (i < numberOfItems) newArray.push(data[i]);
+    }
+    setVisibleData(newArray);
+  }, [data, index]);
+
+  const startIndex = 0;
+  const numberOfAddMovies = 6;
+
+  const handleShowButtonClick = () => {
+    setIndex(index + 3);
   };
-
-  // React.useEffect(() => {
-  //   countNumberMoviesToRender();
-  // }, [size.width])
-
-  // React.useEffect(() => {
-  //   if (locationPathname === "/movies") {
-  //     // setMoviesToRender(data.slice(ZERO_NUMBER, numberMoviesToRender));
-  //     setMoviesToRender(data);
-
-  //     if (data.length <= numberMoviesToRender) {
-  //       setIsShowButtonActive(false);
-  //     } else {
-  //       setIsShowButtonActive(true);
-  //     }
-  //   } else if (locationPathname === "/saved-movies") {
-  //     setMoviesToRender(data);
-  //     setIsShowButtonActive(false);
-  //   }
-  // }, [data, numberMoviesToRender]);
 
   return (
     <section className="moviesCardList">
       <ul className="moviesCardList__conteiner">
-
-        {/* {moviesToRender.map((item) => ( */}
-        {[...Array(12).keys()].map((item) => (
+        {visibleData.map((item) => (
           <li key={item.id || item._id}>
             <MoviesCard
               data={item}
@@ -77,12 +70,12 @@ const numberOfAddMovies = 6
       </ul>
 
       {/* {!locationPathname === "/movies" && isShowButtonActive ? ( */}
-        <Button
-          onClick={handleShowButtonClick}
-          styleSettings={FORM_STYLES}
-          buttonText="Ещё "
-        />
-        {/* ) : null} */}
+      <Button
+        onClick={handleShowButtonClick}
+        styleSettings={FORM_STYLES}
+        buttonText="Ещё "
+      />
+      {/* ) : null} */}
     </section>
   );
 }

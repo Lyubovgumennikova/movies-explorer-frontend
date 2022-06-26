@@ -37,6 +37,8 @@ import {
 } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
 import Menu from "../Menu/Menu";
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
+import MenuButton from "../MenuButton/MenuButton";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -45,6 +47,8 @@ function App() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [moviesData, setMoviesData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const [isLoadingMoviesData, setIsLoadingMoviesData] = React.useState(false);
   // const [movieData, setMovieData] = useState([]);
   //   country: data.country || "Нет данных",
   //   director: data.director || "Нет данных",
@@ -93,7 +97,7 @@ function App() {
   // };
 
   const handleSaveFavoriteMovie = (data) => {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
     // if (token) {
     //   mainApi.saveMovie(data, token)
     //     .then((res) => {
@@ -112,7 +116,7 @@ function App() {
   };
 
   const handleDeleteSavedMovie = (id) => {
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
 
     // if (token) {
     //   mainApi.deleteSavedMovie(id, token)
@@ -129,12 +133,11 @@ function App() {
     //       handleSearchSavedMoviesData(isAfterDelete);
     //     )
     // };
-  }
+  };
 
   const handleOpenMenuClick = () => {
     setMenuIsOpen(true);
   };
-
 
   const setCloseMenu = () => {
     setMenuIsOpen(false);
@@ -156,8 +159,8 @@ function App() {
   };
 
   const handleSubmit = (evt) => {
-    console.log(setSearchQuery)
-    console.log(searchQuery)
+    console.log(setSearchQuery);
+    console.log(searchQuery);
     evt.preventDefault();
     // onSubmit(value);
     setIsSubmitted(true);
@@ -166,15 +169,35 @@ function App() {
 
   useEffect(() => {
     console.log("useEffect");
-    if (isSubmitted) {
-      // setIsLoggedIn(true)
-      api.getMoviesData(searchQuery).then((items) => {
-        setMoviesData(items);
+    api.getMoviesData().then((res) => {
 
-        setIsSubmitted(false);
-        // setSearchQuery("");
-      });
-    }
+          // console.log(items);
+          console.log(res.status)
+          // setMoviesApiResStatus(res.status);
+          const moviesData = res;
+          // localStorage.setItem('name', 'Alex');
+          // localStorage.setItem('movies', JSON.stringify(moviesData));
+
+          const localMoviesData = JSON.parse(localStorage.getItem('movies'));
+          // console.log(localMoviesData);
+          // const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-previously-movies'));
+          // console.log(renderedPrevMovies);
+          setIsSubmitted(false);
+          const DATA =localStorage.setItem('movies', JSON.stringify(moviesData));
+          console.log(DATA);
+          setMoviesData(localMoviesData);
+        });
+
+    // console.log(res);
+    // if (isSubmitted) {
+    //   // setIsLoggedIn(true)
+    //   api.getMoviesData(searchQuery).then((items) => {
+    //     setMoviesData(items);
+
+    //     setIsSubmitted(false);
+    //     // setSearchQuery("");
+    //   });
+    // }
 
     // api.search(searchQuery).then(data => {
     //   console.log(data)
@@ -191,18 +214,9 @@ function App() {
   return (
     <div className="page">
       <Router>
-        {/* { useMatch(exclusionRoutesPath)? (
-          <Header>
-      <Navigation />
-      </Header>
-      ) : null} */}
-
-        {/* <Header>
-      <Navigation />
-      </Header> */}
+        <Header>{isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
         <Routes>
           <Route exact path="/" element={<Main />} />
-          {/* <Route exact path='/' exact element={<Navigation />} /> */}
           <Route path="/signup" element={<Register />} />
           <Route
             path="/signin"
@@ -210,38 +224,34 @@ function App() {
           />
           <Route
             path="/movies"
-            element={<Movies
-            handleChange={searchQuery}
-            isLoadingData={isLoadingData}
-            // onSubmit={onSubmit}
-            onSaveMovie={handleSaveFavoriteMovie}
-            onDeleteSavedMovie={handleDeleteSavedMovie}
-            moviesData={moviesData}
-            onOpenMenu={handleOpenMenuClick}
-            // loggedIn={loggedIn}
-            // component={Movies}
-            // isNoMoviesFound={isNoMoviesFound}
-            // isLoadingData={isLoadingMoviesData}
-            // resStatus={moviesApiResStatus}
-            //
-            //
-            //
-            //
-
-            />}
+            element={
+              <Movies
+                handleChange={searchQuery}
+                isLoadingData={isLoadingData}
+                // onSubmit={onSubmit}
+                onSaveMovie={handleSaveFavoriteMovie}
+                onDeleteSavedMovie={handleDeleteSavedMovie}
+                moviesData={moviesData}
+                // moviesData={markAsSaved(moviesData)}
+                onOpenMenu={handleOpenMenuClick}
+                // loggedIn={loggedIn}
+                // component={Movies}
+                // isNoMoviesFound={isNoMoviesFound}
+                // isLoadingData={isLoadingMoviesData}
+                // resStatus={moviesApiResStatus}
+                //
+                //
+                //
+                //
+              />
+            }
           />
-          <Route
-            path="/saved-movies"
-            element={<SavedMovies  />}
-          />
+          <Route path="/saved-movies" element={<SavedMovies />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/*" element={<NotFound />} />
-          </Routes>
+        </Routes>
         {/* <Footer /> */}
-        <Menu
-            isOpen={menuIsOpen}
-            onClose={setCloseMenu}
-          />
+        <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />
       </Router>
     </div>
   );

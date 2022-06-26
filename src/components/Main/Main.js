@@ -12,9 +12,9 @@ import Footer from '../Footer/Footer';
 function Main() {
   return (
     <main className="main">
-      <Header>
+      {/* <Header>
       <Navigation />
-      </Header>
+      </Header> */}
       <Promo>
         <NavTab />
       </Promo>

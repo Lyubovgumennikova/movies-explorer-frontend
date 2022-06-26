@@ -1,4 +1,4 @@
-// export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
+export const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies'
 class Api {
     constructor(config) {
         this._url = config.url;
@@ -20,9 +20,10 @@ class Api {
       }).then((res) => this._errorHandler(res));
   }
 
-  search(query) {  //     •	получить список всех карточек в виде массива (GET)
-    return fetch(`${this._url}/movies?query=${query}`, {
+  search() {  //     •	получить список всех карточек в виде массива (GET)
+    return fetch(`${this._url}`, {
         // method: "GET",
+        // console.log(res),
         headers: this._headers,
     }).then((res) => this._errorHandler(res));
 }
@@ -112,8 +113,8 @@ class Api {
 }
 
 const api = new Api({
-  // url: BASE_URL,
-    url: 'https://api.nomoreparties.co/beatfilm-movies/',
+  url: BASE_URL,
+    // url: 'https://api.nomoreparties.co/beatfilm-movies/',
     headers: {
       // Authorization : jwt,
         // Authorization: ` Bearer ${localStorage.jwt}`,

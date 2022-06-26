@@ -7,7 +7,7 @@ import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 
-function Profile({isValid}) {
+function Profile({isValid, name}) {
   // const currentUserData = React.useContext(CurrentUserContext);
   const FOPM_STYLES = {
     form: "profile__form",
@@ -39,9 +39,10 @@ function Profile({isValid}) {
 
   return (
     <div className="profile">
-      <Header>
+      {/* <Header>
         <AuthNavigation />
-      </Header>
+      </Header> */}
+      {/* <h1 className="form__title">"Привет, {name}!"</h1> */}
       <Form
         name="Login"
         title="Привет, {name}!"

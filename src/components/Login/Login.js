@@ -9,10 +9,10 @@ import { Navigate, useNavigate } from "react-router-dom";
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   const FORM_STYLES = {
     form: "form",
-    group: "form__group",
+    // group: "form__group",
     label: "input__label",
     input: "text-field__input",
-    valid: "text-field__input_valid",
+    // valid: "text-field__input_valid",
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
@@ -52,7 +52,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
 //   };
   return (
     <div className="login">
-      <Header />
+      {/* <Header /> */}
       <Form
         name="Login"
         title="Рады видеть!"
