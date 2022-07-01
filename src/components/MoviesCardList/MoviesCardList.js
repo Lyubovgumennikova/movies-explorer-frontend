@@ -21,7 +21,7 @@ function MoviesCardList({
     button: "moviesCardList__button",
   };
 
-  const PAGE_SIZE = 2;
+  const PAGE_SIZE = 1;
   const [index, setIndex] = useState(0);
   const [visibleData, setVisibleData] = useState([]);
   const [isShowButtonActive, setIsShowButtonActive] = useState(false);
@@ -39,7 +39,7 @@ function MoviesCardList({
     //   setIsShowButtonActive(false);
     // }
 
-    const numberOfItems = PAGE_SIZE * (index + 6);
+    const numberOfItems = PAGE_SIZE * (index + 5);
     const newArray = [];
     for (let i = 0; i < data.length; i++) {
       if (i < numberOfItems) newArray.push(data[i]);
@@ -63,7 +63,7 @@ function MoviesCardList({
               data={item}
               locationPathname={locationPathname}
               onSaveMovie={onSaveMovie}
-              onDeleteSavedMovie={onDeleteMovie}
+              onDeletedMovie={onDeleteMovie}
             />
           </li>
         ))}

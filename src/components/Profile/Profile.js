@@ -26,7 +26,7 @@ function Profile({isValid, name}) {
   };
 
   function handleSubmit(e) {
-    console.log("lkjds")
+    console.log("профсамбит")
     e.preventDefault();
 
     // const { name, email, password } = newEntry;
@@ -39,9 +39,9 @@ function Profile({isValid, name}) {
 
   return (
     <div className="profile">
-      {/* <Header>
+      <Header>
         <AuthNavigation />
-      </Header> */}
+      </Header>
       {/* <h1 className="form__title">"Привет, {name}!"</h1> */}
       <Form
         name="Login"

@@ -4,6 +4,7 @@ import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Login.css";
+import "../Input/Input.css"
 import { Navigate, useNavigate } from "react-router-dom";
 
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
@@ -12,10 +13,11 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     // group: "form__group",
     label: "input__label",
     input: "text-field__input",
-    // valid: "text-field__input_valid",
+    valid: "text-field__input_valid",
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
+    required: true,
   };
   let navigate = useNavigate();
   const [isincluded, setIsincluded] = useState({
@@ -32,27 +34,24 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   }
 
   function handleSubmit(e) {
-    console.log("ljhg")
-    // <Navigate to="/movies" replace={true} />
+    console.log("логинсубмит")
+      e.preventDefault();
+
+    const { email, password } = isincluded;
+
+    if (!email || !password) {
+      return;
+    }
+    onLogin({
+      email,
+      password,
+    });
     navigate("/movies");
-    // e.preventDefault();
-
-    // const { email, password } = isincluded;
-
-    // if (!email || !password) {
-    //   return;
-    // }
-    // onLogin({
-    //   email,
-    //   password,
-    // });
   }
-//  const handleSubmit = () => {
-//     return console.log("ljhg")
-//   };
+
   return (
     <div className="login">
-      {/* <Header /> */}
+      <Header />
       <Form
         name="Login"
         title="Рады видеть!"
@@ -64,7 +63,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
       >
         <Input
           type="email"
-          required
+          // required
           name="E-mail"
           styleSettings={FORM_STYLES}
           maxLength="30"

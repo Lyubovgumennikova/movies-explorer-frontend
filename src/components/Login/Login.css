@@ -44,6 +44,7 @@
 
 @media screen and (max-width: 767px) {
   .login {
+    max-width: 260px;
     margin-top: 38px;
     margin-bottom: 30px;
     align-items: center;

@@ -4,37 +4,46 @@
   margin: 0 auto;
   box-sizing: border-box;
   padding: 80px 0 83px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 167px;
+  gap: 40px;
   align-items: center;
   position: relative;
-  border-bottom: 1px solid #AAAAAA;
+  border-bottom: 1px solid #aaaaaa;
   margin-bottom: 10px;
 }
 
 .searchForm__group {
-  display: grid;
+  /* display: grid; */
+  grid-area: 1/1;
   width: 100%;
-  padding-right: 40px;
+  /* padding-right: 40px; */
+  /* margin-right: 40px; */
   align-items: center;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: repeat(1, 1fr);
 }
 
-.searchForm__text {
+/* .searchForm__input {
   grid-area: 1/1;
-  /* width: 100%; */
+  width: 100%;
+} */
+
+.searchForm__text {
+  /* grid-area: 1/1; */
+  width: 100%;
   height: 45px;
   font-family: "Inter", Arial, sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
   line-height: 18px;
-  color:  #A0A0A0;
+  color: #a0a0a0;
   text-align: left;
   padding: 0;
-  padding-left: 22px;
+  /* padding-left: 22px; */
   opacity: 0.2;
-  border: 1.5px solid #AAAAAA;
+  border: 1.5px solid #aaaaaa;
   border-radius: 50px;
   /* z-index: 1; */
 }
@@ -62,13 +71,10 @@
   transform: rotate(45deg);
 }
 
-.searchForm__text:hover, .searchForm__submitButton:hover {
+.searchForm__text:hover,
+.searchForm__submitButton:hover {
   opacity: 0.8;
 }
-
-/* .searchForm__submitButton:disabled {
-  cursor: not-allowed;
-} */
 
 .searchForm__checkbox {
   display: flex;
@@ -130,49 +136,32 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .search-form {
-    padding: 70px 30px 61px 30px;
+  .searchForm {
+    width: calc(100% - 60px);
+    padding: 60px 0 57px;
+    margin: 0;
+    grid-template-columns: 1fr;
+    gap: 38px;
+    margin-bottom: 10px;
   }
 
-  .search-form__icon {
-    left: 30px;
-    top: 80px;
-  }
-
-  .search-form__submit-button {
-    right: 30px;
-    top: 85px;
+  .searchForm__checkbox_label {
+    margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 767px) {
-  .search-form {
-    padding: 83px 14px 50px 14px;
+  .searchForm {
+    width: calc(100% - 20px);
+    padding-bottom: 44px;
+    gap: 45px;
   }
 
-  .search-form__icon {
-    display: none;
-  }
-
-  .search-form__text-input {
-    font-size: 18px;
-    line-height: 1.22;
-    text-align: left;
-  }
-
-  .search-form__checkbox-label {
+  .searchForm__text, .searchForm__checkbox_label {
     font-size: 11px;
-    line-height: 1.64;
-    margin-top: 42px;
-    width: 145px;
   }
 
-  .search-form__checkbox-slider {
-    right: 110px;
-  }
-
-  .search-form__submit-button {
-    right: 14px;
-    top: 98px;
+  .searchForm__checkbox_label {
+    width: 148px;
   }
 }

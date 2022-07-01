@@ -1,5 +1,5 @@
-import React from "react";
-// import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import SearchForm from "../SearchForm/SearchForm";
@@ -9,28 +9,80 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
 import Button from "../Button/Button";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import MenuButton from "../MenuButton/MenuButton";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 // import Button from "../Button/Button";
 
 function Movies({
   isLoadingData,
+  resStatus,
   moviesData,
   onSubmit,
   onSaveMovie,
   onDeleteMovie,
-  searchQuery,
-  isSubmitted,
+  isNoMoviesFound,
+
   handleChange,
-  onOpenMenu,
+  isSubmitted,
+  // handleSubmit,
+
+  searchQuery,
 }) {
+  // const [show, setShow] = useState("index");
+  // const [movies, setMovies] = useState([]);
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [isSubmitted, setIsSubmitted] = useState(false);
+  const location = useLocation();
+  console.log(location.pathname);
+  const [isMoviesApiError, setIsMoviesApiError] = useState(false);
+
   const handleSubmit = (data) => {
     onSubmit(data);
+  }
+
+  const handleErrors = () => {
+    if (resStatus) {
+      switch (resStatus) {
+        case 200:
+          setIsMoviesApiError(false);
+          break;
+        default:
+          setIsMoviesApiError(true);
+          break;
+      };
+    };
   };
+
+  React.useEffect(() => {
+    handleErrors();
+  }, [resStatus])
 
   return (
     <main className="movies">
-      <SearchForm onSubmit={handleSubmit} />
+      <Header>
+        <AuthNavigation />
+        <MenuButton/>
+      </Header>
+      <SearchForm
+        onSubmit={handleSubmit}
+        // handleChange={handleChange}
+        // isSubmitted={isSubmitted}
+        // handleSubmit={handleSubmit}
+        // searchQuery={searchQuery}
+      />
+      {/* {isLoadingData ? (
+        <Preloader />
+      // ) : show === "movie" ? (
+        // <InfoTooltip />
+      ) : (
+        <MoviesCardList
+          data={moviesData}
+          locationPathname={useLocation.pathname}
+          onSaveMovie={onSaveMovie}
+          onDeleteSavedMovie={onDeleteMovie}
+        />
+      )} */}
       {/* {isLoadingData && (
         <Preloader />
       )} */}
@@ -41,7 +93,7 @@ function Movies({
       )} */}
       <MoviesCardList
         data={moviesData}
-        locationPathname={useLocation.pathname}
+        locationPathname={location.pathname}
         // searchQuery={searchQuery}
         onSaveMovie={onSaveMovie}
         onDeleteSavedMovie={onDeleteMovie}

@@ -12,32 +12,43 @@ import Button from "../Button/Button";
 
 function SearchForm({
   onSubmit,
+
   setSearchQuery,
   // handleChange,
   isSubmitted,
-  // values,
+  // handleSubmit,
   searchQuery,
 }) {
   // const { values, handleChange, resetForm } = useFormWithValidation({});
   const { values, handleChange, resetForm } = useState({});
+  // const [search, setSearch] = useState("");
+  // const [type, setType] = useState("all");
 
-  const handleSubmit = (evt) => {
-    console.log(evt.target);
+  const handleSubmit = (e) => {
+    console.log("клик");
+    // console.log(e.target);
+    e.preventDefault();
 
-    evt.preventDefault();
     onSubmit(values);
-    console.log(values);
+    // console.log(values);
+    // resetForm();
     // setSearchQuery("");
   };
 
+  const FORM_STYLESI = {
+    input: "searchForm__text",
+    label: "searchForm__group",
+    button: "searchForm__submitButton",
+    required: true,
+  };
   const FORM_STYLES = {
     form: "searchForm",
     textInput: "searchForm__text",
-    button: "searchForm__submitButton",
     group: "searchForm__checkbox",
     input: "searchForm__checkbox_input",
     error: "searchForm__checkbox_slider",
     label: "searchForm__checkbox_label",
+    required: false,
   };
 
   // const SEARCH_TEXT_INPUT_SETTINGS = {
@@ -65,44 +76,27 @@ function SearchForm({
   // };
 
   return (
-    <form className={FORM_STYLES.form}>
-      <div className="searchForm__group">
-        <input
-          placeholder="Фильм"
-          type="text"
-          // value={value}
-          className={FORM_STYLES.textInput}
-          // handleChange={handleChange}
-          // onChange={e => handleChange(e.target.value)}
-          // value={values.search}
-          //   name={props.settings.name}
-          // required={props.settings.required}
-          onChange={handleChange}
-          value={values.search}
-        />
-        <Button
-          // className={FORM_STYLES.submitButton}
-          styleSettings={FORM_STYLES}
-          // type="search"
-          type="submut"
-          title="Найти"
-          onClick={handleSubmit}
-          // onClick={handleClick}
-          // handleClick={() => console.log("rkfnr")}
-          // onClick={onClick}
-          buttonText={
-            <img
-              src={icon}
-              className="searchForm__submitButton_icon"
-              alt="Найти"
-            />
-          }
-        />
-      </div>
+    <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
+      <Input
+        placeholder="Фильм"
+        type="text"
+        // value={value}
+        styleSettings={FORM_STYLESI}
+        // className={FORM_STYLES.textInput}
+        // onChange={handleChange}
+        // handleChange={handleChange}
+        onChange={(e) => handleChange(e.target.value)}
+        value={values.search}
+        //   name={props.settings.name}
+        // required={props.settings.required}
+        // onChange={e => setSearch( e.target.value)}
+        // onChange={handleChange}
+        // value={searchQuery}
+      />
 
       <Input
-        required
-        false
+
+        // false
         type="checkbox"
         name="Короткометражки"
         styleSettings={FORM_STYLES}
@@ -114,6 +108,24 @@ function SearchForm({
         // settings={SHORTFILM_FILTER_CHECKBOX_INPUT_SETTINGS}
         // onChange={handleChange}
         // value={values.shortfilm}
+      />
+          <Button
+        // className={FORM_STYLES.submitButton}
+        styleSettings={FORM_STYLESI}
+        // type="search"
+        type="submit"
+        title="Search"
+        // onClick={handleSubmit}
+        // onClick={handleClick}
+        // handleClick={() => console.log("rkfnr")}
+        // onClick={onClick}
+        buttonText={
+          <img
+            src={icon}
+            className="searchForm__submitButton_icon"
+            alt="Найти"
+          />
+        }
       />
     </form>
   );

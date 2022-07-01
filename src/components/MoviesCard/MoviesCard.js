@@ -31,9 +31,11 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     nameRU: data.nameRU || "Нет данных",
     nameEN: data.nameEN || "Нет данных",
     movieId: data.id,
+    // thumbnail: getFullImageUrl(data),
   });
 
   const handleClickButton = () => {
+    console.log(locationPathname);
     if (locationPathname === "/movies") {
       if (!data.saved) {
         onSaveMovie(movieData);

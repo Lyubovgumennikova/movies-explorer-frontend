@@ -10,26 +10,10 @@ function Header(props) {
       <Link to="/" className="header__logo">
         <img src={logo} alt="Лого" />
       </Link>
-      { props.isLoggedIn? (
-      <MenuButton
-      onOpenMenu={props.onOpenMenu}
-    />
-      ) : null
-
-      }
-
+      {props.isLoggedIn ? <MenuButton onOpenMenu={props.onOpenMenu} /> : null}
       {props.children}
     </header>
   );
 }
 
 export default Header;
-// eslint-disable-next-line no-lone-blocks
-{/* <Link to="/" className="header__logo">
-<img src={logo} alt="Лого" />
-</Link>
-{loggedIn ? (
-<AuthNavigation />
-) : (
-<h1 className="form__title">{props.title}</h1>
-)} */}

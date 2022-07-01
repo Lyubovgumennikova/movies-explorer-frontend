@@ -6,6 +6,9 @@ import NewInput from "../NewInput/NewInput";
 import "./Register.css";
 
 function Register({ onRegister, isSubmitted, setIsSubmitted }) {
+  const [isValid, setIsValid] = useState(false);
+  const [value, setValue] = useState("");
+  const [error, setError] = useState("");
   const [newEntry, setNewEntry] = useState({
     name: "",
     email: "",
@@ -21,15 +24,25 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
+    required: true,
   };
 
   function handleChange(e) {
-    const { name, value } = e.target;
+    // const { name, value } = e.target;
+    const input = e.target;
+    setValue(input.value);
+    setIsValid(input.validity.valid);
+    if (!isValid) {
+      setError(input.validationMessage);
+    } else {
+      setError("");
+    }
 
     setNewEntry((old) => ({
       ...old,
-      [name]: value,
+      [input]: value,
     }));
+    setIsValid(input.closest('form').checkValidity());
   }
 
   function handleSubmit(e) {
