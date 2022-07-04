@@ -11,86 +11,27 @@ import "./SavedMovies.css";
 import Preloader from "../Preloader/Preloader";
 import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
-// import Notification from "../Notification/Notification";
-// import MOVIES_ERRORS_TEXTS from "../../constants/movies-errors-texts";
-// import NO_MOVIES_FOUND_TEXT from "../../constants/no-movies-found-text";
 
-function SavedMovies({
-  onDeleteMovie,
-  savedMovies,
-  isSavedMoviesEmpty,
-  isLoadingData,
-  handleSearchSavedMoviesData,
-  getSavedMoviesResStatus,
-  isNoSavedMoviesFound,
-  onClick,
-  onOpenMenu,
-  moviesData,
-  isSubmitted,
-}) {
-  // const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
-
-  // const handleSubmit = (data) => {
-  //   console.log("submtn");
-  //   handleSearchSavedMoviesData(data);
-  // };
-
+function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu }) {
   const location = useLocation();
   console.log(location.pathname);
-
-  // const handleErrors = () => {
-  //   if (getSavedMoviesResStatus) {
-  //     switch (getSavedMoviesResStatus) {
-  //       case 200:
-  //         setIsMoviesApiError(false);
-  //         break;
-  //       default:
-  //         setIsMoviesApiError(true);
-  //         break;
-  //     }
-  //   }
-  // };
-
-  // React.useEffect(() => {
-  //   handleErrors();
-  // }, [getSavedMoviesResStatus]);
-
-  // React.useEffect(() => {
-  //   handleSearchSavedMoviesData();
-  // }, []);
 
   const handleSubmit = () => console.log("rkfnr");
 
   return (
     <main className="savedMovies">
-    <Header>
+      <Header>
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-      <SearchForm   onSubmit={handleSubmit}/>
-      {/* {!isLoadingData && isSavedMoviesEmpty && (
-        <Notification text={NO_MOVIES_FOUND_TEXT.SAVED_IS_EMPTY} />
-      )}
-      {!isLoadingData && isNoSavedMoviesFound && (
-        <Notification text={NO_MOVIES_FOUND_TEXT.BASE_TEXT} />
-      )}
-      {isMoviesApiError && (
-        <Notification text={MOVIES_ERRORS_TEXTS.BASE_ERROR} />
-      )} */}
-      <MoviesCardList
-      //  data={moviesData}
+      <SearchForm onSubmit={handleSubmit} />
+      {/* <MoviesCardList
+        //  data={moviesData}
         data={savedMovies}
         locationPathname={location.pathname}
         onDeleteSavedMovie={onDeleteMovie}
         // onSaveMovie={moviesData}
-      />
-       {/* {isLoadingData ? (
-          <Preloader />
-        ) : (
-          moviesData.map((movieCard) => (
-            <MoviesCard key={movieCard._id} {...movieCard} />
-          ))
-        )} */}
+      /> */}
       <Footer />
     </main>
   );

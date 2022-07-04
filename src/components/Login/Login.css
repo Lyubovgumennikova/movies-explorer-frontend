@@ -57,4 +57,9 @@
     font-size: 12px;
     line-height: 15px;
   }
+
+  .login__header {
+    width: calc(100% - (2 * 14px));
+    justify-content: center;
+  }
 }

@@ -6,7 +6,7 @@ import MenuButton from "../MenuButton/MenuButton";
 
 function Header(props) {
   return (
-    <header className="header header__inactive">
+    <header className=  "header"  >
       <Link to="/" className="header__logo">
         <img src={logo} alt="Лого" />
       </Link>

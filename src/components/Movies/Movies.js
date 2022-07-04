@@ -12,7 +12,6 @@ import Button from "../Button/Button";
 // import { useLocation } from "react-router-dom";
 import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-// import Button from "../Button/Button";
 
 function Movies({
   isLoadingData,
@@ -35,28 +34,10 @@ function Movies({
   // const [isSubmitted, setIsSubmitted] = useState(false);
   const location = useLocation();
   console.log(location.pathname);
-  const [isMoviesApiError, setIsMoviesApiError] = useState(false);
 
   const handleSubmit = (data) => {
     onSubmit(data);
-  }
-
-  const handleErrors = () => {
-    if (resStatus) {
-      switch (resStatus) {
-        case 200:
-          setIsMoviesApiError(false);
-          break;
-        default:
-          setIsMoviesApiError(true);
-          break;
-      };
-    };
   };
-
-  React.useEffect(() => {
-    handleErrors();
-  }, [resStatus])
 
   return (
     <main className="movies">
@@ -64,13 +45,7 @@ function Movies({
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-      <SearchForm
-        onSubmit={handleSubmit}
-        // handleChange={handleChange}
-        // isSubmitted={isSubmitted}
-        // handleSubmit={handleSubmit}
-        // searchQuery={searchQuery}
-      />
+      <SearchForm onSubmit={handleSubmit} />
       {/* {isLoadingData ? (
         <Preloader />
       // ) : show === "movie" ? (
@@ -81,14 +56,6 @@ function Movies({
           locationPathname={useLocation.pathname}
           onSaveMovie={onSaveMovie}
           onDeleteSavedMovie={onDeleteMovie}
-        />
-      )} */}
-      {/* {isLoadingData && (
-        <Preloader />
-      )} */}
-      {/* {isMoviesApiError && (
-        <Notification
-          text={MOVIES_ERRORS_TEXTS.BASE_ERROR}
         />
       )} */}
       <MoviesCardList

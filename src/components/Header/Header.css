@@ -21,10 +21,3 @@
     width: calc(100% - (2 * 30px));
   }
 }
-
-@media (max-width: 767px) {
-  .header {
-    width: calc(100% - (2 * 14px));
-    justify-content: center;
-  }
-}

@@ -10,24 +10,12 @@ import Main from "../Main/Main";
 import api from "../../utils/Api";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import { useLocation, matchPath } from "react-router";
-
-// import ImagePopup from './ImagePopup';
-// import EditProfilePopup from './EditProfilePopup';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-// import EditAvatarPopup from './EditAvatarPopup';
-// import AddPlacePopup from './AddPlacePopup';
-// import DeleteCardPopup from './DeleteCardPopup';
-// import ProtectedRoute from './ProtectedRoute';
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 // import InfoTooltip from './InfoTooltip';
-// import * as AuthApi from '../utils/AuthApi.js';
-// import {
-//   useHistory,
-//   useLocation,
-// } from 'react-router-dom';
-// import { Navigate } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import "./App.css"
 
 import {
   Navigate,

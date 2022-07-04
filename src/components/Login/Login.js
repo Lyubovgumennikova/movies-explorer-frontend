@@ -17,6 +17,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
+    header: "login__header",
     required: true,
   };
   let navigate = useNavigate();
@@ -51,7 +52,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
 
   return (
     <div className="login">
-      <Header />
+      <Header styleSettings={FORM_STYLES}/>
       <Form
         name="Login"
         title="Рады видеть!"

@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-// import { BASE_URL } from "../../utils/Api";
 import "./MoviesCard.css";
 
 function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovie }) {
@@ -16,10 +15,12 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
 
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardButtonClassName = `${
-    !isSaved ? `moviesCard__button_active` : `moviesCard__button `
+    isSaved ? `moviesCard__button_active` : `moviesCard__button `
   }`;
 
-  const [buttonLabel, setButtonLabel] = React.useState('moviesCard__button ');
+  const [buttonLabel, setButtonLabel] = useState('moviesCard__button ');
+  const DELETE_BUTTON_LABEL = "moviesCard__button_delete";
+  const ADD_BUTTON_LABEL ="moviesCard__button_active";
 
   const [movieData, setMovieData] = useState({
     country: data.country || "Нет данных",
@@ -41,7 +42,8 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
     if (locationPathname === "/movies") {
       console.log(locationPathname);
       if (!data.saved) {
-        onSaveMovie(movieData);
+        setButtonLabel(isSaved ? buttonLabel : ADD_BUTTON_LABEL)
+        onSaveMovie(setMovieData);
       } else {
         onDeleteMovie(data._id);
       }
@@ -50,13 +52,13 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
     }
   };
 
-  // React.useEffect(() => {
-  //   if (locationPathname === '/saved-movies') {
-  //     setButtonLabel(DELETE_LABEL);
-  //   } else if (locationPathname === '/movies') {
-  //     setButtonLabel(isSaved ? DELETE_LABEL : ADD_LEBEL)
-  //   }
-  // }, [isSaved, locationPathname])
+  useEffect(() => {
+    if (locationPathname === '/saved-movies') {
+      setButtonLabel(DELETE_BUTTON_LABEL);
+    } else if (locationPathname === '/movies') {
+      setButtonLabel(isSaved ? buttonLabel : ADD_BUTTON_LABEL)
+    }
+  }, [isSaved, locationPathname])
 
   return (
     <article className="moviesCard__article">

@@ -1,10 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import Input from "../Input/Input";
-// import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-// import SubmitButton from "../SubmitButton/SubmitButton";
-// import { ReactComponent as SearchFormIcon } from "../../images/SearchForm/search-form-icon.svg";
-// import useFormWithValidation from "../../hooks/useFormValidation";
 import "./SearchForm.css";
 import icon from "../../images/icon__movie.svg";
 
@@ -19,11 +15,8 @@ function SearchForm({
   // handleSubmit,
   searchQuery,
 }) {
-  // const { values, handleChange, resetForm } = useFormWithValidation({});
-  const { values, handleChange, resetForm } = useState({});
+  const { values, handleChange} = useState({});
   // const [search, setSearch] = useState("");
-  // const [type, setType] = useState("all");
-
   const handleSubmit = (e) => {
     console.log("клик");
     // console.log(e.target);
@@ -31,7 +24,6 @@ function SearchForm({
 
     onSubmit(values);
     // console.log(values);
-    // resetForm();
     // setSearchQuery("");
   };
 
@@ -50,30 +42,6 @@ function SearchForm({
     label: "searchForm__checkbox_label",
     required: false,
   };
-
-  // const SEARCH_TEXT_INPUT_SETTINGS = {
-  //   type: "text",
-  //   id: "search-text",
-  //   ariaLabel: "поиск фильма",
-  //   placeholder: "Фильм",
-  //   name: "search",
-  //   maxLength: 30,
-  //   required: false,
-  // };
-
-  // const SHORTFILM_FILTER_CHECKBOX_INPUT_SETTINGS = {
-  //   type: "checkbox",
-  //   id: "filter-shortfilm",
-  //   label: "Короткометражки",
-  //   name: "shortfilm",
-  //   required: false,
-  // };
-
-  // const SUBMIT_BUTTON_SETTINGS = {
-  //   className: "",
-  //   type: "submit",
-  //   title: "Найти",
-  // };
 
   return (
     <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
@@ -100,14 +68,6 @@ function SearchForm({
         type="checkbox"
         name="Короткометражки"
         styleSettings={FORM_STYLES}
-        // maxLength="30"
-        // inputClassName={SEARCH_FORM_STYLE_SETTINGS.checkboxInput}
-        // labelClassName={SEARCH_FORM_STYLE_SETTINGS.checkboxLabel}
-        // sliderClassName={SEARCH_FORM_STYLE_SETTINGS.checkboxSlider}
-        // onFocusClassName={SEARCH_FORM_STYLE_SETTINGS.checkboxOnFocus}
-        // settings={SHORTFILM_FILTER_CHECKBOX_INPUT_SETTINGS}
-        // onChange={handleChange}
-        // value={values.shortfilm}
       />
           <Button
         // className={FORM_STYLES.submitButton}

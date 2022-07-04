@@ -8,7 +8,7 @@ import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
 
-function Profile({isValid, name, onOpenMenu}) {
+function Profile({ isValid, name, onOpenMenu }) {
   // const currentUserData = React.useContext(CurrentUserContext);
   const FOPM_STYLES = {
     form: "profile__form",
@@ -23,11 +23,11 @@ function Profile({isValid, name, onOpenMenu}) {
     button: "profile__form_submit-button",
     // button: "form__submit-button",
     link: "profile__text_link",
-    error: "profile__error"
+    error: "profile__error",
   };
 
   function handleSubmit(e) {
-    console.log("профсамбит")
+    console.log("профсамбит");
     e.preventDefault();
 
     // const { name, email, password } = newEntry;
@@ -40,7 +40,7 @@ function Profile({isValid, name, onOpenMenu}) {
 
   return (
     <div className="profile">
-       <Header>
+      <Header>
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
@@ -50,8 +50,6 @@ function Profile({isValid, name, onOpenMenu}) {
         title="Привет, {name}!"
         styleSettings={FOPM_STYLES}
         buttonText="Редактировать"
-        // isSubmitted={isSubmitted}
-        // setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
       >
         <Input
@@ -61,7 +59,6 @@ function Profile({isValid, name, onOpenMenu}) {
           styleSettings={FOPM_STYLES}
           maxLength="30"
           // onChange={handleChange} //={setEmail}
-          // value={isincluded.email}
         />
         <hr class="portfolio__line" />
         <Input
@@ -71,7 +68,6 @@ function Profile({isValid, name, onOpenMenu}) {
           styleSettings={FOPM_STYLES}
           // placeholder="Пароль"
           // onChange={handleChange} //={setPassword}
-          // value={isincluded.password}
         />
       </Form>
       <NewInput
