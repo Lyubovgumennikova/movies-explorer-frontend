@@ -6,23 +6,24 @@ import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
+import MenuButton from "../MenuButton/MenuButton";
 
-function Profile({isValid, name}) {
+function Profile({isValid, name, onOpenMenu}) {
   // const currentUserData = React.useContext(CurrentUserContext);
   const FOPM_STYLES = {
     form: "profile__form",
-    group: "profile__group",
+    // group: "profile__group",
     label: "profile__label",
     // input:  `${isValid
-    //     ? "profile__text-field"
-    //     : "profile__text-field_valid"
+    //     ? "profile__textInput"
+    //     : "profile__textInput_valid"
     // }`,
-    input: "profile__text-field",
-    valid: "profile__text-field_valid",
+    input: "profile__textInput",
+    valid: "profile__textInput_valid",
     button: "profile__form_submit-button",
     // button: "form__submit-button",
-    link: "profile__input-text_link",
-    error: "message__error"
+    link: "profile__text_link",
+    error: "profile__error"
   };
 
   function handleSubmit(e) {
@@ -39,8 +40,9 @@ function Profile({isValid, name}) {
 
   return (
     <div className="profile">
-      <Header>
+       <Header>
         <AuthNavigation />
+        <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       {/* <h1 className="form__title">"Привет, {name}!"</h1> */}
       <Form
@@ -65,7 +67,7 @@ function Profile({isValid, name}) {
         <Input
           required
           type="email"
-          name="E-mail"
+          name="E-mail" //&#8208;
           styleSettings={FOPM_STYLES}
           // placeholder="Пароль"
           // onChange={handleChange} //={setPassword}

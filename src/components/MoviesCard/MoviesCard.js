@@ -3,7 +3,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 // import { BASE_URL } from "../../utils/Api";
 import "./MoviesCard.css";
 
-function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
+function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovie }) {
   const currentUser = useContext(CurrentUserContext);
   const BASE_URL = "https://api.nomoreparties.co";
   // const isOwn = data.owner._id === currentUser._id;
@@ -16,8 +16,10 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
 
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardButtonClassName = `${
-    !onSaveMovie ? `moviesCard__button_active` : `moviesCard__button `
+    !isSaved ? `moviesCard__button_active` : `moviesCard__button `
   }`;
+
+  const [buttonLabel, setButtonLabel] = React.useState('moviesCard__button ');
 
   const [movieData, setMovieData] = useState({
     country: data.country || "Нет данных",
@@ -31,12 +33,13 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     nameRU: data.nameRU || "Нет данных",
     nameEN: data.nameEN || "Нет данных",
     movieId: data.id,
-    // thumbnail: getFullImageUrl(data),
+
   });
 
   const handleClickButton = () => {
-    console.log(locationPathname);
+    // console.log(locationPathname);
     if (locationPathname === "/movies") {
+      console.log(locationPathname);
       if (!data.saved) {
         onSaveMovie(movieData);
       } else {
@@ -47,6 +50,14 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     }
   };
 
+  // React.useEffect(() => {
+  //   if (locationPathname === '/saved-movies') {
+  //     setButtonLabel(DELETE_LABEL);
+  //   } else if (locationPathname === '/movies') {
+  //     setButtonLabel(isSaved ? DELETE_LABEL : ADD_LEBEL)
+  //   }
+  // }, [isSaved, locationPathname])
+
   return (
     <article className="moviesCard__article">
       <div className="moviesCard__article_header">
@@ -55,10 +66,11 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
         </p>
         <p className="moviesCard__subtitle">{movieData.duration}</p>
         <button
-          aria-label="remove"
+          // aria-label="remove"
           type="button"
           className={cardButtonClassName}
           onClick={handleClickButton}
+          isSaved={data.saved}
         ></button>
       </div>
       <a

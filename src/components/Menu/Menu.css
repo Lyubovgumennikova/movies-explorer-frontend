@@ -1,88 +1,24 @@
-.menu-modal {
-
-  display: none;
+.menuNavigation__container {
+  display: grid;
+  gap: 28px;
+  margin-top: 105px;
+  margin-bottom: 620px;
+  text-align: center;
 }
 
-@media screen and (max-width: 1023px) {
-  .menu {
-    display: block;
-    width: 44px;
-    height: 44px;
-    border: unset;
-    background-color: unset;
-    /* background-image: url(../../images/Header/header-menu-button.svg); */
-    background-position: center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-  }
+.menuNavigation__link {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  text-decoration: none;
 }
-
-@media screen and (max-width: 1023px) {
-  .menu-modal {
-    display: block;
-    box-sizing: border-box;
-  }
-
-  .menu-modal::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #000000;
-    opacity: 0.3;
-    transition: opacity 3s ease;
-  }
-
-  .menuNavigation__container {
-   display: grid;
-   gap: 28px;
-   /* align-items: center; */
-   margin-top: 105px;
-   margin-bottom: 620px;
-   text-align: center;
-   /* justify-content: center;
-   align-content: center; */
-  }
-
-  .menuNavigation__link {
-    font-family: 'Inter', Arial, sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 18px;
-    line-height: 22px;
-    color: #000000;
-    text-decoration: none;
-    /* padding-top: 8px; */
-    /* text-align: right; */
-    /* margin-left: 10px; */
-  }
 
 .menuNavigation__link.active {
   text-decoration: underline;
-}
-  .menu-modal__content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: #fff;
-    box-sizing: border-box;
-    padding: 22px 22px 92px 22px;
-  }
-
-  .menu-modal__close-button {
-    width: 22px;
-    height: 22px;
-    margin-top: 37px;
-    margin-right: 37px;
-    background-color: unset;
-    /* background-image: url(../../images/Modal/close-button-icon.svg); */
-    background-position: center;
-    background-repeat: no-repeat;
-    border: unset;
-    cursor: pointer;
-  }
 }
 
 @media screen and (max-width: 767px) {
@@ -97,5 +33,6 @@
   .menuNavigation__container {
     margin-top: 99px;
     margin-bottom: 444px;
+    gap: 24px;
   }
 }

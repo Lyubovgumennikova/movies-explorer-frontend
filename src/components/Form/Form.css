@@ -1,13 +1,7 @@
-/* .popup__content {
-  margin: 0px auto 36px;
-  width: calc(100% - (2*36px));
-} */
 .form {
   display: flex;
   height: 471px;
   flex-direction: column;
-  /* align-content: space-between; */
-  /* justify-content: space-between; */
 }
 
 .form__title {
@@ -52,8 +46,18 @@
 }
 
 @media (max-width: 767px) {
+  .form {
+    height: 609px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .form__title {
+    margin-top: 32px;
+    margin-bottom: 70px;
+  }
+
   .form__submit-button {
-      margin-top: 44px;
       font-size: 14px;
       line-height: 17px;
   }

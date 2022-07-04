@@ -22,7 +22,7 @@ function Movies({
   onSaveMovie,
   onDeleteMovie,
   isNoMoviesFound,
-
+  onOpenMenu,
   handleChange,
   isSubmitted,
   // handleSubmit,
@@ -62,7 +62,7 @@ function Movies({
     <main className="movies">
       <Header>
         <AuthNavigation />
-        <MenuButton/>
+        <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm
         onSubmit={handleSubmit}
@@ -94,12 +94,8 @@ function Movies({
       <MoviesCardList
         data={moviesData}
         locationPathname={location.pathname}
-        // searchQuery={searchQuery}
         onSaveMovie={onSaveMovie}
         onDeleteSavedMovie={onDeleteMovie}
-        // isSubmitted={isSubmitted}
-        // handleChange={handleChange}
-        // onSubmit={onSubmit}
       />
       <Footer />
     </main>

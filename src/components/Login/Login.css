@@ -44,9 +44,17 @@
 
 @media screen and (max-width: 767px) {
   .login {
+    display: flex;
+    flex-direction: column;
     max-width: 260px;
     margin-top: 38px;
     margin-bottom: 30px;
     align-items: center;
+  }
+
+  .login__input-text {
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 15px;
   }
 }

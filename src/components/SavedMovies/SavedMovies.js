@@ -9,12 +9,14 @@ import Footer from "../Footer/Footer";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./SavedMovies.css";
 import Preloader from "../Preloader/Preloader";
+import MenuButton from "../MenuButton/MenuButton";
+import { useLocation } from "react-router-dom";
 // import Notification from "../Notification/Notification";
 // import MOVIES_ERRORS_TEXTS from "../../constants/movies-errors-texts";
 // import NO_MOVIES_FOUND_TEXT from "../../constants/no-movies-found-text";
 
 function SavedMovies({
-  onDeleteSavedMovie,
+  onDeleteMovie,
   savedMovies,
   isSavedMoviesEmpty,
   isLoadingData,
@@ -22,18 +24,19 @@ function SavedMovies({
   getSavedMoviesResStatus,
   isNoSavedMoviesFound,
   onClick,
-  // handleChange,
+  onOpenMenu,
   moviesData,
   isSubmitted,
 }) {
   // const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
 
-  const handleSubmit = (data) => {
-    console.log("submtn");
-    handleSearchSavedMoviesData(data);
-  };
+  // const handleSubmit = (data) => {
+  //   console.log("submtn");
+  //   handleSearchSavedMoviesData(data);
+  // };
 
-  // let location = useLocation();
+  const location = useLocation();
+  console.log(location.pathname);
 
   // const handleErrors = () => {
   //   if (getSavedMoviesResStatus) {
@@ -56,15 +59,15 @@ function SavedMovies({
   //   handleSearchSavedMoviesData();
   // }, []);
 
-  const handleClick = () => console.log("rkfnr");
+  const handleSubmit = () => console.log("rkfnr");
 
   return (
     <main className="savedMovies">
-      <Header>
+    <Header>
         <AuthNavigation />
+        <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-
-      <SearchForm onSubmit={handleSubmit} />
+      <SearchForm   onSubmit={handleSubmit}/>
       {/* {!isLoadingData && isSavedMoviesEmpty && (
         <Notification text={NO_MOVIES_FOUND_TEXT.SAVED_IS_EMPTY} />
       )}
@@ -75,9 +78,11 @@ function SavedMovies({
         <Notification text={MOVIES_ERRORS_TEXTS.BASE_ERROR} />
       )} */}
       <MoviesCardList
+      //  data={moviesData}
         data={savedMovies}
-        // locationPathname={location.pathname}
-        onDeleteSavedMovie={onDeleteSavedMovie}
+        locationPathname={location.pathname}
+        onDeleteSavedMovie={onDeleteMovie}
+        // onSaveMovie={moviesData}
       />
        {/* {isLoadingData ? (
           <Preloader />

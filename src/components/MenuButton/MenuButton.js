@@ -20,7 +20,7 @@ function MenuButton({onOpenMenu}) {
       styleSettings={FOPM_STYLES}
       onClick={onOpenMenu}
       buttonText={
-        <img src={icon} className="menuButton" alt="Найти" />
+        <img src={icon} className="menuButton" alt="Открыть" />
       }
     />
   );
