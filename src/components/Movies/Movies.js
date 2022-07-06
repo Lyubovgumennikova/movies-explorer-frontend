@@ -35,6 +35,7 @@ function Movies({
   const location = useLocation();
   console.log(location.pathname);
 
+
   const handleSubmit = (data) => {
     onSubmit(data);
   };

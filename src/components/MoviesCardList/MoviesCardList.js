@@ -16,12 +16,22 @@ function MoviesCardList({
     button: "moviesCardList__button",
   };
 
-  const PAGE_SIZE = 1;
+  const PAGE_SIZE = document.documentElement.clientWidth;
   const [index, setIndex] = useState(0);
   const [visibleData, setVisibleData] = useState([]);
+  // const [numberOfItems, setNumberOfItems]= useState(0);
+
+
 
   useEffect(() => {
-    const numberOfItems = PAGE_SIZE * (index + 5);
+    const numberOfItems = index + 5;
+    // const numberOfItems = () => {
+    //   if (PAGE_SIZE >= 1280) { setIndex(index + 8)
+    //   // } else if (1280 > PAGE_SIZE >= 768)
+    //   // setIndex(index + 5)
+    //   } else  setIndex(index + 3)
+    // };
+
     const newArray = [];
     for (let i = 0; i < data.length; i++) {
       if (i < numberOfItems) newArray.push(data[i]);
@@ -29,8 +39,9 @@ function MoviesCardList({
     setVisibleData(newArray);
   }, [data, index]);
 
-    const handleShowButtonClick = () => {
-    setIndex(index + 3);
+  const handleShowButtonClick = () => {
+    if (PAGE_SIZE >= 1280) setIndex(index + 3);
+    else setIndex(index + 2);
   };
 
   return (

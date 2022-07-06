@@ -8,9 +8,10 @@ import "../Input/Input.css"
 import { Navigate, useNavigate } from "react-router-dom";
 
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
+  let navigate = useNavigate();
+
   const FORM_STYLES = {
     form: "form",
-    // group: "form__group",
     label: "input__label",
     input: "text-field__input",
     valid: "text-field__input_valid",
@@ -20,7 +21,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     header: "login__header",
     required: true,
   };
-  let navigate = useNavigate();
+
   const [isincluded, setIsincluded] = useState({
     email: "",
     password: "",

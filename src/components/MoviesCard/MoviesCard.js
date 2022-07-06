@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./MoviesCard.css";
 
-function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovie }) {
+function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
   const currentUser = useContext(CurrentUserContext);
   const BASE_URL = "https://api.nomoreparties.co";
   // const isOwn = data.owner._id === currentUser._id;
@@ -11,16 +11,18 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
   //   isOwn ? "element__remove-button_active" : "element__remove-button_hidden"
   // }`;
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-  // const isLiked = data.likes.some((i) => i._id === currentUser._id);
+  // const isSaved = data.saved.some((i) => i._id === currentUser._id);
+  const [isSaved, setIsSaved] = useState(false);
 
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardButtonClassName = `${
     isSaved ? `moviesCard__button_active` : `moviesCard__button `
   }`;
 
-  const [buttonLabel, setButtonLabel] = useState('moviesCard__button ');
+  const [buttonLabel, setButtonLabel] = useState("moviesCard__button ");
+
   const DELETE_BUTTON_LABEL = "moviesCard__button_delete";
-  const ADD_BUTTON_LABEL ="moviesCard__button_active";
+  const ADD_BUTTON_LABEL = "moviesCard__button_active";
 
   const [movieData, setMovieData] = useState({
     country: data.country || "Нет данных",
@@ -34,18 +36,19 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
     nameRU: data.nameRU || "Нет данных",
     nameEN: data.nameEN || "Нет данных",
     movieId: data.id,
-
   });
 
+  // setCards([{like: !cardLiked.like}])
   const handleClickButton = () => {
-    // console.log(locationPathname);
     if (locationPathname === "/movies") {
       console.log(locationPathname);
-      if (!data.saved) {
-        setButtonLabel(isSaved ? buttonLabel : ADD_BUTTON_LABEL)
-        onSaveMovie(setMovieData);
+
+      if (!isSaved) {
+        setIsSaved(true);
+        // onSaveMovie(setMovieData);
       } else {
-        onDeleteMovie(data._id);
+        setIsSaved(false);
+        // onDeleteMovie(data._id);
       }
     } else if (locationPathname === "/saved-movies") {
       onDeleteMovie(data._id);
@@ -53,12 +56,12 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
   };
 
   useEffect(() => {
-    if (locationPathname === '/saved-movies') {
+    if (locationPathname === "/saved-movies") {
       setButtonLabel(DELETE_BUTTON_LABEL);
-    } else if (locationPathname === '/movies') {
-      setButtonLabel(isSaved ? buttonLabel : ADD_BUTTON_LABEL)
+    } else if (locationPathname === "/movies") {
+      setButtonLabel(isSaved ? buttonLabel : ADD_BUTTON_LABEL);
     }
-  }, [isSaved, locationPathname])
+  }, [isSaved, locationPathname]);
 
   return (
     <article className="moviesCard__article">
@@ -72,7 +75,8 @@ function MoviesCard({ data, locationPathname, isSaved, onSaveMovie, onDeleteMovi
           type="button"
           className={cardButtonClassName}
           onClick={handleClickButton}
-          isSaved={data.saved}
+          // isSaved={data.saved}
+          isSaved={isSaved}
         ></button>
       </div>
       <a

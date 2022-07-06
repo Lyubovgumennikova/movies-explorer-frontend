@@ -1,5 +1,5 @@
 export const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies'
-class Api {
+class MoviesApi {
     constructor(config) {
         this._url = config.url;
         this._headers = config.headers;
@@ -112,7 +112,7 @@ class Api {
     }
 }
 
-const api = new Api({
+const moviesApi = new MoviesApi({
   url: BASE_URL,
     // url: 'https://api.nomoreparties.co/beatfilm-movies/',
     headers: {
@@ -125,4 +125,4 @@ const api = new Api({
     }
 });
 
-export default api;
+export default moviesApi;

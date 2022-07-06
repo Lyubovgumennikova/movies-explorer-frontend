@@ -12,11 +12,13 @@ import Preloader from "../Preloader/Preloader";
 import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
 
-function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu }) {
+function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
   const location = useLocation();
   console.log(location.pathname);
 
-  const handleSubmit = () => console.log("rkfnr");
+  const handleSubmit = (data) => {
+    onSubmit(data);
+  };
 
   return (
     <main className="savedMovies">
@@ -25,13 +27,12 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu }) {
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {/* <MoviesCardList
-        //  data={moviesData}
+      <MoviesCardList
         data={savedMovies}
-        locationPathname={location.pathname}
-        onDeleteSavedMovie={onDeleteMovie}
+        // locationPathname={location.pathname}
+        // onDeleteSavedMovie={onDeleteMovie}
         // onSaveMovie={moviesData}
-      /> */}
+      />
       <Footer />
     </main>
   );

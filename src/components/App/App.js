@@ -7,7 +7,7 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
-import api from "../../utils/Api";
+import moviesApi from "../../utils/MoviesApi";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import { useLocation, matchPath } from "react-router";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -38,6 +38,8 @@ function App() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [moviesData, setMoviesData] = useState([]);
   const [isErrorsModale, setIsErrorsModale] = useState(false);
+  const [savedMovies, setSavedMovies] = useState([]);
+
   // const { pathname } = useLocation();
   // const isAdminPath = matchPath("/movies/*", pathname);
 
@@ -77,11 +79,11 @@ function App() {
     // history.push('/');
   };
 
-  const handleSaveFavoriteMovie = (data) => {
-    const token = localStorage.getItem("jwt");
+  const handleSaveMovie = (data) => {
+    // const token = localStorage.getItem("jwt");
     // if (token) {
     //   mainApi.saveMovie(data, token)
-    //     .then((res) => {
+    localStorage.getItem(setSavedMovies(data))
     //     })
     //     .catch((err) => {
     //       setOpenNotificationModal();
@@ -169,7 +171,7 @@ function App() {
   useEffect(() => {
     console.log("useEffect");
     setIsLoadingMoviesData(true);
-    api
+    moviesApi
       .getMoviesData()
       .then((res) => {
         console.log(res);
@@ -242,7 +244,7 @@ function App() {
               // component={Movies}
               isLoadingData={isLoadingData}
               onSubmit={handleSearchMoviesData}
-              onSaveMovie={handleSaveFavoriteMovie}
+              onSaveMovie={handleSaveMovie}
               onDeleteSavedMovie={handleDeleteSavedMovie}
               moviesData={moviesData}
               // moviesData={markAsSaved(moviesData)}
@@ -259,7 +261,7 @@ function App() {
             />
           }
         />
-        <Route path="/saved-movies" element={<SavedMovies />} />
+        <Route path="/saved-movies" element={<SavedMovies savedMovies={savedMovies} />} />
         <Route
           path="/profile"
           element={<Profile onSignOut={handleSignOut} />}
