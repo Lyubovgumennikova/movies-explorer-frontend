@@ -73,7 +73,7 @@ function Profile({ isValid, name, onOpenMenu }) {
       <NewInput
         styleSettings={FOPM_STYLES}
         linkText="Выйти из аккаунта"
-        linkPath="/signup"
+        linkPath="/"
       />
     </div>
   );

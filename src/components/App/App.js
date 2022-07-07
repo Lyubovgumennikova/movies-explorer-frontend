@@ -30,9 +30,12 @@ import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import Footer from "../Footer/Footer";
+import  * as mainApi from "../../utils/MainApi";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
+  const [infoTooltip, setInfoTooltip] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -41,6 +44,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
 
   // const { pathname } = useLocation();
+  let navigate = useNavigate();
   // const isAdminPath = matchPath("/movies/*", pathname);
 
   const [isLoadingMoviesData, setIsLoadingMoviesData] = React.useState(false);
@@ -146,21 +150,37 @@ function App() {
     setMenuIsOpen(false);
   };
 
-  // function handleClick() {
-  //   console.log("APP");
-  //   // Navigate("/movies");
-  //   setSearchQuery("git");
-  // }
   const handleLogin = (data) => {
-    // Navigate("/movies");
-    setIsLoggedIn(true);
-    // history("/movies");
-    // navigate("/movies");
-    // Navigate("/movies");
-    // <Navigate to="/movies" replace={true} />;
-    // <navigate(to="/movies", {replace:true})
+    // if (!jwt) return;
+    mainApi.authorize(data.email, data.password)
+      .then((data) => {
+        if (!data.jwt)
+          // const myError = new Error('please improve your code')
+          return;
+
+        localStorage.setItem("jwt", data.jwt);
+        setIsLoggedIn(true);
+        navigate("/movies");
+      })
+      .catch((err) => setIsRegister(true))
+      .finally(() => {
+        setInfoTooltip(false);
+      });
   };
 
+  const handleRegister = (data) => {
+    mainApi.register(data.email, data.password)
+      .then(() => {
+        setInfoTooltip(true);
+        setIsRegister(true);
+        navigate("/movies");
+      })
+      .catch(
+        (
+          err //console.log(err)
+        ) => setIsRegister(true)
+      )
+  };
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // onSubmit(value);
@@ -232,7 +252,8 @@ function App() {
       )} */}
       <Routes>
         <Route exact path="/" element={<Main />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/signup" element={<Register onRegister={handleRegister}
+              setIsRegister={setIsRegister}/>} />
         <Route
           path="/signin"
           element={<Login onLogin={handleLogin} loggedIn={isLoggedIn} />}

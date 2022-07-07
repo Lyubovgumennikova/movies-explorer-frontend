@@ -6,8 +6,14 @@ import NewInput from "../NewInput/NewInput";
 import "./Login.css";
 import "../Input/Input.css"
 import { Navigate, useNavigate } from "react-router-dom";
+import { useFormWithValidation } from "../FormValidation/FormValidation";
 
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
+  const [isAuthError, setIsAuthError] = useState(false);
+  const [authErrorText, setAuthErrorText] = useState(null);
+
+  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
+
   let navigate = useNavigate();
 
   const FORM_STYLES = {
@@ -27,13 +33,13 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     password: "",
   });
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setIsincluded((old) => ({
-      ...old,
-      [name]: value,
-    }));
-  }
+  // function handleChange(e) {
+  //   const { name, value } = e.target;
+  //   setIsincluded((old) => ({
+  //     ...old,
+  //     [name]: value,
+  //   }));
+  // }
 
   function handleSubmit(e) {
     console.log("логинсубмит")
@@ -62,6 +68,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
+        formIsValid={isValid}
       >
         <Input
           type="email"
