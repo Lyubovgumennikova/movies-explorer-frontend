@@ -13,25 +13,25 @@ function Form({
   styleSettings,
   validationMessage,
   isValid,
-  // value,
+  values,
 
   ...props
 }) {
 
 
   return (
-    <form className= {styleSettings.form}   onSubmit={onSubmit} >
+    <form className= {styleSettings.form}   onSubmit={onSubmit} noValidate >
       <h1 className="form__title">{title}</h1>
       {children}
       <button
         type="submit"
-        // disabled
-        // className={`${
-        //   !isValid
-        //     ? `form__submit-button`
-        //     : `form__submit-button form__submit-button_disabled`
-        // }`}
-        className= {styleSettings.button}
+        disabled={!formIsValid || isLoadingData}
+        className={`${
+          !isValid
+            ? `form__submit-button`
+            : `form__submit-button form__submit-button_disabled`
+        }`}
+        // className= {styleSettings.button}
       >
         {isSubmitted ? "Выполняется..." : buttonText}
       </button>

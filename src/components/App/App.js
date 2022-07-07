@@ -47,7 +47,7 @@ function App() {
   let navigate = useNavigate();
   // const isAdminPath = matchPath("/movies/*", pathname);
 
-  const [isLoadingMoviesData, setIsLoadingMoviesData] = React.useState(false);
+  const [isLoadingMoviesData, setIsLoadingMoviesData] = useState(false);
   // const navigate = useNavigate();
   // console.log(navigate);
 
@@ -56,22 +56,6 @@ function App() {
   // let navigate = useNavigate();
   // const navigate = useHistory();
 
-  // const handleSearchMoviesData = (searchQueries = {}) => {
-  //   const localMoviesData = JSON.parse(localStorage.getItem('movies'));
-  //   if (localMoviesData) {
-  //     // const filteredMovies = searchFilter(searchQueries, localMoviesData);
-
-  //     if (filteredMovies.length === 0) {
-  //       setIsNoMoviesFound(true);
-  //     } else {
-  //       setIsNoMoviesFound(false);
-  //     }
-
-  //     localStorage.setItem('filtered-previously-movies', JSON.stringify(markAsSaved(filteredMovies)));
-
-  //     setMoviesData(markAsSaved(filteredMovies));
-  //   }
-  // };
 
   const handleSignOut = (evt) => {
     evt.preventDefault();
@@ -85,61 +69,20 @@ function App() {
 
   const handleSaveMovie = (data) => {
     // const token = localStorage.getItem("jwt");
-    // if (token) {
+
     //   mainApi.saveMovie(data, token)
     localStorage.getItem(setSavedMovies(data))
-    //     })
-    //     .catch((err) => {
-    //       setOpenNotificationModal();
-    //       setNotificationText(`${SAVE_MOVIE_ERROR_TEXTS.BASE_TEXT} ${err}`)
-    //       console.log(err);
-    //     })
-    //     .finally(() => {
-    //       handleSearchSavedMoviesData();
-    //     })
-    // } else {
-    //   history.push('/signin');
-    // };
+
   };
 
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-    // if (localMoviesData) {
-    //   const filteredMovies = searchFilter(searchQueries, localMoviesData);
 
-    //   if (filteredMovies.length === 0) {
-    //     setIsNoMoviesFound(true);
-    //   } else {
-    //     setIsNoMoviesFound(false);
-    //   }
-
-    //   localStorage.setItem(
-    //     "filtered-previously-movies",
-    //     JSON.stringify(markAsSaved(filteredMovies))
-    //   );
-
-    //   setMoviesData(markAsSaved(filteredMovies));
-    // }
   };
 
   const handleDeleteSavedMovie = (id) => {
     const token = localStorage.getItem("jwt");
 
-    // if (token) {
-    //   mainApi.deleteSavedMovie(id, token)
-    //     .then((res) => {
-    //       markAsUnsaved(id);
-    //     })
-    //     .catch((err) => {
-    //       setOpenNotificationModal();
-    //       setNotificationText(`${DELETE_MOVIE_ERROR_TEXTS.BASE_TEXT} ${err}`)
-    //       console.log(err);
-    //     })
-    //     .finally(() => {
-    //       const isAfterDelete = true;
-    //       handleSearchSavedMoviesData(isAfterDelete);
-    //     )
-    // };
   };
 
   const handleOpenMenuClick = () => {

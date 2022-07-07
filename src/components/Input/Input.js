@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useFormWithValidation } from "../FormValidation/FormValidation";
 // import Placeholder from "../Preloader/Preloader";
 import "./Input.css";
 
@@ -7,12 +8,14 @@ function Input({
   name,
   maxLength,
   styleSettings,
-  handleChange,
-  value,
-  onChange,
+  // handleChange,
+  // value,
+  // onChange,
   required,
+  // isValid,
   ...props
 }) {
+  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
   // const [isValid, setIsValid] = useState(false);
   // const [value, setValue] = useState("");
   // const [error, setError] = useState("");
@@ -44,25 +47,25 @@ function Input({
         <input
           type={type}
           id={name}
-          className={styleSettings.input}
-          // className={`${
-          //   isValid
-          //     ? styleSettings.input
-          //     : styleSettings.valid
-          // }`}
+          // className={styleSettings.input}
+          className={`${
+            isValid
+              ? styleSettings.input
+              : styleSettings.valid
+          }`}
           minLength="2"
           maxLength={maxLength}
           // onChange={(e) => handleChange(e.target.value)}
           // onChange={e => handleChange(e.target.value)}
-          // value={value}
+          value={values}
           // isValid={isValid}
-          onChange={onChange}
-          // onChange={handleChange}
-          value={props.value}
+          // onChange={onChange}
+          onChange={handleChange}
+          // value={props.value}
           required={styleSettings.required}
         />
         <span role="status" aria-live="polite" className={styleSettings.error}>
-          {props.error}
+          {errors}
         </span>
       </label>
     // </div>

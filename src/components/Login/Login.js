@@ -45,15 +45,17 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     console.log("логинсубмит")
       e.preventDefault();
 
-    const { email, password } = isincluded;
+    // const { email, password } = isincluded;
 
-    if (!email || !password) {
-      return;
-    }
-    onLogin({
-      email,
-      password,
-    });
+    // if (!email || !password) {
+    //   return;
+    // }
+    onLogin(values);
+    // onLogin({
+    //   email,
+    //   password,
+    // });
+    resetForm()
     navigate("/movies");
   }
 
@@ -69,6 +71,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
         setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
         formIsValid={isValid}
+        errors={errors}
       >
         <Input
           type="email"
@@ -77,7 +80,8 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           styleSettings={FORM_STYLES}
           maxLength="30"
           onChange={handleChange}
-          value={isincluded.email}
+          value={values.email}
+          // value={isincluded.email}
         />
         <Input
           type="password"
@@ -85,7 +89,8 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           name="Пароль"
           styleSettings={FORM_STYLES}
           onChange={handleChange}
-          value={isincluded.password}
+          value={values.password}
+          // value={isincluded.password}
         />
       </Form>
       <NewInput

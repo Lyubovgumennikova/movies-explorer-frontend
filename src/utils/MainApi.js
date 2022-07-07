@@ -1,4 +1,5 @@
-export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
+// export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
+export const BASE_URL = 'http://api.filmsdiploma.nomoreparties.sbs'
 export const request = ({ url, method = "POST", token, body }) => {
   const config = {
     method,
