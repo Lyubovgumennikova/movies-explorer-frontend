@@ -6,43 +6,42 @@ import "./Input.css";
 function Input({
   type,
   name,
+  label,
   maxLength,
   styleSettings,
   // handleChange,
   // values,
   // onChange,
   required,
-  isValid,
+  // isValid,
+  // error,
   ...props
 }) {
-  // const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
+  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
 
   return (
     // <div className={styleSettings.group}>
       <label className={styleSettings.label}>
-        {name}
+        {label}
         <input
+        name={name}
           type={type}
           id={name}
-          // className={styleSettings.input}
-          className={`${
-            !isValid
-              ? styleSettings.input
-              : styleSettings.valid
-          }`}
+          className={styleSettings.input}
+          // className={`${
+          //   !isValid
+          //     ? styleSettings.input
+          //     : styleSettings.valid
+          // }`}
           minLength="2"
           maxLength={maxLength}
-          // onChange={(e) => handleChange(e.target.value)}
-          // onChange={e => handleChange(e.target.value)}
-          value={props.values}
-          // isValid={isValid}
-          // onChange={onChange}
+          value={props.value}
+          isValid={isValid}
           onChange={props.onChange}
-          // value={props.value}
           required={styleSettings.required}
         />
         <span role="status" aria-live="polite" className={styleSettings.error}>
-          {props.errors}
+          {props.error}
         </span>
       </label>
     // </div>

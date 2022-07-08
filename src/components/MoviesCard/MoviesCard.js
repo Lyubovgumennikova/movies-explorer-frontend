@@ -41,11 +41,10 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
   // setCards([{like: !cardLiked.like}])
   const handleClickButton = () => {
     if (locationPathname === "/movies") {
-      console.log(locationPathname);
-
       if (!isSaved) {
+        // if (!data.saved) {
         setIsSaved(true);
-        // onSaveMovie(setMovieData);
+        onSaveMovie(movieData);
       } else {
         setIsSaved(false);
         // onDeleteMovie(data._id);
@@ -75,21 +74,21 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
           type="button"
           className={cardButtonClassName}
           onClick={handleClickButton}
-          // isSaved={data.saved}
-          isSaved={isSaved}
+          isSaved={data.saved}
+          // isSaved={isSaved}
         ></button>
       </div>
       <a
         href={movieData.trailerLink}
         target="_blank"
-        aria-label={`Открыть трейлер фильма "${
-          movieData.nameRU || movieData.nameEN
-        }" на youtube.com`}
+        aria-label={`Открыть трейлер фильма "${movieData.nameRU ||
+          movieData.nameEN}" на youtube.com`}
         rel="noreferrer"
       >
         <img
           className="moviesCard__image"
           alt={movieData.nameRU || movieData.nameEN}
+          // src={movieData.image.url}
           src={`${BASE_URL}${movieData.image.url}`}
         />
       </a>

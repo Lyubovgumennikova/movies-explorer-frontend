@@ -66,7 +66,8 @@ function SearchForm({
 
         // false
         type="checkbox"
-        name="Короткометражки"
+        name="checkbox"
+        label="Короткометражки"
         styleSettings={FORM_STYLES}
       />
           <Button

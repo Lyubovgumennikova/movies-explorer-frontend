@@ -29,7 +29,7 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
       <SearchForm onSubmit={handleSubmit} />
       <MoviesCardList
         data={savedMovies}
-        // locationPathname={location.pathname}
+        locationPathname={location.pathname}
         // onDeleteSavedMovie={onDeleteMovie}
         // onSaveMovie={moviesData}
       />

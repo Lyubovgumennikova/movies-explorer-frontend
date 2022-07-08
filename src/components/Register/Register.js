@@ -25,7 +25,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
     console.log("ljhg")
     e.preventDefault();
     onRegister(values);
-    resetForm()
+    // resetForm()
     // const { name, email, password } = newEntry;
     // onRegister({
     //   name,
@@ -48,24 +48,30 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
       >
         <Input
           type="name"
-          name="Имя"
+          name="username"
+          label='Имя'
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={values.name}
+          value={values.username}
+          error={errors.username}
         />
         <Input
           type="email"
-          name="E-mail"
+          name="email"
+          label='E-mail'
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.email}
+          error={errors.email}
         />
         <Input
           type="password"
-          name="Пароль"
+          name="password"
+          label='Пароль'
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.password}
+          error={errors.password}
         />
       </Form>
       <NewInput

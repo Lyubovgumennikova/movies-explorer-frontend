@@ -76,21 +76,23 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
         <Input
           type="email"
           // required
-          name="E-mail"
+          name="email"
+          label='E-mail'
           styleSettings={FORM_STYLES}
           maxLength="30"
           onChange={handleChange}
           value={values.email}
-          // value={isincluded.email}
+          error={errors.email}
         />
         <Input
           type="password"
           required
-          name="Пароль"
+          name="password"
+          label='Пароль'
           styleSettings={FORM_STYLES}
           onChange={handleChange}
           value={values.password}
-          // value={isincluded.password}
+          error={errors.password}
         />
       </Form>
       <NewInput

@@ -25,13 +25,13 @@ function Form({
       {children}
       <button
         type="submit"
-        disabled={!formIsValid || isLoadingData}
-        className={`${
-          !isValid
-            ? `form__submit-button`
-            : `form__submit-button form__submit-button_disabled`
-        }`}
-        // className= {styleSettings.button}
+        // disabled={!formIsValid || isLoadingData}
+        // className={`${
+        //   !isValid
+        //     ? `form__submit-button`
+        //     : `form__submit-button form__submit-button_disabled`
+        // }`}
+        className= {styleSettings.button}
       >
         {isSubmitted ? "Выполняется..." : buttonText}
       </button>

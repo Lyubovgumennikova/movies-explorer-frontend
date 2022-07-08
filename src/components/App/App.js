@@ -179,13 +179,17 @@ function App() {
   const { pathname } = useLocation();
   // const { location } = props;
   const routePathMain = matchPath("/*", pathname);
-  const exclusionRoutesPath = ["/signin", "/signup"];
+  // const exclusionRoutesPath = matchPath(exclusionRoutesPathsArrayFooter, pathname);
+  // const exclusionRoutesPathFooter = matchPath["/signin", "/signup", "/profile"];
 
   return (
     <div className="page">
       {/* <Router> */}
-      {/* {pathname.match(routePathMain) ? null : (
+      {/* {pathname.match(exclusionRoutesPathFooter) ? null : (
         <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
+      )} */}
+      {/* { pathname.match(exclusionRoutesPath) ?null : (
+          <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
       )} */}
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
@@ -245,8 +249,12 @@ function App() {
               />
             }
           />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
+        {/* {pathname.match(routePathMain) ? (
+          // <Footer>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Footer>
+          <Footer />
+        ) : null} */}
       </CurrentUserContext.Provider>
       {/* <Footer /> */}
       <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />

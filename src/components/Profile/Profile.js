@@ -7,9 +7,11 @@ import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
+import { useFormWithValidation } from "../FormValidation/FormValidation";
 
-function Profile({ isValid, name, onOpenMenu }) {
+function Profile({onOpenMenu }) {
   // const currentUserData = React.useContext(CurrentUserContext);
+  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
   const FOPM_STYLES = {
     form: "profile__form",
     // group: "profile__group",
@@ -23,7 +25,8 @@ function Profile({ isValid, name, onOpenMenu }) {
     button: "profile__form_submit-button",
     // button: "form__submit-button",
     link: "profile__text_link",
-    error: "profile__error",
+    // error: "profile__error",
+    error: "message__error",
   };
 
   function handleSubmit(e) {
@@ -55,19 +58,24 @@ function Profile({ isValid, name, onOpenMenu }) {
         <Input
           required
           type="name"
-          name="Имя"
+          name="username"
+          label='Имя'
           styleSettings={FOPM_STYLES}
           maxLength="30"
-          // onChange={handleChange} //={setEmail}
+          onChange={handleChange}
+          value={values.username}
+          error={errors.username}
         />
         <hr class="portfolio__line" />
         <Input
           required
           type="email"
-          name="E-mail" //&#8208;
+          name="email"
+          label='E-mail'
           styleSettings={FOPM_STYLES}
-          // placeholder="Пароль"
-          // onChange={handleChange} //={setPassword}
+          onChange={handleChange}
+          value={values.email}
+          error={errors.email}
         />
       </Form>
       <NewInput
