@@ -14,8 +14,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 // import InfoTooltip from './InfoTooltip';
-import { createBrowserHistory } from "history";
-import "./App.css"
+import "./App.css";
 
 import {
   Navigate,
@@ -30,7 +29,7 @@ import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import Footer from "../Footer/Footer";
-import  * as mainApi from "../../utils/MainApi";
+import * as mainApi from "../../utils/MainApi";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -57,7 +56,6 @@ function App() {
   // let navigate = useNavigate();
   // const navigate = useHistory();
 
-
   const handleSignOut = (evt) => {
     evt.preventDefault();
     setIsLoggedIn(false);
@@ -72,18 +70,15 @@ function App() {
     // const token = localStorage.getItem("jwt");
 
     //   mainApi.saveMovie(data, token)
-    localStorage.getItem(setSavedMovies(data))
-
+    localStorage.getItem(setSavedMovies(data));
   };
 
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-
   };
 
   const handleDeleteSavedMovie = (id) => {
     const token = localStorage.getItem("jwt");
-
   };
 
   const handleOpenMenuClick = () => {
@@ -96,7 +91,8 @@ function App() {
 
   const handleLogin = (data) => {
     // if (!jwt) return;
-    mainApi.authorize(data.email, data.password)
+    mainApi
+      .authorize(data.email, data.password)
       .then((data) => {
         if (!data.jwt)
           // const myError = new Error('please improve your code')
@@ -113,17 +109,16 @@ function App() {
   };
 
   const handleRegister = (data) => {
-    mainApi.register(data.username, data.email, data.password)
+    mainApi
+      .register(data.username, data.email, data.password)
       .then(() => {
         setInfoTooltip(true);
         setIsRegister(true);
         navigate("/movies");
       })
-      .catch(
-        (
-          err //console.log(err)
-        ) => setIsRegister(true)
-      )
+      .catch((
+        err //console.log(err)
+      ) => setIsRegister(true));
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -176,11 +171,9 @@ function App() {
       // window.addEventListener('load', handleWindowLoad);
 
       // return () => window.removeEventListener('load', handleWindowLoad);
-      .catch(
-        (
-          err //console.log(err)
-        ) => setIsErrorsModale(true)
-      );
+      .catch((
+        err //console.log(err)
+      ) => setIsErrorsModale(true));
   }, [isSubmitted]);
 
   const { pathname } = useLocation();
@@ -195,46 +188,65 @@ function App() {
         <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
       )} */}
       <CurrentUserContext.Provider value={currentUser}>
-
-     <Routes>
-        <Route exact path="/" element={<Main />} />
-        <Route path="/signup" element={<Register onRegister={handleRegister}
-              setIsRegister={setIsRegister}/>} />
-        <Route
-          path="/signin"
-          element={<Login onLogin={handleLogin} loggedIn={isLoggedIn} />}
-        />
-        <Route
-          path="/movies"
-          element={
-            <Movies
-              // component={Movies}
-              isLoadingData={isLoadingData}
-              onSubmit={handleSearchMoviesData}
-              onSaveMovie={handleSaveMovie}
-              onDeleteSavedMovie={handleDeleteSavedMovie}
-              moviesData={moviesData}
-              // moviesData={markAsSaved(moviesData)}
-              onOpenMenu={handleOpenMenuClick}
-              // loggedIn={loggedIn}
-              // component={Movies}
-              // isNoMoviesFound={isNoMoviesFound}
-              // isLoadingData={isLoadingMoviesData}
-              // resStatus={moviesApiResStatus}
-              isSubmitted={isSubmitted}
-              handleSubmit={handleSubmit}
-              // handleChange={setSearchQuery}
-              // searchQuery={searchQuery}
-            />
-          }
-        />
-        <Route path="/saved-movies" element={<SavedMovies savedMovies={savedMovies} />} />
-        <Route
-          path="/profile"
-          element={<Profile onSignOut={handleSignOut} />}
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <Routes>
+          <Route exact path="/" element={<Main />} />
+          <Route
+            path="/signup"
+            element={
+              <Register
+                onRegister={handleRegister}
+                setIsRegister={setIsRegister}
+              />
+            }
+          />
+          <Route
+            path="/signin"
+            element={<Login onLogin={handleLogin} loggedIn={isLoggedIn} />}
+          />
+          <Route
+            path="/movies"
+            element={
+              <Movies
+                // component={Movies}
+                isLoadingData={isLoadingData}
+                onSubmit={handleSearchMoviesData}
+                onSaveMovie={handleSaveMovie}
+                onDeleteSavedMovie={handleDeleteSavedMovie}
+                moviesData={moviesData}
+                // moviesData={markAsSaved(moviesData)}
+                onOpenMenu={handleOpenMenuClick}
+                // loggedIn={loggedIn}
+                // component={Movies}
+                // isNoMoviesFound={isNoMoviesFound}
+                // isLoadingData={isLoadingMoviesData}
+                // resStatus={moviesApiResStatus}
+                isSubmitted={isSubmitted}
+                handleSubmit={handleSubmit}
+                // handleChange={setSearchQuery}
+                // searchQuery={searchQuery}
+              />
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <SavedMovies
+                savedMovies={savedMovies}
+                onOpenMenu={handleOpenMenuClick}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                onSignOut={handleSignOut}
+                onOpenMenu={handleOpenMenuClick}
+              />
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </CurrentUserContext.Provider>
       {/* <Footer /> */}
       <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />
