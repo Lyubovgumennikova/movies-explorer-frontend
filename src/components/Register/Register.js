@@ -7,31 +7,30 @@ import "./Register.css";
 import { useFormWithValidation } from "../FormValidation/FormValidation";
 
 function Register({ onRegister, isSubmitted, setIsSubmitted }) {
-  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
+  const {
+    values,
+    errors,
+    isValid,
+    handleChange,
+    resetForm,
+  } = useFormWithValidation({});
 
   const FOPM_STYLES = {
     form: "form",
     group: "form__group",
     label: "input__label",
-    input: "text-field__input",
-    valid: "text-field__input_valid",
+    input: `${isValid ? "text-field__input" : "text-field__input_valid"}`,
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
-    required: true,
+    // required: true,
   };
 
   function handleSubmit(e) {
-    console.log("ljhg")
+    console.log("ljhg");
     e.preventDefault();
     onRegister(values);
     // resetForm()
-    // const { name, email, password } = newEntry;
-    // onRegister({
-    //   name,
-    //   email,
-    //   password,
-    // });
   }
 
   return (
@@ -42,32 +41,35 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
         title="Добро пожаловать!"
         buttonText="Зарегистрироваться"
         styleSettings={FOPM_STYLES}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
+        // isSubmitted={isSubmitted}
+        // setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
       >
         <Input
+        required
           type="name"
           name="username"
-          label='Имя'
+          label="Имя"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.username}
           error={errors.username}
         />
         <Input
+        required
           type="email"
           name="email"
-          label='E-mail'
+          label="E-mail"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.email}
           error={errors.email}
         />
         <Input
+        required
           type="password"
           name="password"
-          label='Пароль'
+          label="Пароль"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.password}

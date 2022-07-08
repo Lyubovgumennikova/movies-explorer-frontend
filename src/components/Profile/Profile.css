@@ -27,6 +27,7 @@
   color: #000000;
   text-align: left;
   white-space: nowrap;
+  flex-wrap: wrap;
 }
 
 .profile__textInput,

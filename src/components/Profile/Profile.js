@@ -9,23 +9,23 @@ import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
 import { useFormWithValidation } from "../FormValidation/FormValidation";
 
-function Profile({onOpenMenu }) {
+function Profile({ onOpenMenu }) {
   // const currentUserData = React.useContext(CurrentUserContext);
-  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
+  const {
+    values,
+    errors,
+    isValid,
+    handleChange,
+    resetForm,
+  } = useFormWithValidation({});
+
   const FOPM_STYLES = {
     form: "profile__form",
-    // group: "profile__group",
     label: "profile__label",
-    // input:  `${isValid
-    //     ? "profile__textInput"
-    //     : "profile__textInput_valid"
-    // }`,
-    input: "profile__textInput",
-    valid: "profile__textInput_valid",
+    input: `${isValid ? "profile__textInput" : "profile__textInput_valid"}`,
     button: "profile__form_submit-button",
     // button: "form__submit-button",
     link: "profile__text_link",
-    // error: "profile__error",
     error: "message__error",
   };
 
@@ -59,7 +59,7 @@ function Profile({onOpenMenu }) {
           required
           type="name"
           name="username"
-          label='Имя'
+          label="Имя"
           styleSettings={FOPM_STYLES}
           maxLength="30"
           onChange={handleChange}
@@ -71,7 +71,7 @@ function Profile({onOpenMenu }) {
           required
           type="email"
           name="email"
-          label='E-mail'
+          label="E-mail"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.email}
