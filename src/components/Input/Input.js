@@ -9,36 +9,13 @@ function Input({
   maxLength,
   styleSettings,
   // handleChange,
-  // value,
+  // values,
   // onChange,
   required,
-  // isValid,
+  isValid,
   ...props
 }) {
-  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
-  // const [isValid, setIsValid] = useState(false);
-  // const [value, setValue] = useState("");
-  // const [error, setError] = useState("");
-
-  // function handleChange(e) {
-  //   const input = e.target;
-    // const name = input.name;
-    // const value = input.type === 'checkbox' ? input.checked : input.value;
-
-    // setValue(input.value);
-    // setIsValid(input.validity.valid);
-    // if (!isValid) {
-    //   setError(input.validationMessage);
-    // } else {
-    //   setError("");
-    // }
-
-    // setNewEntry((old) => ({
-    //   ...old,
-    //   [name]: value,
-    // }));
-    // setIsValid(input.closest('form').checkValidity());
-  // }
+  // const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
 
   return (
     // <div className={styleSettings.group}>
@@ -49,7 +26,7 @@ function Input({
           id={name}
           // className={styleSettings.input}
           className={`${
-            isValid
+            !isValid
               ? styleSettings.input
               : styleSettings.valid
           }`}
@@ -57,15 +34,15 @@ function Input({
           maxLength={maxLength}
           // onChange={(e) => handleChange(e.target.value)}
           // onChange={e => handleChange(e.target.value)}
-          value={values}
+          value={props.values}
           // isValid={isValid}
           // onChange={onChange}
-          onChange={handleChange}
+          onChange={props.onChange}
           // value={props.value}
           required={styleSettings.required}
         />
         <span role="status" aria-live="polite" className={styleSettings.error}>
-          {errors}
+          {props.errors}
         </span>
       </label>
     // </div>

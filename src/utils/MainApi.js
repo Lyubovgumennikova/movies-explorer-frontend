@@ -18,10 +18,10 @@ export const request = ({ url, method = "POST", token, body }) => {
   });
 };
 
-export const register = (email, password) => {
+export const register = (username, email, password) => {
   return request({
     url: `signup`,
-    body: { email, password},
+    body: {username, email, password},
   });
 };
 

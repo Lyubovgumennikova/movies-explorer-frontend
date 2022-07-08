@@ -4,16 +4,10 @@ import Input from "../Input/Input";
 import Form from "../Form/Form";
 import NewInput from "../NewInput/NewInput";
 import "./Register.css";
+import { useFormWithValidation } from "../FormValidation/FormValidation";
 
 function Register({ onRegister, isSubmitted, setIsSubmitted }) {
-  const [isValid, setIsValid] = useState(false);
-  const [value, setValue] = useState("");
-  const [error, setError] = useState("");
-  const [newEntry, setNewEntry] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
 
   const FOPM_STYLES = {
     form: "form",
@@ -27,34 +21,17 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
     required: true,
   };
 
-  function handleChange(e) {
-    // const { name, value } = e.target;
-    const input = e.target;
-    setValue(input.value);
-    setIsValid(input.validity.valid);
-    if (!isValid) {
-      setError(input.validationMessage);
-    } else {
-      setError("");
-    }
-
-    setNewEntry((old) => ({
-      ...old,
-      [input]: value,
-    }));
-    setIsValid(input.closest('form').checkValidity());
-  }
-
   function handleSubmit(e) {
     console.log("ljhg")
     e.preventDefault();
-
-    const { name, email, password } = newEntry;
-    onRegister({
-      name,
-      email,
-      password,
-    });
+    onRegister(values);
+    resetForm()
+    // const { name, email, password } = newEntry;
+    // onRegister({
+    //   name,
+    //   email,
+    //   password,
+    // });
   }
 
   return (
@@ -74,21 +51,21 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
           name="Имя"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={newEntry.name}
+          value={values.name}
         />
         <Input
           type="email"
           name="E-mail"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={newEntry.email}
+          value={values.email}
         />
         <Input
           type="password"
           name="Пароль"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={newEntry.password}
+          value={values.password}
         />
       </Form>
       <NewInput

@@ -36,6 +36,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -112,7 +113,7 @@ function App() {
   };
 
   const handleRegister = (data) => {
-    mainApi.register(data.email, data.password)
+    mainApi.register(data.username, data.email, data.password)
       .then(() => {
         setInfoTooltip(true);
         setIsRegister(true);
@@ -193,7 +194,9 @@ function App() {
       {/* {pathname.match(routePathMain) ? null : (
         <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
       )} */}
-      <Routes>
+      <CurrentUserContext.Provider value={currentUser}>
+
+     <Routes>
         <Route exact path="/" element={<Main />} />
         <Route path="/signup" element={<Register onRegister={handleRegister}
               setIsRegister={setIsRegister}/>} />
@@ -232,6 +235,7 @@ function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </CurrentUserContext.Provider>
       {/* <Footer /> */}
       <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />
       <InfoTooltip
