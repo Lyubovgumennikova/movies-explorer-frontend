@@ -5,26 +5,21 @@ import "./SearchForm.css";
 import icon from "../../images/icon__movie.svg";
 
 import Button from "../Button/Button";
+import { useFormWithValidation } from "../../utils/FormValidation";
 
-function SearchForm({
-  onSubmit,
+function SearchForm({ onSubmit }) {
+  const {
+    values,
+    errors,
+    isValid,
+    handleChange,
+    resetForm,
+  } = useFormWithValidation({});
 
-  setSearchQuery,
-  // handleChange,
-  isSubmitted,
-  // handleSubmit,
-  searchQuery,
-}) {
-  const { values, handleChange} = useState({});
-  // const [search, setSearch] = useState("");
   const handleSubmit = (e) => {
-    console.log("клик");
-    // console.log(e.target);
     e.preventDefault();
-
     onSubmit(values);
-    // console.log(values);
-    // setSearchQuery("");
+    resetForm();
   };
 
   const FORM_STYLESI = {
@@ -33,6 +28,7 @@ function SearchForm({
     button: "searchForm__submitButton",
     required: true,
   };
+
   const FORM_STYLES = {
     form: "searchForm",
     textInput: "searchForm__text",
@@ -48,38 +44,28 @@ function SearchForm({
       <Input
         placeholder="Фильм"
         type="text"
-        // value={value}
+        id="search"
+        name="search"
         styleSettings={FORM_STYLESI}
-        // className={FORM_STYLES.textInput}
-        // onChange={handleChange}
-        // handleChange={handleChange}
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={handleChange}
         value={values.search}
-        //   name={props.settings.name}
-        // required={props.settings.required}
-        // onChange={e => setSearch( e.target.value)}
-        // onChange={handleChange}
-        // value={searchQuery}
+        required
+        // error={errors.search}
       />
 
       <Input
-
-        // false
         type="checkbox"
-        name="checkbox"
+        id="checkbox"
+        name="shortfilm"
         label="Короткометражки"
         styleSettings={FORM_STYLES}
+        onChange={handleChange}
+        value={values.shortfilm}
       />
-          <Button
-        // className={FORM_STYLES.submitButton}
-        styleSettings={FORM_STYLESI}
-        // type="search"
+      <Button
         type="submit"
-        title="Search"
-        // onClick={handleSubmit}
-        // onClick={handleClick}
-        // handleClick={() => console.log("rkfnr")}
-        // onClick={onClick}
+        title="search"
+        styleSettings={FORM_STYLESI}
         buttonText={
           <img
             src={icon}

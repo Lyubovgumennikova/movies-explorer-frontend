@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useFormWithValidation } from "../FormValidation/FormValidation";
+import { useFormWithValidation } from "../../utils/FormValidation";
 // import Placeholder from "../Preloader/Preloader";
 import "./Input.css";
 
@@ -33,7 +33,7 @@ function Input({
           value={props.value}
           isValid={isValid}
           onChange={props.onChange}
-          // required={styleSettings.required}
+          required={styleSettings.required}
         />
         <span role="status" aria-live="polite" className={styleSettings.error}>
           {props.error}

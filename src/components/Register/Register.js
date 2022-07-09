@@ -4,7 +4,7 @@ import Input from "../Input/Input";
 import Form from "../Form/Form";
 import NewInput from "../NewInput/NewInput";
 import "./Register.css";
-import { useFormWithValidation } from "../FormValidation/FormValidation";
+import { useFormWithValidation } from "../../utils/FormValidation";
 
 function Register({ onRegister, isSubmitted, setIsSubmitted }) {
   const {
@@ -23,19 +23,20 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
-    // required: true,
+    logo: "header__logo header__logo_entrance",
+    required: true,
   };
 
   function handleSubmit(e) {
     console.log("ljhg");
     e.preventDefault();
     onRegister(values);
-    // resetForm()
+    resetForm()
   }
 
   return (
     <div className="register">
-      <Header />
+      <Header styleSettings={FOPM_STYLES}/>
       <Form
         name="register"
         title="Добро пожаловать!"

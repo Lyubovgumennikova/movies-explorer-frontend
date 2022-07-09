@@ -6,7 +6,7 @@ import NewInput from "../NewInput/NewInput";
 import "./Login.css";
 import "../Input/Input.css";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useFormWithValidation } from "../FormValidation/FormValidation";
+import { useFormWithValidation } from "../../utils/FormValidation";
 
 function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   const {
@@ -26,15 +26,15 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     button: "form__submit-button",
     link: "login__input-text_link",
     error: "message__error",
-    header: "login__header",
-    // required: true,
+    logo: "header__logo header__logo_entrance",
+    required: true,
   };
 
   function handleSubmit(e) {
     console.log("логинсубмит");
     e.preventDefault();
     onLogin(values);
-    //  resetForm();
+    resetForm();
     navigate("/movies");
   }
 
@@ -53,7 +53,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
         errors={errors}
       >
         <Input
-        required
+          required
           type="email"
           name="email"
           label="E-mail"
@@ -64,7 +64,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           error={errors.email}
         />
         <Input
-        required
+          required
           type="password"
           name="password"
           label="Пароль"

@@ -12,6 +12,7 @@ import Button from "../Button/Button";
 // import { useLocation } from "react-router-dom";
 import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
+import NO_MOVIES_FOUND_TEXT from "../../constants/noMoviesFound";
 
 function Movies({
   isLoadingData,
@@ -28,13 +29,10 @@ function Movies({
 
   searchQuery,
 }) {
-  // const [show, setShow] = useState("index");
-  // const [movies, setMovies] = useState([]);
-  // const [searchQuery, setSearchQuery] = useState("");
-  // const [isSubmitted, setIsSubmitted] = useState(false);
+  const FOPM_STYLES = {
+    logo: "header__logo",
+  };
   const location = useLocation();
-  console.log(location.pathname);
-
 
   const handleSubmit = (data) => {
     onSubmit(data);
@@ -42,21 +40,18 @@ function Movies({
 
   return (
     <main className="movies">
-      <Header>
+      <Header styleSettings={FOPM_STYLES}>
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {/* {isLoadingData ? (
-        <Preloader />
-      // ) : show === "movie" ? (
-        // <InfoTooltip />
-      ) : (
-        <MoviesCardList
-          data={moviesData}
-          locationPathname={useLocation.pathname}
-          onSaveMovie={onSaveMovie}
-          onDeleteSavedMovie={onDeleteMovie}
+      {/* {!isLoadingData && isNoMoviesFound && (
+        <p>{NO_MOVIES_FOUND_TEXT.BASE_TEXT}</p>
+      )}
+      {isLoadingData && <Preloader />} */}
+      {/* {isMoviesApiError && (
+        <InfoTooltip
+          text={NO_MOVIES_FOUND_TEXT.BASE_ERROR}
         />
       )} */}
       <MoviesCardList

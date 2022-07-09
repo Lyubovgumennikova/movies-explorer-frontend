@@ -40,3 +40,42 @@ export const getContent = (token) => {
   });
 };
 
+export const getInitialCards = () => {
+  //     •	получить список всех карточек в виде массива (GET)
+  return fetch(`${this._url}/cards`, {
+    method: "GET",
+    headers: this._headers,
+  }).then((res) => this._errorHandler(res));
+}
+
+export const addNewCard = (data)=> {
+  //   •	добавить карточку (POST)
+  return fetch(`${this._url}/cards`, {
+    method: "POST",
+    headers: this._headers,
+    body: JSON.stringify({
+      name: data.name,
+      link: data.link,
+    }),
+  }).then((res) => this._errorHandler(res));
+}
+
+export const deleteCard= (data) => {
+  // •	удалить карточку (DELETE)
+  return fetch(`${this._url}/cards/${data}`, {
+    method: "DELETE",
+    headers: this._headers,
+  }).then((res) => this._errorHandler(res));
+}
+
+export const setUserInfo = (data) => {
+  // •	заменить данные пользователя (PATCH)
+  return fetch(`${this._url}/users/me`, {
+    method: "PATCH",
+    headers: this._headers,
+    body: JSON.stringify({
+      name: data.name,
+      about: data.about,
+    }),
+  }).then((res) => this._errorHandler(res));
+}

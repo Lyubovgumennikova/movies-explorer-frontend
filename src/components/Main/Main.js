@@ -11,9 +11,12 @@ import Footer from '../Footer/Footer';
 import "./Main.css"
 
 function Main() {
+  const FOPM_STYLES = {
+    logo: "header__logo",
+  };
   return (
     <main className="main">
-      <Header>
+      <Header styleSettings={FOPM_STYLES}>
       <Navigation />
       </Header>
       <Promo>

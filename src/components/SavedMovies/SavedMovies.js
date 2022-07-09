@@ -13,6 +13,9 @@ import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
 
 function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
+  const FOPM_STYLES = {
+    logo: "header__logo",
+  };
   const location = useLocation();
   console.log(location.pathname);
 
@@ -22,7 +25,7 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
 
   return (
     <main className="savedMovies">
-      <Header>
+      <Header styleSettings={FOPM_STYLES}>
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>

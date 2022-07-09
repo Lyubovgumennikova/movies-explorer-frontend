@@ -7,7 +7,7 @@ import MenuButton from "../MenuButton/MenuButton";
 function Header(props) {
   return (
     <header className=  "header"  >
-      <Link to="/" className="header__logo">
+      <Link to="/" className={props.styleSettings.logo}>
         <img src={logo} alt="Лого" />
       </Link>
       {props.isLoggedIn ? <MenuButton onOpenMenu={props.onOpenMenu} /> : null}

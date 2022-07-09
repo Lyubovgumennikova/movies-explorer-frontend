@@ -140,6 +140,7 @@
   .aboutMi__avatar {
     max-width: 292px;
     height: 352px;
+    margin: auto;
   }
 
   .aboutMi__title {

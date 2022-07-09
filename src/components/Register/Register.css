@@ -16,11 +16,15 @@
 
 @media (max-width: 767px) {
   .register {
-    margin-top: 38px;
+    margin-top: 56px;
     display: flex;
     flex-direction: column;
     max-width: 260px;
     /* height: 100vh; */
     align-items: center;
+  }
+
+  .header__logo_entrance {
+    margin: auto;
   }
 }

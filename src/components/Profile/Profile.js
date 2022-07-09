@@ -7,7 +7,7 @@ import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
-import { useFormWithValidation } from "../FormValidation/FormValidation";
+import { useFormWithValidation } from "../../utils/FormValidation";
 
 function Profile({ onOpenMenu }) {
   // const currentUserData = React.useContext(CurrentUserContext);
@@ -27,6 +27,7 @@ function Profile({ onOpenMenu }) {
     // button: "form__submit-button",
     link: "profile__text_link",
     error: "message__error",
+    logo: "header__logo",
   };
 
   function handleSubmit(e) {
@@ -43,7 +44,7 @@ function Profile({ onOpenMenu }) {
 
   return (
     <div className="profile">
-      <Header>
+      <Header styleSettings={FOPM_STYLES}>
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>

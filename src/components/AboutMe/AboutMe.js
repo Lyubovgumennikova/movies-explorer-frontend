@@ -2,7 +2,7 @@ import React from "react";
 import MainArticle from "../MainArticle/MainArticle";
 import NavReview from "../NavReview/NavReview";
 import "./AboutMe.css";
-// import foto from "../../images/avatar.jpg "
+import foto from "../../images/IMG_82181.jpg"
 
 function AboutMe(props) {
   const TITLE_TEXT = "Студент";
@@ -27,7 +27,7 @@ function AboutMe(props) {
         <NavReview styleSettings={ABOUT_ME_ARTICLE_STYLES} />
         <img
           className="aboutMi__avatar"
-          src="../../images/avatar.jpg "
+          src={foto}
           alt="AVATAR"
         />
       </div>
