@@ -18,10 +18,10 @@ export const request = ({ url, method = "POST", token, body }) => {
   });
 };
 
-export const register = (username, email, password) => {
+export const register = (name, email, password) => {
   return request({
     url: `signup`,
-    body: {username, email, password},
+    body: {name, email, password},
   });
 };
 
@@ -68,14 +68,20 @@ export const deleteCard= (data) => {
   }).then((res) => this._errorHandler(res));
 }
 
-export const setUserInfo = (data) => {
+export const setUserInfo = (name, email) => {
   // •	заменить данные пользователя (PATCH)
-  return fetch(`${this._url}/users/me`, {
+  return request({
+    url: `users/me`,
     method: "PATCH",
-    headers: this._headers,
-    body: JSON.stringify({
-      name: data.name,
-      about: data.about,
-    }),
-  }).then((res) => this._errorHandler(res));
+    body: {name, email},
+    // token,
+  // •	заменить данные пользователя (PATCH)
+  // return fetch(`${this._url}/users/me`, {
+    // method: "PATCH",
+    // headers: this._headers,
+    // body: JSON.stringify({
+      // name: data.name,
+      // email: data.email,
+    // }),
+  })
 }

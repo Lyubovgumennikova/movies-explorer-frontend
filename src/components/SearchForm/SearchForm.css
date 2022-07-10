@@ -22,16 +22,16 @@
 }
 
 .searchForm__text {
-  width: 100%;
+  width: calc(100% - 22px);
   height: 45px;
+  padding: 0;
+  padding-left: 22px;
   font-family: "Inter", Arial, sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 14px;
   line-height: 18px;
   color: #a0a0a0;
-  text-align: left;
-  padding: 0;
   opacity: 0.2;
   border: 1.5px solid #aaaaaa;
   border-radius: 50px;

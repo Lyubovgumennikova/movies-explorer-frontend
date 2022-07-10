@@ -30,17 +30,23 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     required: true,
   };
 
+  // const styldata = {
+  //   regexp: "[a-zA-Z -]{2,30}",
+  //   customErrorMessage:
+  //     "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
+  // };
+
   function handleSubmit(e) {
     console.log("логинсубмит");
     e.preventDefault();
     onLogin(values);
-    resetForm();
-    navigate("/movies");
+    // resetForm();
+    // navigate("/movies");
   }
 
   return (
     <div className="login">
-      <Header styleSettings={FORM_STYLES} />
+      {/* <Header styleSettings={FORM_STYLES} /> */}
       <Form
         name="Login"
         title="Рады видеть!"
@@ -58,20 +64,27 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           name="email"
           label="E-mail"
           styleSettings={FORM_STYLES}
+          // minLength="5"
           maxLength="30"
           onChange={handleChange}
           value={values.email}
           error={errors.email}
+          // regexp={/^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i}
+          // styldata={styldata}
         />
         <Input
           required
           type="password"
           name="password"
           label="Пароль"
+          minLength="6"
           styleSettings={FORM_STYLES}
           onChange={handleChange}
           value={values.password}
           error={errors.password}
+          // regexp={"[a-zA-Z -]{2,30}"}
+          // styldata={styldata}
+          pattern="[a-zA-Z -]{2,30}"
         />
       </Form>
       <NewInput

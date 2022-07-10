@@ -25,10 +25,10 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
 
   return (
     <main className="savedMovies">
-      <Header styleSettings={FOPM_STYLES}>
-        <AuthNavigation />
-        <MenuButton onOpenMenu={onOpenMenu} />
-      </Header>
+      {/* <Header styleSettings={FOPM_STYLES}> */}
+        {/* <AuthNavigation /> */}
+        {/* <MenuButton onOpenMenu={onOpenMenu} /> */}
+      {/* </Header> */}
       <SearchForm onSubmit={handleSubmit} />
       <MoviesCardList
         data={savedMovies}

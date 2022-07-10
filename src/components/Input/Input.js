@@ -8,16 +8,22 @@ function Input({
   name,
   label,
   maxLength,
+  minLength,
   styleSettings,
-  // handleChange,
-  // values,
-  // onChange,
+  placeholder,
+  pattern,
+  regexp,
   required,
-  // isValid,
+  errorfff,
   // error,
   ...props
 }) {
   const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
+  const INPUTS_DATA = {
+    regexp: "[a-zA-Z -]{2,30}",
+    customErrorMessage:
+      "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
+  };
 
   return (
     // <div className={styleSettings.group}>
@@ -27,13 +33,17 @@ function Input({
         name={name}
           type={type}
           id={name}
+          placeholder={placeholder}
           className={styleSettings.input}
-          minLength="2"
+          minLength={minLength}
           maxLength={maxLength}
           value={props.value}
           isValid={isValid}
           onChange={props.onChange}
           required={styleSettings.required}
+          inputsData={INPUTS_DATA}
+          pattern={pattern}
+          // pattern={props.regexp}
         />
         <span role="status" aria-live="polite" className={styleSettings.error}>
           {props.error}

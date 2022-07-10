@@ -16,9 +16,9 @@ function Main() {
   };
   return (
     <main className="main">
-      <Header styleSettings={FOPM_STYLES}>
-      <Navigation />
-      </Header>
+      {/* <Header styleSettings={FOPM_STYLES}> */}
+      {/* <Navigation /> */}
+      {/* </Header> */}
       <Promo>
         <NavTab />
       </Promo>

@@ -6,7 +6,7 @@ import NewInput from "../NewInput/NewInput";
 import "./Register.css";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
-function Register({ onRegister, isSubmitted, setIsSubmitted }) {
+function Register({ onRegister, isSubmitted, setIsSubmitted, isLoggedIn }) {
   const {
     values,
     errors,
@@ -31,30 +31,35 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
     console.log("ljhg");
     e.preventDefault();
     onRegister(values);
-    resetForm()
+    // resetForm()
   }
 
   return (
     <div className="register">
-      <Header styleSettings={FOPM_STYLES}/>
+      {/* <Header styleSettings={FOPM_STYLES}/> */}
       <Form
         name="register"
         title="Добро пожаловать!"
         buttonText="Зарегистрироваться"
         styleSettings={FOPM_STYLES}
-        // isSubmitted={isSubmitted}
-        // setIsSubmitted={setIsSubmitted}
+        loggedIn={isLoggedIn}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
+        formIsValid={isValid}
+        errors={errors}
       >
         <Input
         required
           type="name"
-          name="username"
+          name="name"
           label="Имя"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={values.username}
-          error={errors.username}
+          value={values.name}
+          error={errors.name}
+          // pattern="[a-zA-Z -]{2,30}"
+          // regexp={'[a-zA-Z -]{2,30}'}
         />
         <Input
         required
@@ -71,6 +76,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted }) {
           type="password"
           name="password"
           label="Пароль"
+          minLength="6"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
           value={values.password}

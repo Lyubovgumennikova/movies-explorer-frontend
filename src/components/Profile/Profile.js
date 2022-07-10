@@ -9,7 +9,7 @@ import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
-function Profile({ onOpenMenu }) {
+function Profile({ onOpenMenu, onUpdateUser }) {
   // const currentUserData = React.useContext(CurrentUserContext);
   const {
     values,
@@ -33,21 +33,16 @@ function Profile({ onOpenMenu }) {
   function handleSubmit(e) {
     console.log("профсамбит");
     e.preventDefault();
-
-    // const { name, email, password } = newEntry;
-    // onRegister({
-    //   name,
-    //   email,
-    //   password,
-    // });
+    onUpdateUser(values);
+    resetForm();
   }
 
   return (
     <div className="profile">
-      <Header styleSettings={FOPM_STYLES}>
-        <AuthNavigation />
-        <MenuButton onOpenMenu={onOpenMenu} />
-      </Header>
+      {/* <Header styleSettings={FOPM_STYLES}> */}
+        {/* <AuthNavigation /> */}
+        {/* <MenuButton onOpenMenu={onOpenMenu} /> */}
+      {/* </Header> */}
       {/* <h1 className="form__title">"Привет, {name}!"</h1> */}
       <Form
         name="Login"
@@ -55,6 +50,7 @@ function Profile({ onOpenMenu }) {
         styleSettings={FOPM_STYLES}
         buttonText="Редактировать"
         onSubmit={handleSubmit}
+        formIsValid={isValid}
       >
         <Input
           required

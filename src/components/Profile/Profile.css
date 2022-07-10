@@ -26,13 +26,13 @@
   line-height: 13px;
   color: #000000;
   text-align: left;
-  white-space: nowrap;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
 .profile__textInput,
 .profile__textInput_valid {
-  width: 100%;
+  /* width: inherit; */
   border: none;
   text-align: end;
   font-family: "Inter", Arial, sans-serif;

@@ -30,6 +30,7 @@ import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import Footer from "../Footer/Footer";
 import * as mainApi from "../../utils/MainApi";
+import PrivateRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -100,6 +101,8 @@ function App() {
 
         localStorage.setItem("jwt", data.jwt);
         setIsLoggedIn(true);
+
+        setInfoTooltip(true);
         navigate("/movies");
       })
       .catch((err) => setIsRegister(true))
@@ -110,10 +113,11 @@ function App() {
 
   const handleRegister = (data) => {
     mainApi
-      .register(data.username, data.email, data.password)
+      .register(data.name, data.email, data.password)
       .then(() => {
-        setInfoTooltip(true);
-        setIsRegister(true);
+        // setInfoTooltip(true);
+        setIsLoggedIn(true);
+        // isErrorsModale(true)
         navigate("/movies");
       })
       .catch((
@@ -125,6 +129,30 @@ function App() {
     // onSubmit(value);
     setIsSubmitted(true);
     // setSearchQuery("");
+  };
+
+  const handleUpdateUser = (data) => {
+    // const token = localStorage.getItem('jwt');
+    // if (token) {
+    // setIsLoadingUpdateCurrentUser(true);
+    mainApi
+      .setUserInfo(data)
+      .then((res) => {
+        setCurrentUser(res.data);
+        // setUpdateCurrentUserResStatus(res.status);
+        // localStorage.setItem('currentUserData', JSON.stringify(res.data));
+        // setOpenNotificationModal();
+        // setNotificationText(PROFILE_UPDATE_SUCCESS_TEXT.BASE_TEXT);
+      })
+      .catch((err) => {
+        console.log(`${err}`);
+        //setUpdateCurrentUserResStatus(err);
+      })
+      .finally(() => {
+        setIsSubmitted(false);
+        // setIsLoadingUpdateCurrentUser(false);
+      });
+    // };
   };
 
   useEffect(() => {
@@ -150,27 +178,6 @@ function App() {
         setMoviesData(localMoviesData);
       })
 
-      // console.log(res);
-      // if (isSubmitted) {
-      //   // setIsLoggedIn(true)
-      //   api.getMoviesData(searchQuery).then((items) => {
-      //     setMoviesData(items);
-
-      //     setIsSubmitted(false);
-      //     setSearchQuery("");
-      //   });
-      // }
-
-      // api.search(searchQuery).then(data => {
-      //   console.log(data)
-      // })
-      // const handleWindowLoad = () => {
-      //   setIsLoadingData(false);
-      // };
-
-      // window.addEventListener('load', handleWindowLoad);
-
-      // return () => window.removeEventListener('load', handleWindowLoad);
       .catch((
         err //console.log(err)
       ) => setIsErrorsModale(true));
@@ -184,14 +191,18 @@ function App() {
 
   return (
     <div className="page">
-      {/* <Router> */}
-      {/* {pathname.match(exclusionRoutesPathFooter) ? null : (
+      <CurrentUserContext.Provider value={currentUser}>
+        {/* <Router> */}
+        {/* {pathname.match(exclusionRoutesPathFooter) ? null : (
         <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
       )} */}
-      {/* { pathname.match(exclusionRoutesPath) ?null : (
-          <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
-      )} */}
-      <CurrentUserContext.Provider value={currentUser}>
+        {pathname.match(routePathMain) ? null : (
+          <Header>
+            {isLoggedIn ? <AuthNavigation /> : <Navigation />}
+            {isLoggedIn ? <MenuButton onOpenMenu={handleOpenMenuClick} /> : null}
+          </Header>
+        )}
+        {/* <CurrentUserContext.Provider value={currentUser}> */}
         <Routes>
           <Route exact path="/" element={<Main />} />
           <Route
@@ -199,14 +210,12 @@ function App() {
             element={
               <Register
                 onRegister={handleRegister}
-                setIsRegister={setIsRegister}
+                // isRegister={isRegister}
+                loggedIn={isLoggedIn}
               />
             }
           />
-          <Route
-            path="/signin"
-            element={<Login onLogin={handleLogin} loggedIn={isLoggedIn} />}
-          />
+          <Route path="/signin" element={<Login onLogin={handleLogin} />} />
           <Route
             path="/movies"
             element={
@@ -218,8 +227,8 @@ function App() {
                 onDeleteSavedMovie={handleDeleteSavedMovie}
                 moviesData={moviesData}
                 // moviesData={markAsSaved(moviesData)}
-                onOpenMenu={handleOpenMenuClick}
-                // loggedIn={loggedIn}
+                // onOpenMenu={handleOpenMenuClick}
+                loggedIn={isLoggedIn}
                 // component={Movies}
                 // isNoMoviesFound={isNoMoviesFound}
                 // isLoadingData={isLoadingMoviesData}
@@ -235,8 +244,9 @@ function App() {
             path="/saved-movies"
             element={
               <SavedMovies
+                loggedIn={isLoggedIn}
                 savedMovies={savedMovies}
-                onOpenMenu={handleOpenMenuClick}
+                // onOpenMenu={handleOpenMenuClick}
               />
             }
           />
@@ -244,8 +254,10 @@ function App() {
             path="/profile"
             element={
               <Profile
+                loggedIn={isLoggedIn}
+                onUpdateUser={handleUpdateUser}
                 onSignOut={handleSignOut}
-                onOpenMenu={handleOpenMenuClick}
+                // onOpenMenu={handleOpenMenuClick}
               />
             }
           />
