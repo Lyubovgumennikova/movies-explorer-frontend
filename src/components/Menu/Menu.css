@@ -1,0 +1,38 @@
+.menuNavigation__container {
+  display: grid;
+  gap: 28px;
+  margin-top: 105px;
+  margin-bottom: 620px;
+  text-align: center;
+}
+
+.menuNavigation__link {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+  text-decoration: none;
+}
+
+.menuNavigation__link.active {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 767px) {
+  .menu-modal__container {
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .menuNavigation__container {
+    margin-top: 99px;
+    margin-bottom: 444px;
+    gap: 24px;
+  }
+}
