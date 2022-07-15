@@ -36,14 +36,15 @@ function Movies({
 
   const handleSubmit = (data) => {
     onSubmit(data);
+    console.log("movies");
   };
 
   return (
     <main className="movies">
-      {/* <Header styleSettings={FOPM_STYLES}> */}
-        {/* <AuthNavigation /> */}
-        {/* <MenuButton onOpenMenu={onOpenMenu} /> */}
-      {/* </Header> */}
+      <Header styleSettings={FOPM_STYLES}>
+        <AuthNavigation />
+        <MenuButton onOpenMenu={onOpenMenu} />
+      </Header>
       <SearchForm onSubmit={handleSubmit} />
       {/* {!isLoadingData && isNoMoviesFound && (
         <p>{NO_MOVIES_FOUND_TEXT.BASE_TEXT}</p>

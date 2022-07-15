@@ -9,7 +9,7 @@ function Form({
   onSubmit,
   title,
   formIsValid,
-  isLoadingData,
+  isUserData,
   styleSettings,
   validationMessage,
   isValid,
@@ -25,13 +25,13 @@ function Form({
       {children}
       <button
         type="submit"
-        disabled={!formIsValid || isLoadingData}
-        className={`${
-          formIsValid
-            ? `form__submit-button`
-            : `form__submit-button form__submit-button_disabled`
-        }`}
-        // className= {styleSettings.button}
+        disabled={!formIsValid || isUserData}
+        // className={`${
+        //   formIsValid
+        //     ? styleSettings.button
+        //     : styleSettings.button  `form__submit-button_disabled`
+        // }`}
+        className= {styleSettings.button}
       >
         {isSubmitted ? "Выполняется..." : buttonText}
       </button>

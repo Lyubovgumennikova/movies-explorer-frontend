@@ -18,6 +18,7 @@ function SearchForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("seachfirm");
     onSubmit(values);
     resetForm();
   };

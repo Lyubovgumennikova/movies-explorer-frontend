@@ -9,16 +9,17 @@ import Header from '../Header/Header';
 import Navigation from "../Navigation/Navigation";
 import Footer from '../Footer/Footer';
 import "./Main.css"
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
 
-function Main() {
+function Main({loggedIn }) {
   const FOPM_STYLES = {
     logo: "header__logo",
   };
   return (
     <main className="main">
-      {/* <Header styleSettings={FOPM_STYLES}> */}
-      {/* <Navigation /> */}
-      {/* </Header> */}
+      <Header styleSettings={FOPM_STYLES}>
+          {loggedIn ? (<AuthNavigation />) : (<Navigation />) }
+      </Header>
       <Promo>
         <NavTab />
       </Promo>

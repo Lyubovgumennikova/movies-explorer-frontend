@@ -40,6 +40,29 @@ export const getContent = (token) => {
   });
 };
 
+export const setUserInfo = (name, email, token) => {
+  // •	заменить данные пользователя (PATCH)
+  return request({
+    url: `users/me`,
+    method: "PATCH",
+    body: {name, email},
+    token,
+  })
+}
+
+export const saveMovie = (data, token)=> {
+  //   •	добавить карточку (POST)
+    //   •	добавить карточку (POST)
+    return request({
+      url: `movies`,
+      // method: "POST",
+      body: {data},
+      token,
+    })
+}
+
+
+
 export const getInitialCards = () => {
   //     •	получить список всех карточек в виде массива (GET)
   return fetch(`${this._url}/cards`, {
@@ -48,17 +71,7 @@ export const getInitialCards = () => {
   }).then((res) => this._errorHandler(res));
 }
 
-export const addNewCard = (data)=> {
-  //   •	добавить карточку (POST)
-  return fetch(`${this._url}/cards`, {
-    method: "POST",
-    headers: this._headers,
-    body: JSON.stringify({
-      name: data.name,
-      link: data.link,
-    }),
-  }).then((res) => this._errorHandler(res));
-}
+
 
 export const deleteCard= (data) => {
   // •	удалить карточку (DELETE)
@@ -68,20 +81,4 @@ export const deleteCard= (data) => {
   }).then((res) => this._errorHandler(res));
 }
 
-export const setUserInfo = (name, email) => {
-  // •	заменить данные пользователя (PATCH)
-  return request({
-    url: `users/me`,
-    method: "PATCH",
-    body: {name, email},
-    // token,
-  // •	заменить данные пользователя (PATCH)
-  // return fetch(`${this._url}/users/me`, {
-    // method: "PATCH",
-    // headers: this._headers,
-    // body: JSON.stringify({
-      // name: data.name,
-      // email: data.email,
-    // }),
-  })
-}
+

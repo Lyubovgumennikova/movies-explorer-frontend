@@ -8,3 +8,4 @@ const PrivateRoute = ({loggedIn, children}) => {
 };
 
 export default PrivateRoute;
+

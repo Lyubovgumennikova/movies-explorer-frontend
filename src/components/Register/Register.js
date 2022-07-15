@@ -20,7 +20,11 @@ function Register({ onRegister, isSubmitted, setIsSubmitted, isLoggedIn }) {
     group: "form__group",
     label: "input__label",
     input: `${isValid ? "text-field__input" : "text-field__input_valid"}`,
-    button: "form__submit-button",
+    button: `${
+      isValid
+        ? "form__submit-button"
+        : "form__submit-button form__submit-button_disabled"
+    }`,
     link: "login__input-text_link",
     error: "message__error",
     logo: "header__logo header__logo_entrance",
@@ -36,7 +40,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted, isLoggedIn }) {
 
   return (
     <div className="register">
-      {/* <Header styleSettings={FOPM_STYLES}/> */}
+      <Header styleSettings={FOPM_STYLES} />
       <Form
         name="register"
         title="Добро пожаловать!"
@@ -50,7 +54,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted, isLoggedIn }) {
         errors={errors}
       >
         <Input
-        required
+          required
           type="name"
           name="name"
           label="Имя"
@@ -62,7 +66,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted, isLoggedIn }) {
           // regexp={'[a-zA-Z -]{2,30}'}
         />
         <Input
-        required
+          required
           type="email"
           name="email"
           label="E-mail"
@@ -72,7 +76,7 @@ function Register({ onRegister, isSubmitted, setIsSubmitted, isLoggedIn }) {
           error={errors.email}
         />
         <Input
-        required
+          required
           type="password"
           name="password"
           label="Пароль"

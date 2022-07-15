@@ -8,7 +8,7 @@ import "../Input/Input.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
-function Login({ onLogin, isSubmitted, setIsSubmitted }) {
+function Login({ onLogin, isSubmitted, setIsSubmitted, formIsValid }) {
   const {
     values,
     errors,
@@ -23,7 +23,11 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     form: "form",
     label: "input__label",
     input: `${isValid ? "text-field__input" : "text-field__input_valid"}`,
-    button: "form__submit-button",
+    button: `${
+      isValid
+        ? "form__submit-button"
+        : "form__submit-button form__submit-button_disabled"
+    }`,
     link: "login__input-text_link",
     error: "message__error",
     logo: "header__logo header__logo_entrance",
@@ -46,7 +50,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
 
   return (
     <div className="login">
-      {/* <Header styleSettings={FORM_STYLES} /> */}
+      <Header styleSettings={FORM_STYLES} />
       <Form
         name="Login"
         title="Рады видеть!"

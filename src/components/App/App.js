@@ -14,6 +14,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 // import InfoTooltip from './InfoTooltip';
+import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./App.css";
 
 import {
@@ -30,7 +31,7 @@ import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import Footer from "../Footer/Footer";
 import * as mainApi from "../../utils/MainApi";
-import PrivateRoute from "../ProtectedRoute/ProtectedRoute";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,7 +44,8 @@ function App() {
   const [moviesData, setMoviesData] = useState([]);
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
-
+  const [tokenAuthResStatus, setTokenAuthResStatus] = React.useState(null);
+  const [isNoMoviesFound, setIsNoMoviesFound] = React.useState(false);
   // const { pathname } = useLocation();
   let navigate = useNavigate();
   // const isAdminPath = matchPath("/movies/*", pathname);
@@ -57,37 +59,51 @@ function App() {
   // let navigate = useNavigate();
   // const navigate = useHistory();
 
-  const handleSignOut = (evt) => {
-    evt.preventDefault();
-    setIsLoggedIn(false);
-    setMoviesData([]);
-    // setCurrentUserData({});
-    // setFoundSavedMoviesData([]);
-    localStorage.clear();
-    // history.push('/');
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem("jwt");
+    if (!localStorage.getItem("jwt")) {
+      navigate("/signin");
+      return;
+    }
+
+    mainApi
+      .getContent(jwt)
+      .then((res) => {
+        if (!res) return;
+
+        setTokenAuthResStatus(res.status);
+        setCurrentUser(res.data);
+        setIsLoggedIn(true);
+        navigate("/movies");
+      })
+      .catch(
+        (err) => console.log(err)
+        // { setTokenAuthResStatus(err) }
+      );
   };
 
-  const handleSaveMovie = (data) => {
-    // const token = localStorage.getItem("jwt");
-
-    //   mainApi.saveMovie(data, token)
-    localStorage.getItem(setSavedMovies(data));
-  };
-
-  const handleSearchMoviesData = (searchQueries = {}) => {
-    const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-  };
-
-  const handleDeleteSavedMovie = (id) => {
-    const token = localStorage.getItem("jwt");
-  };
-
-  const handleOpenMenuClick = () => {
-    setMenuIsOpen(true);
-  };
-
-  const setCloseMenu = () => {
-    setMenuIsOpen(false);
+  const handleRegister = (data) => {
+    setIsRegister(true);
+    mainApi
+      .register(data.name, data.email, data.password)
+      .then(() => {
+        // setInfoTooltip(true);
+        setIsLoggedIn(true);
+        // isErrorsModale(true)
+        handleLogin({
+          email: data.email,
+          password: data.password,
+        });
+        // navigate("/movies");
+      })
+      .catch((err) => {
+        console.log(`${err}`);
+        //setUpdateCurrentUserResStatus(err);
+      })
+      .finally(() => {
+        setIsRegister(false);
+        // setIsLoadingUpdateCurrentUser(false);
+      });
   };
 
   const handleLogin = (data) => {
@@ -111,100 +127,163 @@ function App() {
       });
   };
 
-  const handleRegister = (data) => {
-    mainApi
-      .register(data.name, data.email, data.password)
-      .then(() => {
-        // setInfoTooltip(true);
-        setIsLoggedIn(true);
-        // isErrorsModale(true)
-        navigate("/movies");
-      })
-      .catch((
-        err //console.log(err)
-      ) => setIsRegister(true));
-  };
-  const handleSubmit = (evt) => {
+  function handleSignOut() {
+    // evt.preventDefault();
+    setIsLoggedIn(false);
+    // setMoviesData([]);
+    setCurrentUser({});
+    // setFoundSavedMoviesData([]);
+
+    localStorage.clear();
+    navigate("/");
+  }
+
+  const handle = (evt) => {
     evt.preventDefault();
-    // onSubmit(value);
-    setIsSubmitted(true);
-    // setSearchQuery("");
+    setIsLoggedIn(false);
+    setMoviesData([]);
+    // setCurrentUserData({});
+    // setFoundSavedMoviesData([]);
+    localStorage.clear();
+    // history.push('/');
   };
+
+  const handleSaveMovie = (data) => {
+    const token = localStorage.getItem("jwt");
+
+      mainApi.saveMovie(data, token)
+    localStorage.getItem(setSavedMovies(data));
+  };
+
+  const handleSearchMoviesData = (searchQueries = {}) => {
+    const moviesData = JSON.parse(localStorage.getItem("movies"));
+    console.log("appmovies");
+    if (moviesData) {
+      const filteredMovies = FilterCheckbox(searchQueries, moviesData);
+      console.log(filteredMovies);
+      if (filteredMovies.length === 0) {
+        setIsNoMoviesFound(true);
+      } else {
+        setIsNoMoviesFound(false);
+      }
+
+      localStorage.setItem(
+        "movies",
+        JSON.stringify(filteredMovies)
+      );
+
+      setMoviesData(filteredMovies);
+    }
+  };
+
+  const handleDeleteSavedMovie = (id) => {
+    const token = localStorage.getItem("jwt");
+  };
+
+  const handleOpenMenuClick = () => {
+    setMenuIsOpen(true);
+  };
+
+  const setCloseMenu = () => {
+    setMenuIsOpen(false);
+  };
+
+  // const handleSubmit = (evt) => {
+  //   evt.preventDefault();
+  //   onSubmit(value);
+  //   setIsSubmitted(true);
+  //   // setSearchQuery("");
+  // };
 
   const handleUpdateUser = (data) => {
-    // const token = localStorage.getItem('jwt');
-    // if (token) {
-    // setIsLoadingUpdateCurrentUser(true);
-    mainApi
-      .setUserInfo(data)
-      .then((res) => {
-        setCurrentUser(res.data);
-        // setUpdateCurrentUserResStatus(res.status);
-        // localStorage.setItem('currentUserData', JSON.stringify(res.data));
-        // setOpenNotificationModal();
-        // setNotificationText(PROFILE_UPDATE_SUCCESS_TEXT.BASE_TEXT);
-      })
-      .catch((err) => {
-        console.log(`${err}`);
-        //setUpdateCurrentUserResStatus(err);
-      })
-      .finally(() => {
-        setIsSubmitted(false);
-        // setIsLoadingUpdateCurrentUser(false);
-      });
-    // };
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      // setIsLoadingUpdateCurrentUser(true);
+      mainApi
+        .setUserInfo(data)
+        .then((res) => {
+          setCurrentUser(res.data);
+          // setUpdateCurrentUserResStatus(res.status);
+          localStorage.setItem("currentUser", JSON.stringify(res.data));
+          // setOpenNotificationModal();
+          // setNotificationText(PROFILE_UPDATE_SUCCESS_TEXT.BASE_TEXT);
+        })
+        .catch((err) => {
+          console.log(`${err}`);
+          //setUpdateCurrentUserResStatus(err);
+        })
+        .finally(() => {
+          setIsSubmitted(false);
+          // setIsLoadingUpdateCurrentUser(false);
+        });
+    }
   };
 
+  // useEffect(() => {
+  //   console.log("useEffect");
+  //   setIsLoadingMoviesData(true);
+  //   moviesApi
+  //     .getMoviesData()
+  //     .then((res) => {
+  //       console.log(res);
+  //       // console.log(res.status)
+  //       // setMoviesApiResStatus(res.status);
+  //       const moviesData = res;
+  //       // localStorage.setItem('name', 'Alex');
+  //       // localStorage.setItem('movies', JSON.stringify(moviesData));
+
+  //       const moviesData = JSON.parse(localStorage.getItem("movies"));
+  //       // console.log(moviesData);
+  //       // const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-previously-movies'));
+  //       // console.log(renderedPrevMovies);
+  //       setIsSubmitted(false);
+  //       const DATA = localStorage.setItem("movies", JSON.stringify(moviesData));
+  //       console.log(DATA);
+  //       setMoviesData(moviesData);
+  //     })
+
+  //     .catch((
+  //       err //console.log(err)
+  //     ) => setIsErrorsModale(true));
+  // }, [isSubmitted]);
+
   useEffect(() => {
-    console.log("useEffect");
-    setIsLoadingMoviesData(true);
-    moviesApi
-      .getMoviesData()
-      .then((res) => {
-        console.log(res);
-        // console.log(res.status)
-        // setMoviesApiResStatus(res.status);
-        const moviesData = res;
-        // localStorage.setItem('name', 'Alex');
-        // localStorage.setItem('movies', JSON.stringify(moviesData));
+    tokenCheck();
+    // const userData = [moviesApi.getUserInfo(), api.getInitialCards() ];
+    if (!isLoggedIn) return;
+    // tokenCheck();
+    console.log(localStorage.getItem);
+    // if (currentUser)
+    //   Promise.all(userData)
+    //     .then(([userData, items]) => {
+    //       // setCards(items);
+    //       setCurrentUser(userData);
 
-        const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-        // console.log(localMoviesData);
-        // const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-previously-movies'));
-        // console.log(renderedPrevMovies);
-        setIsSubmitted(false);
-        const DATA = localStorage.setItem("movies", JSON.stringify(moviesData));
-        console.log(DATA);
-        setMoviesData(localMoviesData);
-      })
-
-      .catch((
-        err //console.log(err)
-      ) => setIsErrorsModale(true));
-  }, [isSubmitted]);
+    //       navigate("/users/me");
+    //     })
+    //     .catch((err) => console.log(err));
+  }, []);
 
   const { pathname } = useLocation();
   // const { location } = props;
-  const routePathMain = matchPath("/*", pathname);
+  const routePathMain = matchPath("/signup", pathname);
   // const exclusionRoutesPath = matchPath(exclusionRoutesPathsArrayFooter, pathname);
   // const exclusionRoutesPathFooter = matchPath["/signin", "/signup", "/profile"];
 
   return (
     <div className="page">
+      {/* <CurrentUserContext.Provider value={currentUser}> */}
+      {/* {pathname.match(routePathMain) ? null : (
+          <Header  loggedIn={isLoggedIn} > */}
+      {/* {isLoggedIn ? <AuthNavigation /> : <Navigation />}
+            {isLoggedIn ? (
+              <MenuButton onOpenMenu={handleOpenMenuClick} />
+            ) : null} */}
+      {/* </Header>
+        )} */}
       <CurrentUserContext.Provider value={currentUser}>
-        {/* <Router> */}
-        {/* {pathname.match(exclusionRoutesPathFooter) ? null : (
-        <Header>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Header>
-      )} */}
-        {pathname.match(routePathMain) ? null : (
-          <Header>
-            {isLoggedIn ? <AuthNavigation /> : <Navigation />}
-            {isLoggedIn ? <MenuButton onOpenMenu={handleOpenMenuClick} /> : null}
-          </Header>
-        )}
-        {/* <CurrentUserContext.Provider value={currentUser}> */}
         <Routes>
-          <Route exact path="/" element={<Main />} />
+          <Route exact path="/" element={<Main loggedIn={isLoggedIn} />} />
           <Route
             path="/signup"
             element={
@@ -219,46 +298,52 @@ function App() {
           <Route
             path="/movies"
             element={
-              <Movies
-                // component={Movies}
-                isLoadingData={isLoadingData}
-                onSubmit={handleSearchMoviesData}
-                onSaveMovie={handleSaveMovie}
-                onDeleteSavedMovie={handleDeleteSavedMovie}
-                moviesData={moviesData}
-                // moviesData={markAsSaved(moviesData)}
-                // onOpenMenu={handleOpenMenuClick}
-                loggedIn={isLoggedIn}
-                // component={Movies}
-                // isNoMoviesFound={isNoMoviesFound}
-                // isLoadingData={isLoadingMoviesData}
-                // resStatus={moviesApiResStatus}
-                isSubmitted={isSubmitted}
-                handleSubmit={handleSubmit}
-                // handleChange={setSearchQuery}
-                // searchQuery={searchQuery}
-              />
+              <PrivateRoute loggedIn={isLoggedIn}>
+                <Movies
+                  // component={Movies}
+                  isLoadingData={isLoadingData}
+                  onSubmit={handleSearchMoviesData}
+                  onSaveMovie={handleSaveMovie}
+                  onDeleteSavedMovie={handleDeleteSavedMovie}
+                  moviesData={moviesData}
+                  // moviesData={markAsSaved(moviesData)}
+                  onOpenMenu={handleOpenMenuClick}
+                  loggedIn={isLoggedIn}
+                  // component={Movies}
+                  // isNoMoviesFound={isNoMoviesFound}
+                  // isLoadingData={isLoadingMoviesData}
+                  // resStatus={moviesApiResStatus}
+                  isSubmitted={isSubmitted}
+                  // handleSubmit={handleSubmit}
+                  // handleChange={setSearchQuery}
+                  // searchQuery={searchQuery}
+                />
+              </PrivateRoute>
             }
           />
           <Route
             path="/saved-movies"
             element={
-              <SavedMovies
-                loggedIn={isLoggedIn}
-                savedMovies={savedMovies}
-                // onOpenMenu={handleOpenMenuClick}
-              />
+              <PrivateRoute loggedIn={isLoggedIn}>
+                <SavedMovies
+                  loggedIn={isLoggedIn}
+                  savedMovies={savedMovies}
+                  // onOpenMenu={handleOpenMenuClick}
+                />
+              </PrivateRoute>
             }
           />
           <Route
             path="/profile"
             element={
-              <Profile
-                loggedIn={isLoggedIn}
-                onUpdateUser={handleUpdateUser}
-                onSignOut={handleSignOut}
-                // onOpenMenu={handleOpenMenuClick}
-              />
+              <PrivateRoute loggedIn={isLoggedIn}>
+                <Profile
+                  loggedIn={isLoggedIn}
+                  onUpdateUser={handleUpdateUser}
+                  onSignOut={handleSignOut}
+                  onOpenMenu={handleOpenMenuClick}
+                />
+              </PrivateRoute>
             }
           />
           <Route path="/*" element={<NotFound />} />
@@ -269,7 +354,8 @@ function App() {
         ) : null} */}
       </CurrentUserContext.Provider>
       {/* <Footer /> */}
-      <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />
+      {/* <Menu isOpen={menuIsOpen} onClose={setCloseMenu} /> */}
+      {menuIsOpen && <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />}
       <InfoTooltip
         isOpen={isErrorsModale}
         onClose={setCloseMenu}
