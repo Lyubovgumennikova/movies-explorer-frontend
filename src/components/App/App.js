@@ -156,10 +156,10 @@ function App() {
   };
 
   const handleSearchMoviesData = (searchQueries = {}) => {
-    const moviesData = JSON.parse(localStorage.getItem("movies"));
+    const localMoviesData = JSON.parse(localStorage.getItem("movies"));
     console.log("appmovies");
-    if (moviesData) {
-      const filteredMovies = FilterCheckbox(searchQueries, moviesData);
+    if (localMoviesData) {
+      const filteredMovies = FilterCheckbox(searchQueries, localMoviesData);
       console.log(filteredMovies);
       if (filteredMovies.length === 0) {
         setIsNoMoviesFound(true);
@@ -219,33 +219,33 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("useEffect");
-  //   setIsLoadingMoviesData(true);
-  //   moviesApi
-  //     .getMoviesData()
-  //     .then((res) => {
-  //       console.log(res);
-  //       // console.log(res.status)
-  //       // setMoviesApiResStatus(res.status);
-  //       const moviesData = res;
-  //       // localStorage.setItem('name', 'Alex');
-  //       // localStorage.setItem('movies', JSON.stringify(moviesData));
+  useEffect(() => {
+    console.log("useEffect");
+    setIsLoadingMoviesData(true);
+    moviesApi
+      .getMoviesData()
+      .then((res) => {
+        console.log(res);
+        // console.log(res.status)
+        // setMoviesApiResStatus(res.status);
+        const moviesData = res;
+        // localStorage.setItem('name', 'Alex');
+        // localStorage.setItem('movies', JSON.stringify(moviesData));
 
-  //       const moviesData = JSON.parse(localStorage.getItem("movies"));
-  //       // console.log(moviesData);
-  //       // const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-previously-movies'));
-  //       // console.log(renderedPrevMovies);
-  //       setIsSubmitted(false);
-  //       const DATA = localStorage.setItem("movies", JSON.stringify(moviesData));
-  //       console.log(DATA);
-  //       setMoviesData(moviesData);
-  //     })
+        const localMoviesData = JSON.parse(localStorage.getItem("movies"));
+        // console.log(moviesData);
+        // const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-previously-movies'));
+        // console.log(renderedPrevMovies);
+        setIsSubmitted(false);
+        const DATA = localStorage.setItem("movies", JSON.stringify(moviesData));
+        console.log(DATA);
+        setMoviesData(moviesData);
+      })
 
-  //     .catch((
-  //       err //console.log(err)
-  //     ) => setIsErrorsModale(true));
-  // }, [isSubmitted]);
+      .catch((
+        err //console.log(err)
+      ) => setIsErrorsModale(true));
+  }, [isSubmitted]);
 
   useEffect(() => {
     tokenCheck();

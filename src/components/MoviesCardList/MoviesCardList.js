@@ -20,6 +20,7 @@ function MoviesCardList({
   const [index, setIndex] = useState(0);
   const [visibleData, setVisibleData] = useState([]);
   // const [numberOfItems, setNumberOfItems]= useState(0);
+  const [isShowButtonActive, setIsShowButtonActive] = useState(false);
 
 
 
@@ -37,7 +38,26 @@ function MoviesCardList({
       if (i < numberOfItems) newArray.push(data[i]);
     }
     setVisibleData(newArray);
+    if (data.length <= numberOfItems) {
+      setIsShowButtonActive(false);
+    } else {
+      setIsShowButtonActive(true);
+    };
   }, [data, index]);
+
+  // useEffect(() => {
+  //   if (locationPathname === '/movies') {
+  //     setMoviesToRender(data.slice(ZERO_NUMBER, numberMoviesToRender));
+  //     if (data.length <= numberMoviesToRender) {
+  //       setIsShowButtonActive(false);
+  //     } else {
+  //       setIsShowButtonActive(true);
+  //     };
+  //   } else if (locationPathname === '/saved-movies') {
+  //     setMoviesToRender(data);
+  //     setIsShowButtonActive(false);
+  //   }
+  // }, [data, numberMoviesToRender])
 
   const handleShowButtonClick = () => {
     if (PAGE_SIZE >= 1280) setIndex(index + 3);
@@ -58,7 +78,7 @@ function MoviesCardList({
           </li>
         ))}
       </ul>
-      {locationPathname === "/movies" ? (
+      {locationPathname === "/movies" && isShowButtonActive ? (
         <Button
           onClick={handleShowButtonClick}
           styleSettings={FORM_STYLES}
