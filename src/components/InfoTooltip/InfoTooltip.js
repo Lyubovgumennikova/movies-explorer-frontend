@@ -7,9 +7,8 @@ function InfoTooltip({
   name,
   isOpen,
   onClose,
-  infoTooltip,
   src,
-  ...props
+  notificationText,
   }) {
 
   return (
@@ -21,7 +20,8 @@ function InfoTooltip({
           alt={name}
         />
         <figcaption className="popup__text">
-          { "Поменяйте запрос и опробуйте ещё раз."}
+          {notificationText}
+          {/* { "Поменяйте запрос и опробуйте ещё раз."} */}
         </figcaption>
       </figure>
     </Popup>

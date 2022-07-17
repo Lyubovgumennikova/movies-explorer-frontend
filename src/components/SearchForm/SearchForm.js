@@ -7,7 +7,7 @@ import icon from "../../images/icon__movie.svg";
 import Button from "../Button/Button";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
-function SearchForm({ onSubmit }) {
+function SearchForm({ onSubmit, props }) {
   const {
     values,
     errors,
@@ -15,6 +15,23 @@ function SearchForm({ onSubmit }) {
     handleChange,
     resetForm,
   } = useFormWithValidation({});
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchInputChanges = (e) => {
+    setSearchValue(e.target.value);
+  }
+
+  const resetInputField = () => {
+    setSearchValue("")
+  }
+
+  const callSearchFunction = (e) => {
+    e.preventDefault();
+    props.search(searchValue);
+    resetInputField();
+  }
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,7 +58,8 @@ function SearchForm({ onSubmit }) {
   };
 
   return (
-    <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
+    <form className={FORM_STYLES.form} onSubmit={handleSubmit} >
+      {/* onSubmit={callSearchFunction} */}
       <Input
         placeholder="Фильм"
         type="text"
@@ -50,6 +68,8 @@ function SearchForm({ onSubmit }) {
         styleSettings={FORM_STYLESI}
         onChange={handleChange}
         value={values.search}
+        // value={searchValue}
+        //   onChange={handleSearchInputChanges}
         required
         // error={errors.search}
       />

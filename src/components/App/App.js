@@ -39,13 +39,20 @@ function App() {
   const [infoTooltip, setInfoTooltip] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoadingData, setIsLoadingData] = useState(true);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [moviesData, setMoviesData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [tokenAuthResStatus, setTokenAuthResStatus] = React.useState(null);
   const [isNoMoviesFound, setIsNoMoviesFound] = React.useState(false);
+  const [registrationResStatus, setRegistrationResStatus] = React.useState(
+    null
+  );
+  const [moviesApiResStatus, setMoviesApiResStatus] = React.useState(null);
   // const { pathname } = useLocation();
   let navigate = useNavigate();
   // const isAdminPath = matchPath("/movies/*", pathname);
@@ -71,7 +78,7 @@ function App() {
       .then((res) => {
         if (!res) return;
 
-        setTokenAuthResStatus(res.status);
+        // setTokenAuthResStatus(res.status);
         setCurrentUser(res.data);
         setIsLoggedIn(true);
         navigate("/movies");
@@ -87,21 +94,22 @@ function App() {
     mainApi
       .register(data.name, data.email, data.password)
       .then(() => {
-        // setInfoTooltip(true);
         setIsLoggedIn(true);
         // isErrorsModale(true)
         handleLogin({
           email: data.email,
           password: data.password,
         });
-        // navigate("/movies");
+        // setInfoTooltip(true);
       })
       .catch((err) => {
         console.log(`${err}`);
+        // setInfoTooltip(true);
+        setRegistrationResStatus(err);
         //setUpdateCurrentUserResStatus(err);
       })
       .finally(() => {
-        setIsRegister(false);
+        // setIsRegister(false);
         // setIsLoadingUpdateCurrentUser(false);
       });
   };
@@ -149,12 +157,28 @@ function App() {
   };
 
   const handleSaveMovie = (data) => {
-    const token = localStorage.getItem("jwt");
+    // const token = localStorage.getItem("jwt");
 
-      mainApi.saveMovie(data, token)
+    // mainApi.saveMovie(data, token);
     localStorage.getItem(setSavedMovies(data));
   };
 
+  // const search = (searchValue) => {
+  //   setLoading(true);
+  //   setErrorMessage(null);
+
+  //   fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+  //     .then((response) => response.json())
+  //     .then((jsonResponse) => {
+  //       if (jsonResponse.Response === "True") {
+  //         setMovies(jsonResponse.Search);
+  //         setLoading(false);
+  //       } else {
+  //         setErrorMessage(jsonResponse.Error);
+  //         setLoading(false);
+  //       }
+  //     });
+  // };
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
     console.log("appmovies");
@@ -167,17 +191,15 @@ function App() {
         setIsNoMoviesFound(false);
       }
 
-      localStorage.setItem(
-        "movies",
-        JSON.stringify(filteredMovies)
-      );
+      localStorage.setItem("movie", JSON.stringify(filteredMovies));
 
       setMoviesData(filteredMovies);
     }
   };
 
   const handleDeleteSavedMovie = (id) => {
-    const token = localStorage.getItem("jwt");
+    // const token = localStorage.getItem("jwt");
+    console.log("delete");
   };
 
   const handleOpenMenuClick = () => {
@@ -219,50 +241,77 @@ function App() {
     }
   };
 
+  // useEffect(() => {
+  //   fetch(MOVIE_API_URL)
+  //     .then((response) => response.json())
+  //     .then((jsonResponse) => {
+  //       setMovies(jsonResponse.Search);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
   useEffect(() => {
     console.log("useEffect");
-    setIsLoadingMoviesData(true);
-    moviesApi
-      .getMoviesData()
-      .then((res) => {
-        console.log(res);
-        // console.log(res.status)
-        // setMoviesApiResStatus(res.status);
-        const moviesData = res;
-        // localStorage.setItem('name', 'Alex');
-        // localStorage.setItem('movies', JSON.stringify(moviesData));
-
-        const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-        // console.log(moviesData);
-        // const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-previously-movies'));
-        // console.log(renderedPrevMovies);
-        setIsSubmitted(false);
-        const DATA = localStorage.setItem("movies", JSON.stringify(moviesData));
-        console.log(DATA);
-        setMoviesData(moviesData);
-      })
-
-      .catch((
-        err //console.log(err)
-      ) => setIsErrorsModale(true));
-  }, [isSubmitted]);
-
-  useEffect(() => {
     tokenCheck();
-    // const userData = [moviesApi.getUserInfo(), api.getInitialCards() ];
-    if (!isLoggedIn) return;
-    // tokenCheck();
-    console.log(localStorage.getItem);
-    // if (currentUser)
-    //   Promise.all(userData)
-    //     .then(([userData, items]) => {
-    //       // setCards(items);
-    //       setCurrentUser(userData);
+    // if (!isLoggedIn) return;
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      setIsLoadingData(true);
+      moviesApi
+        .getMoviesData()
+        .then((res) => {
 
-    //       navigate("/users/me");
-    //     })
-    //     .catch((err) => console.log(err));
-  }, []);
+          // setMoviesApiResStatus(res);
+          const moviesData = res;
+
+          localStorage.setItem("movies", JSON.stringify(moviesData));
+
+          const localMoviesData = JSON.parse(localStorage.getItem("movie"));
+          console.log(moviesData);
+          console.log(localMoviesData);
+          const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-movies'));
+          // console.log(renderedPrevMovies);
+          // setIsSubmitted(false);
+          // localStorage.setItem("movies", JSON.stringify(moviesData));
+
+          // setMoviesData(moviesData);
+          // const renderedPrevMovies = JSON.parse(
+          //   localStorage.getItem("filtered-previously-movies")
+          // );
+          console.log(renderedPrevMovies);
+          if (renderedPrevMovies) {
+            setMoviesData(renderedPrevMovies);
+          } else {
+            if (localMoviesData) {
+              setMoviesData(localMoviesData);
+            } else {
+              localStorage.setItem("movies", JSON.stringify(moviesData));
+            }
+          }
+        })
+
+        .catch((
+          err //console.log(err)
+        ) => setIsErrorsModale(true));
+    }
+  }, [isLoggedIn]);
+
+  // useEffect(() => {
+  //   tokenCheck();
+  //   // const userData = [moviesApi.getUserInfo(), api.getInitialCards() ];
+  //   if (!isLoggedIn) return;
+  //   // tokenCheck();
+  //   console.log(localStorage.getItem);
+  //   // if (currentUser)
+  //   //   Promise.all(userData)
+  //   //     .then(([userData, items]) => {
+  //   //       // setCards(items);
+  //   //       setCurrentUser(userData);
+
+  //   //       navigate("/users/me");
+  //   //     })
+  //   //     .catch((err) => console.log(err));
+  // }, []);
 
   const { pathname } = useLocation();
   // const { location } = props;
@@ -289,7 +338,7 @@ function App() {
             element={
               <Register
                 onRegister={handleRegister}
-                // isRegister={isRegister}
+                isRegister={isRegister}
                 loggedIn={isLoggedIn}
               />
             }
@@ -357,12 +406,13 @@ function App() {
       {/* <Menu isOpen={menuIsOpen} onClose={setCloseMenu} /> */}
       {menuIsOpen && <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />}
       <InfoTooltip
-        isOpen={isErrorsModale}
+        // isOpen={isErrorsModale}
+        isOpen={isRegister}
         onClose={setCloseMenu}
         name="register"
         loggedIn={isLoggedIn}
         // location={location}
-        // infoTooltip={infoTooltip}
+        infoTooltip={infoTooltip}
         // text={text}
       />
       {/* </Router> */}

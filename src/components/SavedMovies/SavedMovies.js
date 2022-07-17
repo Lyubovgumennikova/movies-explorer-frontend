@@ -12,7 +12,7 @@ import Preloader from "../Preloader/Preloader";
 import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
 
-function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
+function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, handleSearchSavedMoviesData }) {
   const FOPM_STYLES = {
     logo: "header__logo",
   };
@@ -20,7 +20,7 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, onSubmit }) {
   console.log(location.pathname);
 
   const handleSubmit = (data) => {
-    onSubmit(data);
+    handleSearchSavedMoviesData(data);
   };
 
   return (

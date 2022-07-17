@@ -23,16 +23,11 @@ function Movies({
   onDeleteMovie,
   isNoMoviesFound,
   onOpenMenu,
-  handleChange,
-  isSubmitted,
-  // handleSubmit,
-
-  searchQuery,
 }) {
+  const location = useLocation();
   const FOPM_STYLES = {
     logo: "header__logo",
   };
-  const location = useLocation();
 
   const handleSubmit = (data) => {
     onSubmit(data);
@@ -59,7 +54,7 @@ function Movies({
         data={moviesData}
         locationPathname={location.pathname}
         onSaveMovie={onSaveMovie}
-        onDeleteSavedMovie={onDeleteMovie}
+        onDeleteMovie={onDeleteMovie}
       />
       <Footer />
     </main>
