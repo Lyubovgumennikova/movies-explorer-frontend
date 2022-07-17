@@ -41,14 +41,16 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
-  const [isLoadingData, setIsLoadingData] = useState(true);
+
   const [moviesData, setMoviesData] = useState([]);
+  const [isLoadingMoviesData, setIsLoadingMoviesData] = useState(true);
+  const [isNoMoviesFound, setIsNoMoviesFound] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [tokenAuthResStatus, setTokenAuthResStatus] = React.useState(null);
-  const [isNoMoviesFound, setIsNoMoviesFound] = React.useState(false);
+
   const [registrationResStatus, setRegistrationResStatus] = React.useState(
     null
   );
@@ -57,8 +59,7 @@ function App() {
   let navigate = useNavigate();
   // const isAdminPath = matchPath("/movies/*", pathname);
 
-  const [isLoadingMoviesData, setIsLoadingMoviesData] = useState(false);
-  // const navigate = useNavigate();
+   // const navigate = useNavigate();
   // console.log(navigate);
 
   // const location = useLocation();
@@ -256,7 +257,7 @@ function App() {
     // if (!isLoggedIn) return;
     const token = localStorage.getItem("jwt");
     if (token) {
-      setIsLoadingData(true);
+      setIsLoadingMoviesData(true);
       moviesApi
         .getMoviesData()
         .then((res) => {
@@ -292,7 +293,10 @@ function App() {
 
         .catch((
           err //console.log(err)
-        ) => setIsErrorsModale(true));
+        ) => setIsErrorsModale(true))
+        .finally(() => {
+          setIsLoadingMoviesData(false);
+        })
     }
   }, [isLoggedIn]);
 
@@ -350,7 +354,7 @@ function App() {
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
                   // component={Movies}
-                  isLoadingData={isLoadingData}
+                  isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
                   onDeleteSavedMovie={handleDeleteSavedMovie}
@@ -358,8 +362,7 @@ function App() {
                   // moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
                   loggedIn={isLoggedIn}
-                  // component={Movies}
-                  // isNoMoviesFound={isNoMoviesFound}
+                  isNoMoviesFound={isNoMoviesFound}
                   // isLoadingData={isLoadingMoviesData}
                   // resStatus={moviesApiResStatus}
                   isSubmitted={isSubmitted}

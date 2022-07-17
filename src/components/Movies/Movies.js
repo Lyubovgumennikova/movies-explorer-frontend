@@ -15,16 +15,18 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import NO_MOVIES_FOUND_TEXT from "../../constants/noMoviesFound";
 
 function Movies({
-  isLoadingData,
-  resStatus,
+  isLoadingMoviesData,
   moviesData,
   onSubmit,
   onSaveMovie,
   onDeleteMovie,
   isNoMoviesFound,
+  resStatus,
   onOpenMenu,
 }) {
+  const [isMoviesApiError, setIsMoviesApiError] = useState(false);
   const location = useLocation();
+
   const FOPM_STYLES = {
     logo: "header__logo",
   };
@@ -41,15 +43,11 @@ function Movies({
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {/* {!isLoadingData && isNoMoviesFound && (
+      {isLoadingMoviesData && <Preloader />}
+      {!isLoadingMoviesData && isNoMoviesFound && (
         <p>{NO_MOVIES_FOUND_TEXT.BASE_TEXT}</p>
       )}
-      {isLoadingData && <Preloader />} */}
-      {/* {isMoviesApiError && (
-        <InfoTooltip
-          text={NO_MOVIES_FOUND_TEXT.BASE_ERROR}
-        />
-      )} */}
+      {isMoviesApiError && <p>{NO_MOVIES_FOUND_TEXT.BASE_ERROR}</p>}
       <MoviesCardList
         data={moviesData}
         locationPathname={location.pathname}
