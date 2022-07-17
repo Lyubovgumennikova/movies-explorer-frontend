@@ -8,6 +8,7 @@ import Button from "../Button/Button";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
 function SearchForm({ onSubmit, props }) {
+  const [onFocus, setOnFocus] = useState(false);
   const {
     values,
     errors,
@@ -16,16 +17,16 @@ function SearchForm({ onSubmit, props }) {
     resetForm,
   } = useFormWithValidation({});
 
-  const FORM_STYLESI = {
+  const FORM_STYLES = {
+    form: "searchForm",
+    textInput: "searchForm__text",
     input: "searchForm__text",
     label: "searchForm__group",
     button: "searchForm__submitButton",
     required: true,
   };
 
-  const FORM_STYLES = {
-    form: "searchForm",
-    textInput: "searchForm__text",
+  const FORM_STYLES_CHECKBOX = {
     group: "searchForm__checkbox",
     input: "searchForm__checkbox_input",
     error: "searchForm__checkbox_slider",
@@ -37,18 +38,30 @@ function SearchForm({ onSubmit, props }) {
     e.preventDefault();
     console.log("seachfirm");
     onSubmit(values);
-    resetForm();
+    // resetForm();
   };
 
+  const handleFocus = () => {
+    setOnFocus(true);
+  };
+
+  // const handleBlur = () => {
+  //   setOnFocus(false);
+  // };
+
+  // const handleFilter = () => {
+  //   if (:checked) search=true;
+  // };
+
   return (
-    <form className={FORM_STYLES.form} onSubmit={handleSubmit} >
+    <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
       {/* onSubmit={callSearchFunction} */}
       <Input
         placeholder="Фильм"
         type="text"
         id="search"
         name="search"
-        styleSettings={FORM_STYLESI}
+        styleSettings={FORM_STYLES}
         onChange={handleChange}
         value={values.search}
         // value={searchValue}
@@ -59,17 +72,21 @@ function SearchForm({ onSubmit, props }) {
 
       <Input
         type="checkbox"
-        id="checkbox"
+        id="shortfilm"
         name="shortfilm"
         label="Короткометражки"
-        styleSettings={FORM_STYLES}
+        styleSettings={FORM_STYLES_CHECKBOX}
+        // onChange={handleFilter}
         onChange={handleChange}
         value={values.shortfilm}
+        onClick={onFocus}
+        // onFocus={handleFocus}
+      // onBlur={handleBlur}
       />
       <Button
         type="submit"
         title="search"
-        styleSettings={FORM_STYLESI}
+        styleSettings={FORM_STYLES}
         buttonText={
           <img
             src={icon}

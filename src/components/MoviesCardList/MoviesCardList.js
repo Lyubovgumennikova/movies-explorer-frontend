@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Button from "../Button/Button";
 import "./MoviesCardList.css";
-import Preloader from "../Preloader/Preloader";
 
 function MoviesCardList({
   locationPathname,
   data,
   onSaveMovie,
   onDeleteMovie,
-  moviesData,
-  isLoadingData,
 }) {
   const FORM_STYLES = {
     button: "moviesCardList__button",
@@ -21,20 +18,6 @@ function MoviesCardList({
   const [visibleData, setVisibleData] = useState([]);
   const [numberOfItems, setNumberOfItems]= useState(0);
   const [isShowButtonActive, setIsShowButtonActive] = useState(false);
-
-  // useEffect(() => {
-  //   const numberOfItems = index + 5;
-  //   const newArray = [];
-  //   for (let i = 0; i < data.length; i++) {
-  //     if (i < numberOfItems) newArray.push(data[i]);
-  //   }
-  //   setVisibleData(newArray);
-  //   if (data.length <= numberOfItems) {
-  //     setIsShowButtonActive(false);
-  //   } else {
-  //     setIsShowButtonActive(true);
-  //   };
-  // }, [data, index]);
 
   useEffect(() => {
     if (locationPathname === "/movies") {
@@ -56,7 +39,7 @@ function MoviesCardList({
     } else {
       setIsShowButtonActive(true);
     }
-  }, [data, index]);
+  }, [data, visibleData]);
 
   const handleShowButtonClick = () => {
     if (PAGE_SIZE >= 1280) setIndex(index + 3);

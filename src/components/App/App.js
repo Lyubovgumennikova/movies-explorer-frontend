@@ -162,8 +162,9 @@ function App() {
         setIsNoMoviesFound(false);
       }
 
-      // localStorage.setItem("movie", JSON.stringify(filteredMovies));
       localStorage.setItem('filtered-movies', JSON.stringify(filteredMovies));
+      // localStorage.setItem('searchQueries', JSON.stringify(searchQueries));
+      // localStorage.setItem('shortfilm', JSON.stringify(searchQueries));
 
       setMoviesData(filteredMovies);
     }
@@ -223,7 +224,6 @@ function App() {
   // }, []);
 
   useEffect(() => {
-    console.log("useEffect");
     tokenCheck();
     // if (!isLoggedIn) return;
     const token = localStorage.getItem("jwt");
@@ -232,25 +232,14 @@ function App() {
       moviesApi
         .getMoviesData()
         .then((res) => {
-
           // setMoviesApiResStatus(res);
           const moviesData = res;
-
-          localStorage.setItem("movies", JSON.stringify(moviesData));
-
-          const localMoviesData = JSON.parse(localStorage.getItem("movie"));
-          console.log(moviesData);
-          console.log(localMoviesData);
-          const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-movies'));
-          // console.log(renderedPrevMovies);
-          // setIsSubmitted(false);
           // localStorage.setItem("movies", JSON.stringify(moviesData));
-
-          // setMoviesData(moviesData);
-          // const renderedPrevMovies = JSON.parse(
-          //   localStorage.getItem("filtered-previously-movies")
-          // );
-          console.log(renderedPrevMovies);
+          const localMoviesData = JSON.parse(localStorage.getItem("movies"));
+              console.log(moviesData);
+              console.log(localMoviesData);
+          const renderedPrevMovies = JSON.parse(localStorage.getItem('filtered-movies'));
+                  console.log(renderedPrevMovies);
           if (renderedPrevMovies) {
             setMoviesData(renderedPrevMovies);
           } else {
@@ -269,7 +258,7 @@ function App() {
           setIsLoadingMoviesData(false);
         })
     }
-  }, [isLoggedIn]);
+  }, [isSubmitted]);
 
 
 
@@ -310,7 +299,6 @@ function App() {
                   onSaveMovie={handleSaveMovie}
                   onDeleteSavedMovie={handleDeleteSavedMovie}
                   moviesData={moviesData}
-                  // moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
                   loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}

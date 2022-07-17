@@ -10,7 +10,7 @@ const FilterCheckbox = (searchQueries, moviesData) => {
     return movie.duration <= 40;
   }
 
-  if (shortfilm) {
+  if (shortfilm === "") {
     return moviesData.filter(filterShortfilm).filter(filterKeyword);
   } else {
     return moviesData.filter(filterKeyword);
