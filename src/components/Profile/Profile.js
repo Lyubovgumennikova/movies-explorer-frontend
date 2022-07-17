@@ -48,7 +48,7 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
     console.log("профсамбит");
     e.preventDefault();
     onUpdateUser(values);
-    // resetForm(currentUser);
+    resetForm(currentUser);
   }
 
   // useEffect(() => {
@@ -66,17 +66,11 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
 
 
 
-
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     resetForm(currentUser);
-  //   }
-  //   // if (currentUser.name === values.name && currentUser.email === values.email) {
-  //   //   setFormIsValid(true);
-  //   // }
-  //   // setName(currentUser.name);
-  //   setEmail(currentUser.email);
-  // }, [currentUser, resetForm, values]);
+  React.useEffect(() => {
+    if (currentUser.name === values.name && currentUser.email === values.email) {
+      setFormIsValid(false);
+    }
+  }, [currentUser, values])
 
 
 

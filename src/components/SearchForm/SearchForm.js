@@ -16,30 +16,6 @@ function SearchForm({ onSubmit, props }) {
     resetForm,
   } = useFormWithValidation({});
 
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleSearchInputChanges = (e) => {
-    setSearchValue(e.target.value);
-  }
-
-  const resetInputField = () => {
-    setSearchValue("")
-  }
-
-  const callSearchFunction = (e) => {
-    e.preventDefault();
-    props.search(searchValue);
-    resetInputField();
-  }
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("seachfirm");
-    onSubmit(values);
-    resetForm();
-  };
-
   const FORM_STYLESI = {
     input: "searchForm__text",
     label: "searchForm__group",
@@ -55,6 +31,13 @@ function SearchForm({ onSubmit, props }) {
     error: "searchForm__checkbox_slider",
     label: "searchForm__checkbox_label",
     required: false,
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("seachfirm");
+    onSubmit(values);
+    resetForm();
   };
 
   return (

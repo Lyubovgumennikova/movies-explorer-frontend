@@ -9,7 +9,7 @@ function MoviesCardList({
   data,
   onSaveMovie,
   onDeleteMovie,
-  // moviesData,
+  moviesData,
   isLoadingData,
 }) {
   const FORM_STYLES = {
@@ -19,19 +19,32 @@ function MoviesCardList({
   const PAGE_SIZE = document.documentElement.clientWidth;
   const [index, setIndex] = useState(0);
   const [visibleData, setVisibleData] = useState([]);
-  // const [numberOfItems, setNumberOfItems]= useState(0);
+  const [numberOfItems, setNumberOfItems]= useState(0);
   const [isShowButtonActive, setIsShowButtonActive] = useState(false);
 
-
+  // useEffect(() => {
+  //   const numberOfItems = index + 5;
+  //   const newArray = [];
+  //   for (let i = 0; i < data.length; i++) {
+  //     if (i < numberOfItems) newArray.push(data[i]);
+  //   }
+  //   setVisibleData(newArray);
+  //   if (data.length <= numberOfItems) {
+  //     setIsShowButtonActive(false);
+  //   } else {
+  //     setIsShowButtonActive(true);
+  //   };
+  // }, [data, index]);
 
   useEffect(() => {
-    const numberOfItems = index + 5;
-    // const numberOfItems = () => {
-    //   if (PAGE_SIZE >= 1280) { setIndex(index + 8)
-    //   // } else if (1280 > PAGE_SIZE >= 768)
-    //   // setIndex(index + 5)
-    //   } else  setIndex(index + 3)
-    // };
+    if (locationPathname === "/movies") {
+      if (PAGE_SIZE >= 1280) setNumberOfItems(index + 12);
+      else if (PAGE_SIZE <= 635) setNumberOfItems(index + 5);
+      else setNumberOfItems(index + 8);
+    } else if (locationPathname === "/saved-movies") {
+      setNumberOfItems(data);
+      // setIsShowButtonActive(false);
+    }
 
     const newArray = [];
     for (let i = 0; i < data.length; i++) {
@@ -42,22 +55,8 @@ function MoviesCardList({
       setIsShowButtonActive(false);
     } else {
       setIsShowButtonActive(true);
-    };
+    }
   }, [data, index]);
-
-  // useEffect(() => {
-  //   if (locationPathname === '/movies') {
-  //     setMoviesToRender(data.slice(ZERO_NUMBER, numberMoviesToRender));
-  //     if (data.length <= numberMoviesToRender) {
-  //       setIsShowButtonActive(false);
-  //     } else {
-  //       setIsShowButtonActive(true);
-  //     };
-  //   } else if (locationPathname === '/saved-movies') {
-  //     setMoviesToRender(data);
-  //     setIsShowButtonActive(false);
-  //   }
-  // }, [data, numberMoviesToRender])
 
   const handleShowButtonClick = () => {
     if (PAGE_SIZE >= 1280) setIndex(index + 3);

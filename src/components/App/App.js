@@ -57,15 +57,11 @@ function App() {
   const [moviesApiResStatus, setMoviesApiResStatus] = React.useState(null);
   // const { pathname } = useLocation();
   let navigate = useNavigate();
-  // const isAdminPath = matchPath("/movies/*", pathname);
-
-   // const navigate = useNavigate();
-  // console.log(navigate);
-
-  // const location = useLocation();
-  // console.log(location.pathname);
-  // let navigate = useNavigate();
-  // const navigate = useHistory();
+  const { pathname } = useLocation();
+  // const { location } = props;
+  const routePathMain = matchPath("/signup", pathname);
+  // const exclusionRoutesPath = matchPath(exclusionRoutesPathsArrayFooter, pathname);
+  // const exclusionRoutesPathFooter = matchPath["/signin", "/signup", "/profile"];
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
@@ -139,23 +135,13 @@ function App() {
   function handleSignOut() {
     // evt.preventDefault();
     setIsLoggedIn(false);
-    // setMoviesData([]);
+    setMoviesData([]);
     setCurrentUser({});
     // setFoundSavedMoviesData([]);
 
     localStorage.clear();
     navigate("/");
   }
-
-  const handle = (evt) => {
-    evt.preventDefault();
-    setIsLoggedIn(false);
-    setMoviesData([]);
-    // setCurrentUserData({});
-    // setFoundSavedMoviesData([]);
-    localStorage.clear();
-    // history.push('/');
-  };
 
   const handleSaveMovie = (data) => {
     // const token = localStorage.getItem("jwt");
@@ -164,22 +150,6 @@ function App() {
     localStorage.getItem(setSavedMovies(data));
   };
 
-  // const search = (searchValue) => {
-  //   setLoading(true);
-  //   setErrorMessage(null);
-
-  //   fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
-  //     .then((response) => response.json())
-  //     .then((jsonResponse) => {
-  //       if (jsonResponse.Response === "True") {
-  //         setMovies(jsonResponse.Search);
-  //         setLoading(false);
-  //       } else {
-  //         setErrorMessage(jsonResponse.Error);
-  //         setLoading(false);
-  //       }
-  //     });
-  // };
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
     console.log("appmovies");
@@ -192,7 +162,8 @@ function App() {
         setIsNoMoviesFound(false);
       }
 
-      localStorage.setItem("movie", JSON.stringify(filteredMovies));
+      // localStorage.setItem("movie", JSON.stringify(filteredMovies));
+      localStorage.setItem('filtered-movies', JSON.stringify(filteredMovies));
 
       setMoviesData(filteredMovies);
     }
@@ -300,28 +271,8 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  // useEffect(() => {
-  //   tokenCheck();
-  //   // const userData = [moviesApi.getUserInfo(), api.getInitialCards() ];
-  //   if (!isLoggedIn) return;
-  //   // tokenCheck();
-  //   console.log(localStorage.getItem);
-  //   // if (currentUser)
-  //   //   Promise.all(userData)
-  //   //     .then(([userData, items]) => {
-  //   //       // setCards(items);
-  //   //       setCurrentUser(userData);
 
-  //   //       navigate("/users/me");
-  //   //     })
-  //   //     .catch((err) => console.log(err));
-  // }, []);
 
-  const { pathname } = useLocation();
-  // const { location } = props;
-  const routePathMain = matchPath("/signup", pathname);
-  // const exclusionRoutesPath = matchPath(exclusionRoutesPathsArrayFooter, pathname);
-  // const exclusionRoutesPathFooter = matchPath["/signin", "/signup", "/profile"];
 
   return (
     <div className="page">
