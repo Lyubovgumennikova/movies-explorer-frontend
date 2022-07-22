@@ -30,9 +30,9 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     duration: data.duration || 0,
     year: data.year || "Нет данных",
     description: data.description || "Нет данных",
-    image: data.image,
+    image:`${BASE_URL}${data.image.url}`,
     trailerLink: data.trailerLink,
-    thumbnail: data.thumbnail,
+    thumbnail: data.thumbnail || "https://www.aa/#",
     nameRU: data.nameRU || "Нет данных",
     nameEN: data.nameEN || "Нет данных",
     movieId: data.id,
@@ -41,9 +41,13 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
   // setCards([{like: !cardLiked.like}])
   const handleClickButton = () => {
     if (locationPathname === "/movies") {
-      if (!isSaved) {
-        // if (!data.saved) {
+      // if (!isSaved) {
+        if (!data.saved ) {
+        // data.saved = true
         setIsSaved(true);
+        // const saveMovie = data.push("saved");
+        // onSaveMovie.push(data.saved);
+        // console.log(total)
         onSaveMovie(movieData);
       } else {
         setIsSaved(false);
@@ -66,9 +70,9 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     <article className="moviesCard__article">
       <div className="moviesCard__article_header">
         <p className="moviesCard__title">
-          {movieData.nameRU || movieData.nameEN}
+          {data.nameRU || data.nameEN}
         </p>
-        <p className="moviesCard__subtitle">{movieData.duration}</p>
+        <p className="moviesCard__subtitle">{data.duration}</p>
         <button
           // aria-label="remove"
           type="button"
@@ -79,17 +83,17 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
         ></button>
       </div>
       <a
-        href={movieData.trailerLink}
+        href={data.trailerLink}
         target="_blank"
-        aria-label={`Открыть трейлер фильма "${movieData.nameRU ||
-          movieData.nameEN}" на youtube.com`}
+        aria-label={`Открыть трейлер фильма "${data.nameRU ||
+          data.nameEN}" на youtube.com`}
         rel="noreferrer"
       >
         <img
           className="moviesCard__image"
-          alt={movieData.nameRU || movieData.nameEN}
-          // src={movieData.image.url}
-          src={`${BASE_URL}${movieData.image.url}`}
+          alt={data.nameRU || data.nameEN}
+          src={movieData.image}
+          // src={`${BASE_URL}${data.image.url}`}
         />
       </a>
     </article>

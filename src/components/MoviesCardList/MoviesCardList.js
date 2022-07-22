@@ -39,7 +39,7 @@ function MoviesCardList({
     } else {
       setIsShowButtonActive(true);
     }
-  }, [data, visibleData]);
+  }, [data, numberOfItems]);
 
   const handleShowButtonClick = () => {
     if (PAGE_SIZE >= 1280) setIndex(index + 3);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { useLocation } from "react-router-dom";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
@@ -12,16 +12,34 @@ import Preloader from "../Preloader/Preloader";
 import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
 
-function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, handleSearchSavedMoviesData }) {
+function SavedMovies({
+  onDeleteMovie,
+  onOpenMenu,
+  // savedMovies,
+  // onSaveMovie,
+  handleSearchSavedMovies,
+}) {
   const FOPM_STYLES = {
     logo: "header__logo",
   };
   const location = useLocation();
   console.log(location.pathname);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   const handleSubmit = (data) => {
-    handleSearchSavedMoviesData(data);
+    handleSearchSavedMovies(data);
   };
+
+  // useEffect(() => {
+  //   const localsavedMovies = localStorage.getItem("savedMovies");
+  //   console.log(localsavedMovies);
+
+  //   setSavedMovies(savedMovies);
+  // }, []);
+
+  useEffect(() => {
+    handleSearchSavedMovies();
+  }, [])
 
   return (
     <main className="savedMovies">
@@ -30,11 +48,11 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, handleSearchSaved
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
+
       <MoviesCardList
         data={savedMovies}
         locationPathname={location.pathname}
-        // onDeleteSavedMovie={onDeleteMovie}
-        // onSaveMovie={moviesData}
+        onDeleteSavedMovie={onDeleteMovie}
       />
       <Footer />
     </main>
@@ -42,4 +60,3 @@ function SavedMovies({ onDeleteMovie, savedMovies, onOpenMenu, handleSearchSaved
 }
 
 export default SavedMovies;
-//{handleChange}

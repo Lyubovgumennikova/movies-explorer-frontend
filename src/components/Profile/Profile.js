@@ -103,7 +103,7 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
           // value={values.username}
           error={errors.username}
         />
-        <hr class="portfolio__line" />
+        <hr className="portfolio__line" />
         <Input
           required
           type="email"

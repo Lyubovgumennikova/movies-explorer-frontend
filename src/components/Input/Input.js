@@ -15,15 +15,16 @@ function Input({
   regexp,
   required,
   errorfff,
+  isValid,
   // error,
   ...props
 }) {
-  const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
-  const INPUTS_DATA = {
-    regexp: "[a-zA-Z -]{2,30}",
-    customErrorMessage:
-      "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
-  };
+  // const {values, errors, isValid, handleChange, resetForm } = useFormWithValidation({});
+  // const INPUTS_DATA = {
+  //   regexp: "[a-zA-Z -]{2,30}",
+  //   customErrorMessage:
+  //     "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
+  // };
 
   return (
     // <div className={styleSettings.group}>
@@ -38,10 +39,10 @@ function Input({
           minLength={minLength}
           maxLength={maxLength}
           value={props.value}
-          isValid={isValid}
+          // isValid={isValid}
           onChange={props.onChange}
           required={styleSettings.required}
-          inputsData={INPUTS_DATA}
+          // inputsData={INPUTS_DATA}
           pattern={pattern}
           // pattern={props.regexp}
         />

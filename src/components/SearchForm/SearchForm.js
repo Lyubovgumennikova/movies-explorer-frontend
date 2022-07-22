@@ -45,14 +45,6 @@ function SearchForm({ onSubmit, props }) {
     setOnFocus(true);
   };
 
-  // const handleBlur = () => {
-  //   setOnFocus(false);
-  // };
-
-  // const handleFilter = () => {
-  //   if (:checked) search=true;
-  // };
-
   return (
     <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
       {/* onSubmit={callSearchFunction} */}

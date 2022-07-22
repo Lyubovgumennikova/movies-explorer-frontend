@@ -1,5 +1,5 @@
 // export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
-export const BASE_URL = 'http://api.filmsdiploma.nomoreparties.sbs'
+export const BASE_URL = "http://api.filmsdiploma.nomoreparties.sbs";
 export const request = ({ url, method = "POST", token, body }) => {
   const config = {
     method,
@@ -21,7 +21,7 @@ export const request = ({ url, method = "POST", token, body }) => {
 export const register = (name, email, password) => {
   return request({
     url: `signup`,
-    body: {name, email, password},
+    body: { name, email, password },
   });
 };
 
@@ -45,40 +45,45 @@ export const setUserInfo = (name, email, token) => {
   return request({
     url: `users/me`,
     method: "PATCH",
-    body: {name, email},
+    body: { name, email },
     token,
-  })
-}
+  });
+};
 
-export const saveMovie = (data, token)=> {
+export const saveMovie = (data, token) => {
   //   •	добавить карточку (POST)
-    //   •	добавить карточку (POST)
-    return request({
-      url: `movies`,
-      // method: "POST",
-      body: {data},
-      token,
-    })
-}
+  return request({
+    url: `movies`,
+    // method: "POST",
+    body: {
+      country: data.country,
+      director: data.director,
+      duration: data.duration,
+      year: data.year,
+      description: data.description,
+      image: data.image,
+      trailerLink: data.trailerLink,
+      thumbnail: data.thumbnail,
+      nameRU: data.nameRU,
+      nameEN: data.nameEN,
+      movieId: data.movieId, },
+    token,
+  });
+};
 
-
-
-export const getInitialCards = () => {
+export const getSavedMovies = (token) => {
   //     •	получить список всех карточек в виде массива (GET)
-  return fetch(`${this._url}/cards`, {
+  return request({
+    url: `movies`,
     method: "GET",
-    headers: this._headers,
-  }).then((res) => this._errorHandler(res));
-}
+    token,
+  });
+};
 
-
-
-export const deleteCard= (data) => {
+export const deleteCard = (data) => {
   // •	удалить карточку (DELETE)
   return fetch(`${this._url}/cards/${data}`, {
     method: "DELETE",
     headers: this._headers,
   }).then((res) => this._errorHandler(res));
-}
-
-
+};
