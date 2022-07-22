@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import getValidUrl from "../../utils/getValidUrl";
 import "./MoviesCard.css";
 
 function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
@@ -30,7 +31,8 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     duration: data.duration || 0,
     year: data.year || "Нет данных",
     description: data.description || "Нет данных",
-    image:`${BASE_URL}${data.image.url}`,
+    image: getValidUrl(data),
+    // image:`${BASE_URL}${data.image.url}`,
     trailerLink: data.trailerLink,
     thumbnail: data.thumbnail || "https://www.aa/#",
     nameRU: data.nameRU || "Нет данных",

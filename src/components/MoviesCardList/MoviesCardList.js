@@ -24,8 +24,10 @@ function MoviesCardList({
       if (PAGE_SIZE >= 1280) setNumberOfItems(index + 12);
       else if (PAGE_SIZE <= 635) setNumberOfItems(index + 5);
       else setNumberOfItems(index + 8);
+      console.log(locationPathname);
     } else if (locationPathname === "/saved-movies") {
-      setNumberOfItems(data);
+      setNumberOfItems(data.length);
+      console.log(locationPathname);
       // setIsShowButtonActive(false);
     }
 

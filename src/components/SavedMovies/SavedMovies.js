@@ -15,7 +15,7 @@ import { useLocation } from "react-router-dom";
 function SavedMovies({
   onDeleteMovie,
   onOpenMenu,
-  // savedMovies,
+  savedMovies,
   // onSaveMovie,
   handleSearchSavedMovies,
 }) {
@@ -24,7 +24,7 @@ function SavedMovies({
   };
   const location = useLocation();
   console.log(location.pathname);
-  const [savedMovies, setSavedMovies] = useState([]);
+  // const [savedMovies, setSavedMovies] = useState([]);
 
   const handleSubmit = (data) => {
     handleSearchSavedMovies(data);
