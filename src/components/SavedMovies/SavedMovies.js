@@ -4,27 +4,28 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
-// import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
-import MoviesCard from "../MoviesCard/MoviesCard";
 import "./SavedMovies.css";
 import Preloader from "../Preloader/Preloader";
 import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
+import NO_MOVIES_FOUND_TEXT from "../../constants/noMoviesFound";
 
 function SavedMovies({
   onDeleteMovie,
   onOpenMenu,
   savedMovies,
-  // onSaveMovie,
   handleSearchSavedMovies,
+  isNoMoviesFound,
+  isLoadingMoviesData,
 }) {
+  const [isMoviesApiError, setIsMoviesApiError] = useState(false);
+
   const FOPM_STYLES = {
     logo: "header__logo",
   };
   const location = useLocation();
-  console.log(location.pathname);
-  // const [savedMovies, setSavedMovies] = useState([]);
+    // const [savedMovies, setSavedMovies] = useState([]);
 
   const handleSubmit = (data) => {
     handleSearchSavedMovies(data);
@@ -48,11 +49,14 @@ function SavedMovies({
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-
+      {!isLoadingMoviesData && isNoMoviesFound && (
+        <p>{NO_MOVIES_FOUND_TEXT.BASE_TEXT}</p>
+      )}
+      {isMoviesApiError && <p>{NO_MOVIES_FOUND_TEXT.BASE_ERROR}</p>}
       <MoviesCardList
         data={savedMovies}
         locationPathname={location.pathname}
-        onDeleteSavedMovie={onDeleteMovie}
+        onDeleteMovie={onDeleteMovie}
       />
       <Footer />
     </main>

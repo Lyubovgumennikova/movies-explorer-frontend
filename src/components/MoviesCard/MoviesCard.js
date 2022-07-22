@@ -5,7 +5,7 @@ import "./MoviesCard.css";
 
 function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
   const currentUser = useContext(CurrentUserContext);
-  const BASE_URL = "https://api.nomoreparties.co";
+  // const BASE_URL = "https://api.nomoreparties.co";
   // const isOwn = data.owner._id === currentUser._id;
   // // Создаём переменную, которую после зададим в `className` для кнопки удаления
   // const cardDeleteButtonClassName = `element__remove-button ${
@@ -53,7 +53,7 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
         onSaveMovie(movieData);
       } else {
         setIsSaved(false);
-        // onDeleteMovie(data._id);
+        onDeleteMovie(data._id);
       }
     } else if (locationPathname === "/saved-movies") {
       onDeleteMovie(data._id);
@@ -78,7 +78,7 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
         <button
           // aria-label="remove"
           type="button"
-          className={cardButtonClassName}
+          className={buttonLabel}
           onClick={handleClickButton}
           isSaved={data.saved}
           // isSaved={isSaved}

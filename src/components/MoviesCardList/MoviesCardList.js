@@ -57,7 +57,7 @@ function MoviesCardList({
               data={item}
               locationPathname={locationPathname}
               onSaveMovie={onSaveMovie}
-              onDeletedMovie={onDeleteMovie}
+              onDeleteMovie={onDeleteMovie}
             />
           </li>
         ))}

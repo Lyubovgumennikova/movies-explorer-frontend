@@ -15,12 +15,12 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import NO_MOVIES_FOUND_TEXT from "../../constants/noMoviesFound";
 
 function Movies({
-  isLoadingMoviesData,
   moviesData,
   onSubmit,
   onSaveMovie,
   onDeleteMovie,
   isNoMoviesFound,
+  isLoadingMoviesData,
   resStatus,
   onOpenMenu,
 }) {

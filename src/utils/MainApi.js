@@ -66,7 +66,8 @@ export const saveMovie = (data, token) => {
       thumbnail: data.thumbnail,
       nameRU: data.nameRU,
       nameEN: data.nameEN,
-      movieId: data.movieId, },
+      movieId: data.movieId,
+    },
     token,
   });
 };
@@ -80,10 +81,15 @@ export const getSavedMovies = (token) => {
   });
 };
 
-export const deleteCard = (data) => {
+export const deleteMovie = (data, token) => {
   // •	удалить карточку (DELETE)
-  return fetch(`${this._url}/cards/${data}`, {
+  return request({
+    url: `movies/${data}`,
     method: "DELETE",
-    headers: this._headers,
-  }).then((res) => this._errorHandler(res));
+    token,
+  })
+  // return fetch(`${this._url}/movies/${data}`, {
+  //   method: "DELETE",
+  //   headers: this._headers,
+  // }).then((res) => this._errorHandler(res));
 };

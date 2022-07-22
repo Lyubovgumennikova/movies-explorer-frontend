@@ -259,10 +259,14 @@ function App() {
   const handleSaveMovie = (data) => {
     const token = localStorage.getItem("jwt");
     if (token) {
+      savedMovies.map((card) =>
+      card.id === data.movieId ? { ...card, saved: true } : card
+    )
       mainApi
         .saveMovie(data, token)
         .then((res) => {
           console.log(res);
+
         })
         .catch((err) => {
           // setOpenNotificationModal();
@@ -331,7 +335,22 @@ function App() {
     }
   };
 
-  const handleDeleteSavedMovie = (id) => {
+  const handleDeleteMovie = (data) => {
+    const token = localStorage.getItem("jwt");
+
+    if (token) {
+      mainApi
+        .deleteMovie(data, token)
+        .then(() => {
+          const deleteMovies = savedMovies.filter((c) => c._id !== data._id);
+          setSavedMovies(deleteMovies);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {
+          handleSearchSavedMovies()
+        });
+    }
+
     // const token = localStorage.getItem("jwt");
     console.log("delete");
   };
@@ -414,10 +433,10 @@ function App() {
                   // component={Movies}
                   isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
-                  // onSaveMovie={handleSaveMovie}
+                  onSaveMovie={handleSaveMovie}
                   // onSaveMovie={handleSearchSavedMovies}
-                  onSaveMovie={handleCardLike}
-                  onDeleteSavedMovie={handleDeleteSavedMovie}
+                  // onSaveMovie={handleCardLike}
+                  onDeleteMovie={handleDeleteMovie}
                   moviesData={moviesData}
                   onOpenMenu={handleOpenMenuClick}
                   loggedIn={isLoggedIn}
@@ -445,7 +464,7 @@ function App() {
                   // isNoSavedMoviesFound={isNoSavedMoviesFound}
 
                   handleSearchSavedMovies={handleSearchSavedMovies}
-                  onDeleteSavedMovie={handleDeleteSavedMovie}
+                  onDeleteMovie={handleDeleteMovie}
                 />
               </PrivateRoute>
             }
