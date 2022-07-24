@@ -8,7 +8,7 @@ import "../Input/Input.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
-function Login({ onLogin, isSubmitted, setIsSubmitted, formIsValid }) {
+function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   const {
     values,
     errors,

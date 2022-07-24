@@ -6,7 +6,6 @@ function Button({
   styleSettings,
   buttonText,
   onClick,
-  handleClick,
 }) {
   return (
     <button

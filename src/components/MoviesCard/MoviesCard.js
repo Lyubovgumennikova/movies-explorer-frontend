@@ -7,7 +7,7 @@ import "./MoviesCard.css";
 function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
   const currentUser = useContext(CurrentUserContext);
   const BASE_URL = "https://api.nomoreparties.co";
-  const [isSaved, setIsSaved] = useState(false);
+  // const [isSaved, setIsSaved] = useState(false);
   // const isSaved = data.saved.some((i) => i._id === currentUser._id);
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const isOwn = data.owner === currentUser._id;
@@ -29,7 +29,7 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     description: data.description || "Нет данных",
     image: getValidUrl(data),
     // image:`${BASE_URL}${data.image.url}`,
-    trailerLink: data.trailerLink,
+    trailerLink: data.trailerLink || "https://www.aa/#",
     thumbnail: data.thumbnail || "https://www.aa/#",
     nameRU: data.nameRU || "Нет данных",
     nameEN: data.nameEN || "Нет данных",
@@ -44,28 +44,28 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
       // setIsSaved(!isSaved);
       if (!isSaved) {
         // if (!data.saved ) {
-          setMovieData.saved = true
-        setIsSaved(true);
+          // movieData.saved = true
+        // setIsSaved(true);
         // const saveMovie = data.push("saved");
         // onSaveMovie.push(data.saved);
         // console.log(total)
         onSaveMovie(movieData);
       } else {
-        setIsSaved(false);
-        onDeleteMovie(data._id);
+        // setIsSaved(false);
+        onDeleteMovie(data);
       }
     } else if (locationPathname === "/saved-movies") {
       onDeleteMovie(data._id);
     }
   };
-
+  const isSaved = data.saved
   useEffect(() => {
-    const isSaved = data.saved
+
     if (locationPathname === "/saved-movies") {
       setButtonLabel(DELETE_BUTTON_LABEL);
     } else if (locationPathname === "/movies") {
-      setButtonLabel(cardButtonClassName);
-      // setButtonLabel(isSaved ? BUTTON_LABEL : ADD_BUTTON_LABEL)
+      // setButtonLabel(cardButtonClassName);
+      setButtonLabel(!isSaved ? BUTTON_LABEL : ADD_BUTTON_LABEL)
     }
   }, [isSaved, locationPathname]);
 

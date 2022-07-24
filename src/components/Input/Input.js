@@ -39,7 +39,6 @@ function Input({
           minLength={minLength}
           maxLength={maxLength}
           value={props.value}
-          // isValid={isValid}
           onChange={props.onChange}
           required={styleSettings.required}
           // inputsData={INPUTS_DATA}

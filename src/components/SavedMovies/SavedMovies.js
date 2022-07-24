@@ -39,7 +39,8 @@ function SavedMovies({
   // }, []);
 
   useEffect(() => {
-    handleSearchSavedMovies();
+    // handleSearchSavedMovies();
+    localStorage.getItem("savedMovies");
   }, [])
 
   return (

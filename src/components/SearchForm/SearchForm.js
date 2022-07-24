@@ -41,10 +41,6 @@ function SearchForm({ onSubmit, props }) {
     // resetForm();
   };
 
-  const handleFocus = () => {
-    setOnFocus(true);
-  };
-
   return (
     <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
       {/* onSubmit={callSearchFunction} */}
@@ -56,8 +52,6 @@ function SearchForm({ onSubmit, props }) {
         styleSettings={FORM_STYLES}
         onChange={handleChange}
         value={values.search}
-        // value={searchValue}
-        //   onChange={handleSearchInputChanges}
         required
         // error={errors.search}
       />
@@ -68,12 +62,8 @@ function SearchForm({ onSubmit, props }) {
         name="shortfilm"
         label="Короткометражки"
         styleSettings={FORM_STYLES_CHECKBOX}
-        // onChange={handleFilter}
         onChange={handleChange}
         value={values.shortfilm}
-        onClick={onFocus}
-        // onFocus={handleFocus}
-      // onBlur={handleBlur}
       />
       <Button
         type="submit"

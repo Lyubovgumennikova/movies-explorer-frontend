@@ -61,15 +61,6 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
     }
   }, [currentUser, resetForm]);
 
-  // React.useEffect(() => {
-  //   if (
-  //     currentUser.name === values.name &&
-  //     currentUser.email === values.email
-  //   ) {
-  //     setFormIsValid(false);
-  //   }
-  // }, [currentUser, values]);
-
   return (
     <div className="profile">
       <Header styleSettings={FOPM_STYLES}>
@@ -96,7 +87,6 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
           minLength="2"
           onChange={handleChange}
           value={values.name || ""}
-          // value={values.username}
           error={errors.name}
         />
         <hr className="portfolio__line" />
