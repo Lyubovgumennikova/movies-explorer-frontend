@@ -130,6 +130,7 @@ function App() {
     setMoviesData([]);
     setCurrentUser({});
     setSavedMovies([]);
+    setFoundSavedMoviesData([]);
     localStorage.clear();
     navigate("/");
   }
@@ -144,12 +145,11 @@ function App() {
         setIsNoMoviesFound(false);
       }
 
-      // localStorage.setItem("filtered-movies", JSON.stringify(filteredMovies));
-      localStorage.setItem("filtered-movies", JSON.stringify(markAsSaved(filteredMovies)));
-      // localStorage.setItem('searchQueries', JSON.stringify(searchQueries));
-      // localStorage.setItem('shortfilm', JSON.stringify(searchQueries));
+      localStorage.setItem(
+        "filtered-movies",
+        JSON.stringify(markAsSaved(filteredMovies))
+      );
 
-      // setMoviesData(filteredMovies);
       setMoviesData(markAsSaved(filteredMovies));
     }
   };
@@ -181,104 +181,15 @@ function App() {
     return foundMoviesArr;
   };
 
-  function handleCardLike(data) {
-    // const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-    //   savedMovies.forEach((foundMovie) => {
-    //   // foundMovie.saved = getInitialSavedMoviesIds.some((savedMovieId) => savedMovieId === foundMovie.id);
-    // });
-    // const cardLiked = cards.find((card) => card.id === id);
-
-    // function savedMovies() {
-    //   return initialSavedMoviesIds;
-    // }
-
-    setSavedMovies(
-      savedMovies.map((card) =>
-        card.id === data.movieId ? { ...card, saved: true } : card
-      )
-    );
-    // localStorage.setItem(
-    //   "movie",
-    //   JSON.stringify(
-    //     moviesData.map((card) =>
-    //       card.id === data.movieId ? { ...card, saved: true } : card
-    //     )
-    //   )
-    // );
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    // mainApi
-    //   .saveMovie(data, token)
-    //   .then((newMovie) => {
-    //     // setSavedMovies([newMovie, ...savedMovies]);
-    //     localStorage.setItem(
-    //       "savedMovies",
-    //       JSON.stringify([newMovie, ...savedMovies])
-    //     );
-    //     const localsavedMovies = JSON.parse(localStorage.setItem("savedMovies"));
-    // console.log(localsavedMovies);
-    // })
-    //   .then((newCard) => {
-    //     setMoviesData((state) =>
-    //       state.map((c) => (c._id === card.movieId ? newCard : c))
-    //     );
-    //     const localsavedMovies = JSON.parse(localStorage.setItem("savedMovies"));
-    // console.log(localsavedMovies);
-    //   })
-    // .catch((err) => console.log(err));
-  }
-
-  // const handleSaveMovie = (data) => {
-  //   const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-  //   const cardLiked = moviesData.find((card) => card.id === data.movieId);
-  //     const token = localStorage.getItem("jwt");
-  //   if (token) {
-  //     mainApi
-  //       .saveMovie(data, token)
-  //       .then( res => {
-  //         const newMovie = res.data
-  //         setSavedMovies([newMovie, ...savedMovies]);
-  //         localStorage.setItem(
-  //           "savedMovies",
-  //           JSON.stringify([newMovie, ...savedMovies])
-  //         );
-
-  //           localStorage.setItem("movies", JSON.stringify(moviesData.map((card) =>
-  //           card.id === data.movieId ? { ...card, saved: true } : card
-  //         )));
-
-
-  //         // const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-
-  //         // const cardLiked = moviesData.find((card) => card.id === data.movieId);
-  //         // localMoviesData.push(res.data.saved = true)
-  //         // localStorage.setItem("movies", JSON.stringify(cardLiked));
-  //         // localStorage.setItem("savedMovies", JSON.stringify(cardLiked));
-  //       })
-  //       .catch((err) => {
-  //         // setOpenNotificationModal();
-  //         console.log(err);
-  //       })
-  //       .finally(() => {
-  //         handleSearchSavedMovies();
-  //       });
-  //   }
-  // };
-
   const handleSaveMovie = (data) => {
     const cardLiked = moviesData.find((card) => card.id === data.movieId);
 
-    // savedMovies.forEach((foundMovie) => {
-    //   foundMovie.saved = getInitialSavedMoviesIds.some((savedMovieId) => savedMovieId === foundMovie.id);
-    // });
     const token = localStorage.getItem("jwt");
     if (token) {
       mainApi
         .saveMovie(data, token)
         .then((res) => {
           console.log(res.data);
-          // res.data.saved = true;
-          // const cardLiked = moviesData.find((card) => card.id === data.movieId);
-          // localStorage.setItem("savedMovies", JSON.stringify(cardLiked));
         })
         .catch((err) => {
           // setOpenNotificationModal();
@@ -317,7 +228,6 @@ function App() {
           } else {
             setIsNoMoviesFound(false);
           }
-          // setSavedMovies(filteredSavedMovies);
           setFoundSavedMoviesData(filteredSavedMovies);
         })
         .catch((err) => {
@@ -327,6 +237,15 @@ function App() {
   };
 
   const handleDeleteMovie = (data) => {
+    moviesData.forEach((movie) => {
+      if (movie.saved) {
+        if (movie._id === data) {
+          delete movie.saved;
+          delete movie._id;
+        }
+      }
+    });
+
     const token = localStorage.getItem("jwt");
 
     if (token) {
@@ -342,37 +261,6 @@ function App() {
         });
     }
   };
-
-  // const handleDeleteMovie = (data) => {
-  //   const token = localStorage.getItem("jwt");
-
-  //   if (token) {
-  //     mainApi
-  //       .deleteMovie(data, token)
-  //       .then(() => {
-  //         const localMoviesData = JSON.parse(localStorage.getItem("movies"));
-  //         const localSavedMoviesData = JSON.parse(localStorage.getItem("savedMovies"));
-  //         if (localSavedMoviesData) {
-  //           const deleteMovies = savedMovies.filter((c) => c._id !== data._id);
-  //           setSavedMovies(deleteMovies);
-  //         }
-  //         if (localMoviesData) {
-  //           moviesData.forEach((movie) => {
-  //             if (movie.saved) {
-  //               if (movie._id === data.id) {
-  //                 delete movie.saved;
-  //                 delete movie._id;
-  //               }
-  //             }
-  //           });
-  //         }
-  //       })
-  //       .catch((err) => console.log(err))
-  //       .finally(() => {
-  //         handleSearchSavedMovies();
-  //       });
-  //   }
-  // };
 
   const handleOpenMenuClick = () => {
     setMenuIsOpen(true);
@@ -397,12 +285,10 @@ function App() {
           );
 
           if (renderedPrevMovies) {
-            // setMoviesData(renderedPrevMovies);
             setMoviesData(markAsSaved(renderedPrevMovies));
           } else {
             if (localMoviesData) {
               setMoviesData(markAsSaved(localMoviesData));
-              // setMoviesData(localMoviesData);
             } else {
               localStorage.setItem("movies", JSON.stringify(moviesData));
               // localStorage.setItem("movies", JSON.stringify(moviesData));
@@ -446,23 +332,16 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
-                  // component={Movies}
                   isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
-                  // onSaveMovie={handleSearchSavedMovies}
-                  // onSaveMovie={handleCardLike}
                   onDeleteMovie={handleDeleteMovie}
-                  // moviesData={moviesData}
                   moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
                   loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
-                  // resStatus={moviesApiResStatus}
                   isSubmitted={isSubmitted}
                   // handleSubmit={handleSubmit}
-                  // handleChange={setSearchQuery}
-                  // searchQuery={searchQuery}
                 />
               </PrivateRoute>
             }
@@ -473,12 +352,10 @@ function App() {
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
                   loggedIn={isLoggedIn}
-                  // savedMovies={savedMovies}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
                   isLoadingMoviesData={isLoadingMoviesData}
                   isNoMoviesFound={isNoMoviesFound}
-                  // isNoSavedMoviesFound={isNoSavedMoviesFound}
                   handleSearchSavedMovies={handleSearchSavedMovies}
                   onDeleteMovie={handleDeleteMovie}
                 />

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { useLocation } from "react-router-dom";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
@@ -31,16 +30,9 @@ function SavedMovies({
     handleSearchSavedMovies(data);
   };
 
-  // useEffect(() => {
-  //   const localsavedMovies = localStorage.getItem("savedMovies");
-  //   console.log(localsavedMovies);
-
-  //   setSavedMovies(savedMovies);
-  // }, []);
-
   useEffect(() => {
-    // handleSearchSavedMovies();
-    localStorage.getItem("savedMovies");
+    handleSearchSavedMovies();
+    // localStorage.getItem("savedMovies");
   }, [])
 
   return (
