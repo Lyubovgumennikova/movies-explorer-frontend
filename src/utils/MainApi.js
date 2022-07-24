@@ -1,3 +1,5 @@
+import getValidUrl from "./getValidUrl";
+
 // export const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000'
 export const BASE_URL = "http://api.filmsdiploma.nomoreparties.sbs";
 export const request = ({ url, method = "POST", token, body }) => {
@@ -56,6 +58,18 @@ export const saveMovie = (data, token) => {
     url: `movies`,
     // method: "POST",
     body: {
+      // country: data.country || "Нет данных",
+      //   director: data.director || "Нет данных",
+      //   duration: data.duration || 0,
+      //   year: data.year || "Нет данных",
+      //   description: data.description || "Нет данных",
+      //   image: getValidUrl(data),
+      //   // image:`${BASE_URL}${data.image.url}`,
+      //   trailerLink: data.trailerLink,
+      //   thumbnail: data.thumbnail || "https://www.aa/#",
+      //   nameRU: data.nameRU || "Нет данных",
+      //   nameEN: data.nameEN || "Нет данных",
+      //   movieId: data.id,
       country: data.country,
       director: data.director,
       duration: data.duration,
@@ -67,6 +81,7 @@ export const saveMovie = (data, token) => {
       nameRU: data.nameRU,
       nameEN: data.nameEN,
       movieId: data.movieId,
+      // saved: true,
     },
     token,
   });

@@ -4,17 +4,14 @@ import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
-import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
 import { useFormWithValidation } from "../../utils/FormValidation";
 import Button from "../Button/Button";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
+function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
   const [isEdited, setIsEdited] = React.useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
 
   const currentUser = useContext(CurrentUserContext);
@@ -29,7 +26,8 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
   const FOPM_STYLES = {
     form: "profile__form",
     label: "profile__label",
-    input: `${isValid ? "profile__textInput" : "profile__textInput_valid"}`,
+    input: "profile__textInput",
+    // input: `${isValid ? "profile__textInput" : "profile__textInput_valid"}`,
     button: `${
       isValid
         ? "profile__form_submit-button"
@@ -44,6 +42,8 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
     button: "profile__reset-button",
   };
 
+  const TITLE_TEXT = `Привет, ${currentUser.name || ""}!`;
+
   function handleSubmit(e) {
     console.log("профсамбит");
     e.preventDefault();
@@ -51,29 +51,24 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
     resetForm(currentUser);
   }
 
-  // useEffect(() => {
-  //   setFormIsValid(isValid);
-  // }, [isValid, values])
+  useEffect(() => {
+    setFormIsValid(isValid);
+  }, [isValid, values]);
 
   useEffect(() => {
-    // if (currentUser.name === values.name && currentUser.email === values.email) {
-    //       setFormIsValid(true);
-    //     }
-
-    setName(currentUser.name);
-    setEmail(currentUser.email);
+    if (currentUser) {
+      resetForm(currentUser);
+    }
   }, [currentUser, resetForm]);
 
-
-
-  React.useEffect(() => {
-    if (currentUser.name === values.name && currentUser.email === values.email) {
-      setFormIsValid(false);
-    }
-  }, [currentUser, values])
-
-
-
+  // React.useEffect(() => {
+  //   if (
+  //     currentUser.name === values.name &&
+  //     currentUser.email === values.email
+  //   ) {
+  //     setFormIsValid(false);
+  //   }
+  // }, [currentUser, values]);
 
   return (
     <div className="profile">
@@ -81,27 +76,28 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-      {/* <h1 className="form__title">"Привет, {name}!"</h1> */}
       <Form
         name="Login"
-        title="Привет, {name}!"
+        title={TITLE_TEXT}
+        // image =${BASE_URL}${data.image.url}
         styleSettings={FOPM_STYLES}
         buttonText="Редактировать"
         onSubmit={handleSubmit}
         formIsValid={isValid}
-        // disabled={!formIsValid}
+        disabled={!formIsValid}
       >
         <Input
           required
           type="name"
-          name="username"
+          name="name"
           label="Имя"
           styleSettings={FOPM_STYLES}
           maxLength="30"
+          minLength="2"
           onChange={handleChange}
-          value={values.username || name}
+          value={values.name || ""}
           // value={values.username}
-          error={errors.username}
+          error={errors.name}
         />
         <hr className="portfolio__line" />
         <Input
@@ -111,14 +107,12 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut, isOpen }) {
           label="E-mail"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={values.email || email}
+          value={values.email || ""}
           error={errors.email}
         />
       </Form>
       <Button
         styleSettings={FOPM_STYLES_BUTTON}
-        // type={type}
-        // title={title}
         buttonText="Выйти из аккаунта"
         onClick={onSignOut}
       />
