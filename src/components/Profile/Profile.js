@@ -9,10 +9,18 @@ import MenuButton from "../MenuButton/MenuButton";
 import { useFormWithValidation } from "../../utils/FormValidation";
 import Button from "../Button/Button";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
-  const [isEdited, setIsEdited] = React.useState(false);
-  const [formIsValid, setFormIsValid] = useState(false);
+function Profile({
+  onOpenMenu,
+  onUpdateUser,
+  onSignOut,
+  profResStatus,
+  isSubmitted,
+}) {
+
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
+  const [registrationErrorText, setRegistrationErrorText] = useState("");
 
   const currentUser = useContext(CurrentUserContext);
   const {
@@ -27,11 +35,12 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
     form: "profile__form",
     label: "profile__label",
     input: "profile__textInput",
-    // input: `${isValid ? "profile__textInput" : "profile__textInput_valid"}`,
     button: `${
-      isValid
-        ? "profile__form_submit-button"
-        : "profile__form_submit-button profile__form_submit-button_disabled"
+      isValid &&
+      currentUser.name === values.name &&
+      currentUser.email === values.email
+        ? "profile__form_submit-button profile__form_submit-button_disabled"
+        : "profile__form_submit-button "
     }`,
     link: "profile__text_link",
     error: "message__error",
@@ -44,22 +53,55 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
 
   const TITLE_TEXT = `Привет, ${currentUser.name || ""}!`;
 
+  const errorHandler = () => {
+    if (profResStatus) {
+      switch (profResStatus) {
+        case 404:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.PROFILE_ERRORS_TEXTS
+          );
+          break;
+        case 400:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.LOGIN_UNAUTHORIZED);
+          break;
+        case 500:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.INTERNAL_SERVER_ERROR
+          );
+          break;
+        case 200:
+          setIsRegistrationError(false);
+          setRegistrationErrorText("");
+          resetForm();
+          break;
+        default:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.PROFILE_SUCCESS_TEXT
+          );
+          break;
+      }
+    }
+  };
+
   function handleSubmit(e) {
-    console.log("профсамбит");
     e.preventDefault();
     onUpdateUser(values);
     resetForm(currentUser);
   }
 
   useEffect(() => {
-    setFormIsValid(isValid);
-  }, [isValid, values]);
-
-  useEffect(() => {
     if (currentUser) {
       resetForm(currentUser);
     }
   }, [currentUser, resetForm]);
+
+  useEffect(() => {
+    errorHandler();
+  });
 
   return (
     <div className="profile">
@@ -68,14 +110,13 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <Form
-        name="Login"
+        name="profile"
         title={TITLE_TEXT}
-        // image =${BASE_URL}${data.image.url}
         styleSettings={FOPM_STYLES}
         buttonText="Редактировать"
         onSubmit={handleSubmit}
+        isSubmitted={isSubmitted}
         formIsValid={isValid}
-        disabled={!formIsValid}
       >
         <Input
           required
@@ -100,6 +141,9 @@ function Profile({ onOpenMenu, onUpdateUser, onSignOut }) {
           value={values.email || ""}
           error={errors.email}
         />
+        {isRegistrationError && (
+          <p className="notifyAboutError_text">{registrationErrorText}</p>
+        )}
       </Form>
       <Button
         styleSettings={FOPM_STYLES_BUTTON}

@@ -18,6 +18,7 @@ import Menu from "../Menu/Menu";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import * as mainApi from "../../utils/MainApi";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,7 +41,7 @@ function App() {
 
   const [regResStatus, setRegResResStatus] = useState(null);
   const [logResStatus, setLogResStatus] = useState(null);
-  const [regProfStatus, setProfResStatus] = useState(null);
+  const [profResStatus, setProfResStatus] = useState(null);
 
   let navigate = useNavigate();
   const { pathname } = useLocation();
@@ -48,7 +49,7 @@ function App() {
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
     if (!localStorage.getItem("jwt")) {
-      navigate("/signin");
+      navigate("/");
       return;
     }
     mainApi
@@ -83,7 +84,6 @@ function App() {
   };
 
   const handleLogin = (data) => {
-    // setIsLoggedIn(true);
     mainApi
       .authorize(data.email, data.password)
       .then((res) => {
@@ -111,16 +111,18 @@ function App() {
       mainApi
         .setUserInfo(data.name, data.email, token)
         .then((res) => {
-          setLogResStatus(res.status);
+          setProfResStatus(res.status);
           setCurrentUser(res.data);
           localStorage.setItem("currentUser", JSON.stringify(res.data));
+          setProfResStatus(
+            NOTIFICATION_TEXT_ERROR.PROFILE_SUCCESS_TEXT);
         })
         .catch((err) => {
+          setProfResStatus(err);
           console.log(`${err}`);
         })
         .finally(() => {
-          setIsLoggedIn(false);
-          setLogResStatus(null);
+          // setIsLoggedIn(false);
         });
     }
   };
@@ -312,15 +314,14 @@ function App() {
     }
   }, [isLoggedIn]);
   React.useEffect(() => {
-
     const handleWindowLoad = () => {
       setIsLoadingMoviesData(false);
     };
 
-    window.addEventListener('load', handleWindowLoad);
+    window.addEventListener("load", handleWindowLoad);
 
-    return () => window.removeEventListener('load', handleWindowLoad);
-  }, [])
+    return () => window.removeEventListener("load", handleWindowLoad);
+  }, []);
 
   return (
     <div className="page">
@@ -353,7 +354,7 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
-                redirectTo="/"
+                  redirectTo="/"
                   isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
@@ -373,7 +374,7 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
-                redirectTo="/"
+                  redirectTo="/"
                   loggedIn={isLoggedIn}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
@@ -390,13 +391,13 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Profile
-                redirectTo="/"
-                component={Profile}
+                  redirectTo="/"
+                  component={Profile}
                   loggedIn={isLoggedIn}
                   onUpdateUser={handleUpdateUser}
                   onSignOut={handleSignOut}
                   onOpenMenu={handleOpenMenuClick}
-                  regProfStatus={regProfStatus}
+                  profResStatus={profResStatus}
                 />
               </PrivateRoute>
             }

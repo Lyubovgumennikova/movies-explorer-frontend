@@ -35,12 +35,6 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
     required: true,
   };
 
-  // const styldata = {
-  //   regexp: "[a-zA-Z -]{2,30}",
-  //   customErrorMessage:
-  //     "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
-  // };
-
   const errorHandler = () => {
     if (logResStatus) {
       switch (logResStatus) {
@@ -51,12 +45,14 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
         case 400:
           setIsRegistrationError(true);
           setRegistrationErrorText(
-            NOTIFICATION_TEXT_ERROR.REGISTRATION_ERRORS_TEXTS
+            NOTIFICATION_TEXT_ERROR.LOGIN_UNAUTHORIZED
           );
           break;
         case 500:
           setIsRegistrationError(true);
-          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.INTERNAL_SERVER_ERROR);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.INTERNAL_SERVER_ERROR
+          );
           break;
         case 200:
           setIsRegistrationError(false);
@@ -91,8 +87,8 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
         title="Рады видеть!"
         buttonText="Войти"
         styleSettings={FORM_STYLES}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
+        // isSubmitted={isSubmitted}
+        // setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
         formIsValid={isValid}
         errors={errors}
@@ -108,7 +104,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
           value={values.email}
           error={errors.email}
           // regexp={/^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i}
-                />
+        />
         <Input
           required
           type="password"
@@ -119,8 +115,6 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
           onChange={handleChange}
           value={values.password}
           error={errors.password}
-          // regexp={"[a-zA-Z -]{2,30}"}
-          // styldata={styldata}
           // pattern="[a-zA-Z -]{2,30}"
         />
         {isRegistrationError && (

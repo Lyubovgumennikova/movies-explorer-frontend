@@ -14,8 +14,7 @@ const NOTIFICATION_TEXT_ERROR = {
   REGISTRATION_SUCCESS_TEXT: "Регистрация прошло успешно",
 
   LOGIN_ERRORS_TEXTS: "Вы ввели неправильный логин или пароль.",
-  TOKEN_UNAUTHORIZED:
-    "При авторизации произошла ошибка. Переданный токен некорректен.",
+  LOGIN_UNAUTHORIZED: "Произошла ошибка. Hекорректные данные.",
   AUTH_SUCCESS_TEXT: "Аутентификация прошла успешно",
 
   PROFILE_ERRORS_TEXTS: "При обновлении профиля произошла ошибка.",
