@@ -12,7 +12,7 @@ import Button from "../Button/Button";
 // import { useLocation } from "react-router-dom";
 import MenuButton from "../MenuButton/MenuButton";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import NO_MOVIES_FOUND_TEXT from "../../constants/noMoviesFound";
+import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
 function Movies({
   moviesData,
@@ -20,7 +20,7 @@ function Movies({
   onSaveMovie,
   onDeleteMovie,
   isNoMoviesFound,
-  isLoadingMoviesData,
+  isLoadingData,
   resStatus,
   onOpenMenu,
 }) {
@@ -43,11 +43,11 @@ function Movies({
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {isLoadingMoviesData && <Preloader />}
-      {!isLoadingMoviesData && isNoMoviesFound && (
-        <p>{NO_MOVIES_FOUND_TEXT.BASE_TEXT}</p>
+      {isLoadingData && <Preloader />}
+      {!isLoadingData && isNoMoviesFound && (
+        <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>
       )}
-      {isMoviesApiError && <p>{NO_MOVIES_FOUND_TEXT.BASE_ERROR}</p>}
+      {isMoviesApiError && <p>{NOTIFICATION_TEXT_ERROR.MOVIES_ERROR}</p>}
       <MoviesCardList
         data={moviesData}
         locationPathname={location.pathname}

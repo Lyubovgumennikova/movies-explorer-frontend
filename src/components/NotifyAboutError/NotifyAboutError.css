@@ -1,0 +1,12 @@
+.notifyAboutError_text {
+  margin-top: auto;
+  border: none;
+  justify-self: center;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  outline: none;
+  text-align: center;
+  color: #ee3465;
+}

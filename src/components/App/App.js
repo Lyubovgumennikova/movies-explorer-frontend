@@ -12,13 +12,7 @@ import Login from "../Login/Login";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./App.css";
 
-import {
-  Navigate,
-  useNavigate,
-  useLocation,
-  useMatch,
-  matchPath,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
 import Menu from "../Menu/Menu";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
@@ -42,7 +36,11 @@ function App() {
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
 
-  const [foundSavedMoviesData, setFoundSavedMoviesData] = React.useState([]);
+  const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
+
+  const [regResStatus, setRegResResStatus] = useState(null);
+  const [logResStatus, setLogResStatus] = useState(null);
+  const [regProfStatus, setProfResStatus] = useState(null);
 
   let navigate = useNavigate();
   const { pathname } = useLocation();
@@ -65,41 +63,42 @@ function App() {
   };
 
   const handleRegister = (data) => {
-    setIsLoggedIn(true);
+    // setIsLoggedIn(true);
     mainApi
       .register(data.name, data.email, data.password)
-      .then(() => {
-        setIsLoggedIn(true);
-        // isErrorsModale(true)
+      .then((res) => {
+        setRegResResStatus(res.status);
         handleLogin({
           email: data.email,
           password: data.password,
         });
       })
       .catch((err) => {
+        setRegResResStatus(err);
         console.log(`${err}`);
-        // setInfoTooltip(true);
       })
       .finally(() => {
-        // setInfoTooltip(false);
         setIsLoggedIn(false);
       });
   };
 
   const handleLogin = (data) => {
-    // if (!jwt) return;
+    // setIsLoggedIn(true);
     mainApi
       .authorize(data.email, data.password)
-      .then((data) => {
-        if (!data.jwt) return;
-
-        localStorage.setItem("jwt", data.jwt);
+      .then((res) => {
+        if (!res.jwt) return;
+        setLogResStatus(res.status);
+        localStorage.setItem("jwt", res.jwt);
         setIsLoggedIn(true);
-
+        setIsSubmitted(true);
         setInfoTooltip(true);
-        navigate("/movies");
+        // navigate("/movies");
       })
-      .catch((err) => setIsLoggedIn(true))
+      .catch((err) => {
+        setLogResStatus(err);
+        console.log(`${err}`);
+      })
       .finally(() => {
         setInfoTooltip(false);
       });
@@ -112,6 +111,7 @@ function App() {
       mainApi
         .setUserInfo(data.name, data.email, token)
         .then((res) => {
+          setLogResStatus(res.status);
           setCurrentUser(res.data);
           localStorage.setItem("currentUser", JSON.stringify(res.data));
         })
@@ -120,6 +120,7 @@ function App() {
         })
         .finally(() => {
           setIsLoggedIn(false);
+          setLogResStatus(null);
         });
     }
   };
@@ -272,7 +273,6 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-    // if (!isLoggedIn) return;
     const token = localStorage.getItem("jwt");
     if (token) {
       setIsLoadingMoviesData(true);
@@ -292,7 +292,7 @@ function App() {
             } else {
               localStorage.setItem("movies", JSON.stringify(moviesData));
               // localStorage.setItem("movies", JSON.stringify(moviesData));
-              // localStorage.setItem("input", name);
+              // localStorage.setItem("input", );
             }
           }
         })
@@ -306,32 +306,54 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      return navigate("/");
+    }
+  }, [isLoggedIn]);
+  React.useEffect(() => {
+
+    const handleWindowLoad = () => {
+      setIsLoadingMoviesData(false);
+    };
+
+    window.addEventListener('load', handleWindowLoad);
+
+    return () => window.removeEventListener('load', handleWindowLoad);
+  }, [])
+
   return (
     <div className="page">
-      {/* <CurrentUserContext.Provider value={currentUser}> */}
-      {/* {pathname.match(routePathMain) ? null : (
-          <Header  loggedIn={isLoggedIn} > */}
-      {/* {isLoggedIn ? <AuthNavigation /> : <Navigation />}
-            {isLoggedIn ? (
-              <MenuButton onOpenMenu={handleOpenMenuClick} />
-            ) : null} */}
-      {/* </Header>
-        )} */}
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route exact path="/" element={<Main loggedIn={isLoggedIn} />} />
           <Route
             path="/signup"
             element={
-              <Register onRegister={handleRegister} loggedIn={isLoggedIn} />
+              <Register
+                onRegister={handleRegister}
+                loggedIn={isLoggedIn}
+                isSubmitted={isSubmitted}
+                regResStatus={regResStatus}
+              />
             }
           />
-          <Route path="/signin" element={<Login onLogin={handleLogin} />} />
+          <Route
+            path="/signin"
+            element={
+              <Login
+                onLogin={handleLogin}
+                isSubmitted={isSubmitted}
+                logResStatus={logResStatus}
+              />
+            }
+          />
           <Route
             path="/movies"
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
+                redirectTo="/"
                   isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
@@ -351,6 +373,7 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
+                redirectTo="/"
                   loggedIn={isLoggedIn}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
@@ -367,34 +390,30 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Profile
+                redirectTo="/"
+                component={Profile}
                   loggedIn={isLoggedIn}
                   onUpdateUser={handleUpdateUser}
                   onSignOut={handleSignOut}
                   onOpenMenu={handleOpenMenuClick}
+                  regProfStatus={regProfStatus}
                 />
               </PrivateRoute>
             }
           />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-        {/* {pathname.match(routePathMain) ? (
-          // <Footer>{!isLoggedIn ? <Navigation /> : <AuthNavigation />}</Footer>
-          <Footer />
-        ) : null} */}
       </CurrentUserContext.Provider>
-      {/* <Footer /> */}
-      {/* <Menu isOpen={menuIsOpen} onClose={setCloseMenu} /> */}
+
       {menuIsOpen && <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />}
       <InfoTooltip
-        // isOpen={isErrorsModale}
+        isOpen={isErrorsModale}
         onClose={setCloseMenu}
         name="register"
         loggedIn={isLoggedIn}
         // location={location}
         infoTooltip={infoTooltip}
-        // text={text}
       />
-      {/* </Router> */}
     </div>
   );
 }

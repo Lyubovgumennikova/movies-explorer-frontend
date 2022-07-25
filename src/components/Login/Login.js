@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Login.css";
 import "../Input/Input.css";
-import { Navigate, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/FormValidation";
+import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Login({ onLogin, isSubmitted, setIsSubmitted }) {
+function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
   const {
     values,
     errors,
@@ -17,7 +17,8 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     resetForm,
   } = useFormWithValidation({});
 
-  let navigate = useNavigate();
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
+  const [registrationErrorText, setRegistrationErrorText] = useState("");
 
   const FORM_STYLES = {
     form: "form",
@@ -40,13 +41,47 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
   //     "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
   // };
 
+  const errorHandler = () => {
+    if (logResStatus) {
+      switch (logResStatus) {
+        case 401:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.LOGIN_ERRORS_TEXTS);
+          break;
+        case 400:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.REGISTRATION_ERRORS_TEXTS
+          );
+          break;
+        case 500:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.INTERNAL_SERVER_ERROR);
+          break;
+        case 200:
+          setIsRegistrationError(false);
+          setRegistrationErrorText("");
+          resetForm();
+          break;
+        default:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.REGISTRATION_ERRORS_TEXTS
+          );
+          break;
+      }
+    }
+  };
+
   function handleSubmit(e) {
     console.log("логинсубмит");
     e.preventDefault();
     onLogin(values);
-    // resetForm();
-    // navigate("/movies");
   }
+
+  useEffect(() => {
+    errorHandler();
+  }, [logResStatus]);
 
   return (
     <div className="login">
@@ -68,14 +103,12 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           name="email"
           label="E-mail"
           styleSettings={FORM_STYLES}
-          // minLength="5"
           maxLength="30"
           onChange={handleChange}
           value={values.email}
           error={errors.email}
           // regexp={/^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i}
-          // styldata={styldata}
-        />
+                />
         <Input
           required
           type="password"
@@ -88,8 +121,11 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           error={errors.password}
           // regexp={"[a-zA-Z -]{2,30}"}
           // styldata={styldata}
-          pattern="[a-zA-Z -]{2,30}"
+          // pattern="[a-zA-Z -]{2,30}"
         />
+        {isRegistrationError && (
+          <p className="notifyAboutError_text">{registrationErrorText}</p>
+        )}
       </Form>
       <NewInput
         styleSettings={FORM_STYLES}

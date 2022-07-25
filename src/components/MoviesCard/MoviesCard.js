@@ -26,11 +26,9 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
 
   const handleClickButton = () => {
     if (locationPathname === "/movies") {
-      // setIsSaved(!isSaved);
       if (!isSaved) {
         onSaveMovie(movieData);
       } else {
-        // setIsSaved(false);
         onDeleteMovie(data._id);
       }
     } else if (locationPathname === "/saved-movies") {
@@ -38,11 +36,16 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     }
   };
 
+  const getTimeFromMins = (mins) => {
+    const hours = Math.trunc(mins / 60);
+    const minutes = mins % 60;
+    return hours + "ч. " + minutes + "м.";
+  };
+
   useEffect(() => {
     if (locationPathname === "/saved-movies") {
       setButtonLabel(DELETE_BUTTON_LABEL);
     } else if (locationPathname === "/movies") {
-      // setButtonLabel(cardButtonClassName);
       setButtonLabel(!isSaved ? BUTTON_LABEL : ADD_BUTTON_LABEL);
     }
   }, [isSaved, locationPathname]);
@@ -51,14 +54,11 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
     <article className="moviesCard__article">
       <div className="moviesCard__article_header">
         <p className="moviesCard__title">{data.nameRU || data.nameEN}</p>
-        <p className="moviesCard__subtitle">{data.duration}</p>
+        <p className="moviesCard__subtitle">{getTimeFromMins(data.duration)}</p>
         <button
-          // aria-label="remove"
           type="button"
           className={buttonLabel}
           onClick={handleClickButton}
-          // isSaved={data.saved}
-          // isSaved={isSaved}
         ></button>
       </div>
       <a
