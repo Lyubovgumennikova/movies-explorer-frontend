@@ -41,6 +41,13 @@ function SearchForm({ onSubmit, props }) {
     // resetForm();
   };
 
+  const myFunction = () => {
+    onFocus = true
+    console.log("CHECBOX");
+  }
+
+
+
   return (
     <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
       {/* onSubmit={callSearchFunction} */}
@@ -64,10 +71,12 @@ function SearchForm({ onSubmit, props }) {
         styleSettings={FORM_STYLES_CHECKBOX}
         onChange={handleChange}
         value={values.shortfilm}
+        checked={console.log("CHECBOX")}
+        onclick={myFunction}
       />
       <Button
         type="submit"
-        title="search"
+        title="Найти"
         styleSettings={FORM_STYLES}
         buttonText={
           <img

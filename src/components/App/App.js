@@ -10,6 +10,8 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 // import InfoTooltip from './InfoTooltip';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import searchFilter from '../../utils/searchFilter';
+
 import "./App.css";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -58,7 +60,7 @@ function App() {
         if (!res) return;
         setCurrentUser(res.data);
         setIsLoggedIn(true);
-        navigate("/movies");
+        navigate("/movies", {replace: false});
       })
       .catch((err) => console.log(err));
   };
@@ -90,10 +92,14 @@ function App() {
         if (!res.jwt) return;
         setLogResStatus(res.status);
         localStorage.setItem("jwt", res.jwt);
+        localStorage.setItem("cheked", 'false');
         setIsLoggedIn(true);
-        setIsSubmitted(true);
+        // setIsSubmitted(true);
         setInfoTooltip(true);
-        // navigate("/movies");
+        navigate("/movies");
+      })
+      .then(() => {
+        tokenCheck();
       })
       .catch((err) => {
         setLogResStatus(err);
@@ -122,7 +128,7 @@ function App() {
           console.log(`${err}`);
         })
         .finally(() => {
-          // setIsLoggedIn(false);
+          setIsLoggedIn(false);
         });
     }
   };
@@ -141,7 +147,7 @@ function App() {
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
     if (localMoviesData) {
-      const filteredMovies = FilterCheckbox(searchQueries, localMoviesData);
+      const filteredMovies = searchFilter(searchQueries, localMoviesData);
       if (filteredMovies.length === 0) {
         setIsNoMoviesFound(true);
       } else {
@@ -150,12 +156,36 @@ function App() {
 
       localStorage.setItem(
         "filtered-movies",
-        JSON.stringify(markAsSaved(filteredMovies))
+        JSON.stringify(markAsSaved(filteredMovies)),
+        localStorage.setItem('input', {} )
       );
+
+      // localStorage.setItem(
+      //   "filtered-movies",
+      //   JSON.stringify({
+      //     movies: markAsSaved(filteredMovies),
+      //     search: searchQueries.search,
+      //     FilterCheckbox:FilterCheckbox
+      //   }),
+
+      // );
 
       setMoviesData(markAsSaved(filteredMovies));
     }
   };
+
+  // useEffect(() => {
+  //   tokenCheck()
+  //   .then((res) => {
+  //     if (res.ok) {
+  //       console.log(res);
+  //     }
+
+  //   })
+  //   // .then(() => {
+  //   //   tokenCheck();
+  //   // })
+  // })
 
   const getInitialSavedMoviesIds = () => {
     const initialSavedMoviesIds = [];
@@ -201,6 +231,8 @@ function App() {
         .finally(() => {
           handleSearchSavedMovies();
         });
+    } else {
+      navigate("/signin");
     }
   };
 
@@ -221,7 +253,7 @@ function App() {
 
           const savedMovies = res.data.reverse();
 
-          const filteredSavedMovies = FilterCheckbox(
+          const filteredSavedMovies = searchFilter(
             searchQueries,
             savedMovies
           );
@@ -274,7 +306,8 @@ function App() {
   };
 
   useEffect(() => {
-    tokenCheck();
+    tokenCheck()
+
     const token = localStorage.getItem("jwt");
     if (token) {
       setIsLoadingMoviesData(true);
@@ -308,20 +341,21 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      return navigate("/");
-    }
-  }, [isLoggedIn]);
-  React.useEffect(() => {
-    const handleWindowLoad = () => {
-      setIsLoadingMoviesData(false);
-    };
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     return navigate("/");
+  //   }
+  // }, [isLoggedIn]);
 
-    window.addEventListener("load", handleWindowLoad);
+  // React.useEffect(() => {
+  //   const handleWindowLoad = () => {
+  //     setIsLoadingMoviesData(false);
+  //   };
 
-    return () => window.removeEventListener("load", handleWindowLoad);
-  }, []);
+  //   window.addEventListener("load", handleWindowLoad);
+
+  //   return () => window.removeEventListener("load", handleWindowLoad);
+  // }, []);
 
   return (
     <div className="page">
@@ -333,7 +367,7 @@ function App() {
             element={
               <Register
                 onRegister={handleRegister}
-                loggedIn={isLoggedIn}
+                // loggedIn={isLoggedIn}
                 isSubmitted={isSubmitted}
                 regResStatus={regResStatus}
               />
@@ -354,14 +388,14 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
-                  redirectTo="/"
+                  // redirectTo="/"
                   isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
                   onDeleteMovie={handleDeleteMovie}
                   moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
-                  loggedIn={isLoggedIn}
+                  // loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
                   isSubmitted={isSubmitted}
                   // handleSubmit={handleSubmit}
@@ -374,7 +408,7 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
-                  redirectTo="/"
+                  // redirectTo="/saved-movies"
                   loggedIn={isLoggedIn}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
@@ -393,7 +427,7 @@ function App() {
                 <Profile
                   redirectTo="/"
                   component={Profile}
-                  loggedIn={isLoggedIn}
+                  // loggedIn={isLoggedIn}
                   onUpdateUser={handleUpdateUser}
                   onSignOut={handleSignOut}
                   onOpenMenu={handleOpenMenuClick}
@@ -402,7 +436,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/*" element={<NotFound />} />
+          <Route path="/*" element={<NotFound replace/>} />
         </Routes>
       </CurrentUserContext.Provider>
 

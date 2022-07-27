@@ -10,7 +10,8 @@ const NOTIFICATION_TEXT_ERROR = {
   INTERNAL_SERVER_ERROR: "Внутренняя ошибка сервера",
 
   CONFLICT_EMAIL: "Пользователь с таким email уже существует.",
-  REGISTRATION_ERRORS_TEXTS: "При регистрации пользователя произошла ошибка.",
+  REGISTRATION_ERRORS_TEXTS:
+    "При регистрации пользователя произошла ошибка. Не корректные данные.",
   REGISTRATION_SUCCESS_TEXT: "Регистрация прошло успешно",
 
   LOGIN_ERRORS_TEXTS: "Вы ввели неправильный логин или пароль.",

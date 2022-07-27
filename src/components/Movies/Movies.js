@@ -33,7 +33,6 @@ function Movies({
 
   const handleSubmit = (data) => {
     onSubmit(data);
-    console.log("movies");
   };
 
   return (
