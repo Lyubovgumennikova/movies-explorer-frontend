@@ -12,7 +12,7 @@ function Form({
   styleSettings,
 }) {
   return (
-    <form className={styleSettings.form} onSubmit={onSubmit}>
+    <form className={styleSettings.form} onSubmit={onSubmit} noValidate>
       <h1 className="form__title">{title}</h1>
       {children}
       <button
@@ -27,4 +27,3 @@ function Form({
 }
 
 export default Form;
-//noValidate

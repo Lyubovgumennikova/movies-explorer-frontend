@@ -3,7 +3,6 @@ import "./Portfolio.css";
 import icon from "../../images/icon.svg";
 
 function Portfolio() {
-
   return (
     <div className="portfolio">
       <h2 className="portfolio__article">Портфолио</h2>
@@ -18,7 +17,7 @@ function Portfolio() {
           <img className="portfolio__link" src={icon} alt="Кликни" />
         </a>
       </nav>
-      <hr class="portfolio__line" />
+      <hr className="portfolio__line" />
       <nav className="portfolio__link-dox">
         <h2 className="portfolio__title">Адаптивный сайт</h2>
         <a
@@ -30,7 +29,7 @@ function Portfolio() {
           <img className="portfolio__link" src={icon} alt="Кликни" />
         </a>
       </nav>
-      <hr class="portfolio__line" />
+      <hr className="portfolio__line" />
       <nav className="portfolio__link-dox">
         <h2 className="portfolio__title">Одностраничное приложение</h2>
         <a

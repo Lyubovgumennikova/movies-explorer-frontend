@@ -5,12 +5,8 @@ import Modale from "../Modale/Modale";
 import "./Menu.css";
 
 function Menu({ isOpen, onClose }) {
-  const FOPM_STYLES = {
-    container: "modale__container",
-  };
-
   return (
-    <Modale isOpen={isOpen} onClose={onClose} >
+    <Modale isOpen={isOpen} onClose={onClose}>
       <div className="menuNavigation__container">
         <NavLink className="menuNavigation__link" to="/">
           Главная

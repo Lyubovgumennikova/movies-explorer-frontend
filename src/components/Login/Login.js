@@ -8,7 +8,7 @@ import "../Input/Input.css";
 import { useFormWithValidation } from "../../utils/FormValidation";
 import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
+function Login({ onLogin, logResStatus }) {
   const {
     values,
     errors,
@@ -44,9 +44,7 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
           break;
         case 400:
           setIsRegistrationError(true);
-          setRegistrationErrorText(
-            NOTIFICATION_TEXT_ERROR.LOGIN_UNAUTHORIZED
-          );
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.LOGIN_UNAUTHORIZED);
           break;
         case 500:
           setIsRegistrationError(true);
@@ -87,8 +85,6 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
         title="Рады видеть!"
         buttonText="Войти"
         styleSettings={FORM_STYLES}
-        // isSubmitted={isSubmitted}
-        // setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
         formIsValid={isValid}
         errors={errors}
@@ -103,7 +99,6 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
           onChange={handleChange}
           value={values.email}
           error={errors.email}
-          // regexp={/^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i}
         />
         <Input
           required
@@ -115,7 +110,6 @@ function Login({ onLogin, isSubmitted, setIsSubmitted, logResStatus }) {
           onChange={handleChange}
           value={values.password}
           error={errors.password}
-          // pattern="[a-zA-Z -]{2,30}"
         />
         {isRegistrationError && (
           <p className="notifyAboutError_text">{registrationErrorText}</p>

@@ -10,7 +10,7 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 // import InfoTooltip from './InfoTooltip';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import searchFilter from '../../utils/searchFilter';
+import searchFilter from "../../utils/searchFilter";
 
 import "./App.css";
 
@@ -38,6 +38,7 @@ function App() {
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
+  // const [checkboxStatus, seеСheckboxStatus] = useState(true);
 
   const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
 
@@ -60,7 +61,7 @@ function App() {
         if (!res) return;
         setCurrentUser(res.data);
         setIsLoggedIn(true);
-        navigate("/movies", {replace: false});
+        navigate("/movies", { replace: false });
       })
       .catch((err) => console.log(err));
   };
@@ -92,7 +93,6 @@ function App() {
         if (!res.jwt) return;
         setLogResStatus(res.status);
         localStorage.setItem("jwt", res.jwt);
-        localStorage.setItem("cheked", 'false');
         setIsLoggedIn(true);
         // setIsSubmitted(true);
         setInfoTooltip(true);
@@ -120,8 +120,7 @@ function App() {
           setProfResStatus(res.status);
           setCurrentUser(res.data);
           localStorage.setItem("currentUser", JSON.stringify(res.data));
-          setProfResStatus(
-            NOTIFICATION_TEXT_ERROR.PROFILE_SUCCESS_TEXT);
+          setProfResStatus(NOTIFICATION_TEXT_ERROR.PROFILE_SUCCESS_TEXT);
         })
         .catch((err) => {
           setProfResStatus(err);
@@ -157,7 +156,8 @@ function App() {
       localStorage.setItem(
         "filtered-movies",
         JSON.stringify(markAsSaved(filteredMovies)),
-        localStorage.setItem('input', {} )
+        localStorage.setItem("input", searchQueries.search),
+        localStorage.setItem("checked", searchQueries.shortfilm)
       );
 
       // localStorage.setItem(
@@ -253,10 +253,7 @@ function App() {
 
           const savedMovies = res.data.reverse();
 
-          const filteredSavedMovies = searchFilter(
-            searchQueries,
-            savedMovies
-          );
+          const filteredSavedMovies = searchFilter(searchQueries, savedMovies);
 
           if (filteredSavedMovies.length === 0) {
             setIsNoMoviesFound(true);
@@ -306,7 +303,7 @@ function App() {
   };
 
   useEffect(() => {
-    tokenCheck()
+    tokenCheck();
 
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -319,6 +316,7 @@ function App() {
             localStorage.getItem("filtered-movies")
           );
 
+
           if (renderedPrevMovies) {
             setMoviesData(markAsSaved(renderedPrevMovies));
           } else {
@@ -327,7 +325,7 @@ function App() {
             } else {
               localStorage.setItem("movies", JSON.stringify(moviesData));
               // localStorage.setItem("movies", JSON.stringify(moviesData));
-              // localStorage.setItem("input", );
+              // localStorage.setItem("input", searchQueries.search);
             }
           }
         })
@@ -347,15 +345,10 @@ function App() {
   //   }
   // }, [isLoggedIn]);
 
-  // React.useEffect(() => {
-  //   const handleWindowLoad = () => {
-  //     setIsLoadingMoviesData(false);
-  //   };
-
-  //   window.addEventListener("load", handleWindowLoad);
-
-  //   return () => window.removeEventListener("load", handleWindowLoad);
-  // }, []);
+  useEffect(() => {
+    localStorage.getItem("input");
+    localStorage.getItem("checked");
+  }, []);
 
   return (
     <div className="page">
@@ -436,7 +429,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/*" element={<NotFound replace/>} />
+          <Route path="/*" element={<NotFound replace />} />
         </Routes>
       </CurrentUserContext.Provider>
 

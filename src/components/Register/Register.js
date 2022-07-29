@@ -67,12 +67,6 @@ function Register({ onRegister, isSubmitted, regResStatus, isLoggedIn }) {
     }
   };
 
-  const styldata = {
-    regexp: "[a-zA-Z -]{2,30}",
-    customErrorMessage:
-      "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
-  };
-
   useEffect(() => {
     errorHandler();
   }, [regResStatus]);
@@ -101,7 +95,8 @@ function Register({ onRegister, isSubmitted, regResStatus, isLoggedIn }) {
           onChange={handleChange}
           value={values.name}
           error={errors.name}
-          // pattern="[a-zA-Z -]{2,30}"
+          pattern="[a-zA-Zа-яёА-ЯЁ -]{2,30}"
+          customErrorMessage="Поле должно сотовлять не менее 2-х символов и содержать только латиницу, кириллицу, пробел или дефис."
         />
         <Input
           required

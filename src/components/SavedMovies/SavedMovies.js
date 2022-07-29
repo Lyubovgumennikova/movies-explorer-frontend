@@ -5,7 +5,6 @@ import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import Footer from "../Footer/Footer";
 import "./SavedMovies.css";
-import Preloader from "../Preloader/Preloader";
 import MenuButton from "../MenuButton/MenuButton";
 import { useLocation } from "react-router-dom";
 import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";

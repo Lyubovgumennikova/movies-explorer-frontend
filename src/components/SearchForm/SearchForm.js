@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Input from "../Input/Input";
 import "./SearchForm.css";
@@ -7,8 +7,8 @@ import icon from "../../images/icon__movie.svg";
 import Button from "../Button/Button";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
-function SearchForm({ onSubmit, props }) {
-  const [onFocus, setOnFocus] = useState(false);
+function SearchForm({ onSubmit }) {
+  const [ checkboxStatus, seеСheckboxStatus] = useState(false);
   const {
     values,
     errors,
@@ -41,10 +41,18 @@ function SearchForm({ onSubmit, props }) {
     // resetForm();
   };
 
-  const myFunction = () => {
-    onFocus = true
-    console.log("CHECBOX");
-  }
+  // const myFunction = () => {
+  //   onFocus = true
+  //   console.log("CHECBOX");
+  // }
+useEffect(() => {
+  // const input = JSON.parse(
+    localStorage.getItem("input")
+    // );
+    //       const checked = JSON.parse(
+            localStorage.getItem("checked")
+            // );
+})
 
 
 
@@ -70,9 +78,9 @@ function SearchForm({ onSubmit, props }) {
         label="Короткометражки"
         styleSettings={FORM_STYLES_CHECKBOX}
         onChange={handleChange}
-        value={values.shortfilm}
-        checked={console.log("CHECBOX")}
-        onclick={myFunction}
+        // value={checkboxStatus}
+        checked={checkboxStatus}
+        onclick={values.shortfilm}
       />
       <Button
         type="submit"

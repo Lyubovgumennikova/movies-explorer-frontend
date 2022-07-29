@@ -1,12 +1,6 @@
 import React from "react";
 
-function Button({
-  type,
-  title,
-  styleSettings,
-  buttonText,
-  onClick,
-}) {
+function Button({ type, title, styleSettings, buttonText, onClick }) {
   return (
     <button
       type={type}

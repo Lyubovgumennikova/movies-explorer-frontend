@@ -34,7 +34,7 @@ const Modale = ({ isOpen, onClose, name, children }) => {
       className={`modale ${isOpen ? "modale_opened" : ""}`}
       onClick={handleOverlayClose}
     >
-      <div className= {`modale__container`}>
+      <div className={`modale__container`}>
         <Button
           type="close"
           title=""

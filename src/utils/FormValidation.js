@@ -8,14 +8,14 @@ export function useForm() {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    setValues({...values, [name]: value});
+    setValues({ ...values, [name]: value });
   };
 
-  return {values, handleChange, setValues};
+  return { values, handleChange, setValues };
 }
 
 //хук управления формой и валидации формы
-export function useFormWithValidation() {
+export function useFormWithValidation(customHandlers) {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
@@ -23,9 +23,10 @@ export function useFormWithValidation() {
   const handleChange = (event) => {
     const target = event.target;
     const name = target.name;
-    const value = target.value;
-    setValues({...values, [name]: value});
-    setErrors({...errors, [name]: target.validationMessage });
+    const value = target.type === "checkbox" ? target.checked : target.value;
+
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
     setIsValid(target.closest("form").checkValidity());
   };
 

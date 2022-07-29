@@ -11,11 +11,7 @@ function AuthForm({
   title,
   buttonText,
   isSubmitted,
-  values,
-  errors,
 }) {
-  // const [validationMessage, setValidationMessage] = useState ("");
-
   return (
     <Popup isOpen={isOpen} name={name} onClose={onClose}>
       <h2 className="popup__text">{title}</h2>

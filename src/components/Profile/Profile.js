@@ -1,4 +1,3 @@
-// import CurrentUserContext from '../../contexts/CurrentUserContext';
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
@@ -140,6 +139,8 @@ function Profile({
           onChange={handleChange}
           value={values.name || ""}
           error={errors.name}
+          pattern="[a-zA-Zа-яёА-ЯЁ -]{2,30}"
+          customErrorMessage="Поле должно сотовлять не менее 2-х символов и содержать только латиницу, кириллицу, пробел или дефис."
         />
         <hr className="portfolio__line" />
         <Input
