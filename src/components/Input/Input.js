@@ -33,8 +33,8 @@ function Input({
         pattern={pattern}
       />
       <span role="status" aria-live="polite" className={styleSettings.error}>
-        { props.error && props.customErrorMessage}
-        {props.error }
+        {props.error}
+        {props.error && props.customErrorMessage}
       </span>
     </label>
   );

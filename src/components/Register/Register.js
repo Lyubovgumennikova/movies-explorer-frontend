@@ -107,6 +107,8 @@ function Register({ onRegister, isSubmitted, regResStatus, isLoggedIn }) {
           onChange={handleChange}
           value={values.email}
           error={errors.email}
+          pattern="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+          customErrorMessage=" Поле должно содержать точку и доменное имя(ru,com,info)."
         />
         <Input
           required
