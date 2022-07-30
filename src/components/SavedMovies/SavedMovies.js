@@ -15,7 +15,7 @@ function SavedMovies({
   savedMovies,
   handleSearchSavedMovies,
   isNoMoviesFound,
-  isLoadingData,
+  isLoadingMoviesData,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
 
@@ -41,7 +41,7 @@ function SavedMovies({
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {!isLoadingData && isNoMoviesFound && (
+      {!isLoadingMoviesData && isNoMoviesFound && (
         <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>
       )}
       {isMoviesApiError && <p>{NOTIFICATION_TEXT_ERROR.MOVIES_ERROR}</p>}

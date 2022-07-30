@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Button from "../Button/Button";
 import "./MoviesCardList.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function MoviesCardList({
   locationPathname,
@@ -9,6 +10,7 @@ function MoviesCardList({
   onSaveMovie,
   onDeleteMovie,
 }) {
+  const currentUser = useContext(CurrentUserContext);
   const FORM_STYLES = {
     button: "moviesCardList__button",
   };
@@ -25,7 +27,7 @@ function MoviesCardList({
       return 3;
     }
     return 2;
-  }
+  };
 
   useEffect(() => {
     if (locationPathname === "/movies") {
@@ -33,7 +35,14 @@ function MoviesCardList({
       else if (PAGE_SIZE <= 635) setNumberOfItems(index + 5);
       else setNumberOfItems(index + 8);
     } else if (locationPathname === "/saved-movies") {
-      setNumberOfItems(data.length);
+      data.forEach((movie) =>{
+        if (movie.owner === currentUser._id) {
+                      setNumberOfItems(data.length);
+
+        }
+      })
+
+      // else  setNumberOfItems(null);
     }
 
     const newArray = [];
@@ -50,10 +59,8 @@ function MoviesCardList({
 
   const handleShowButtonClick = () => {
     if (PAGE_SIZE >= 1280) {
-      // setIndex(3);
       setVisibleData(data.slice(ZERO_NUMBER, visibleData.length + 3));
     } else {
-      // setIndex(2);
       setVisibleData(data.slice(ZERO_NUMBER, visibleData.length + 2));
     }
     if (visibleData.length >= data.length - index) {

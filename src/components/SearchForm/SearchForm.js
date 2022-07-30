@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import Input from "../Input/Input";
 import "./SearchForm.css";
@@ -8,11 +8,9 @@ import Button from "../Button/Button";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
 function SearchForm({ onSubmit }) {
-  const [ checkboxStatus, seеСheckboxStatus] = useState(false);
+  const [checkboxStatus, seеСheckboxStatus] = useState(false);
   const {
     values,
-    errors,
-    isValid,
     handleChange,
     resetForm,
   } = useFormWithValidation({});
@@ -41,24 +39,8 @@ function SearchForm({ onSubmit }) {
     // resetForm();
   };
 
-  // const myFunction = () => {
-  //   onFocus = true
-  //   console.log("CHECBOX");
-  // }
-useEffect(() => {
-  // const input = JSON.parse(
-    localStorage.getItem("input")
-    // );
-    //       const checked = JSON.parse(
-            localStorage.getItem("checked")
-            // );
-})
-
-
-
   return (
     <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
-      {/* onSubmit={callSearchFunction} */}
       <Input
         placeholder="Фильм"
         type="text"

@@ -8,8 +8,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
-// import InfoTooltip from './InfoTooltip';
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import searchFilter from "../../utils/searchFilter";
 
 import "./App.css";
@@ -34,7 +32,6 @@ function App() {
 
   const [isLoadingMoviesData, setIsLoadingMoviesData] = useState(true); //плейсхолдер
   const [isNoMoviesFound, setIsNoMoviesFound] = useState(false); // не найдено
-  // const [errorMessage, setErrorMessage] = useState(null);
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
@@ -47,7 +44,6 @@ function App() {
   const [profResStatus, setProfResStatus] = useState(null);
 
   let navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
@@ -94,7 +90,6 @@ function App() {
         setLogResStatus(res.status);
         localStorage.setItem("jwt", res.jwt);
         setIsLoggedIn(true);
-        // setIsSubmitted(true);
         setInfoTooltip(true);
         navigate("/movies");
       })
@@ -160,34 +155,11 @@ function App() {
         localStorage.setItem("checked", searchQueries.shortfilm)
       );
 
-      // localStorage.setItem(
-      //   "filtered-movies",
-      //   JSON.stringify({
-      //     movies: markAsSaved(filteredMovies),
-      //     search: searchQueries.search,
-      //     FilterCheckbox:FilterCheckbox
-      //   }),
-
-      // );
-
-      setMoviesData(markAsSaved(filteredMovies));
+            setMoviesData(markAsSaved(filteredMovies));
     }
   };
 
-  // useEffect(() => {
-  //   tokenCheck()
-  //   .then((res) => {
-  //     if (res.ok) {
-  //       console.log(res);
-  //     }
-
-  //   })
-  //   // .then(() => {
-  //   //   tokenCheck();
-  //   // })
-  // })
-
-  const getInitialSavedMoviesIds = () => {
+    const getInitialSavedMoviesIds = () => {
     const initialSavedMoviesIds = [];
     foundSavedMoviesData.forEach((savedMovie) => {
       initialSavedMoviesIds.push(savedMovie.movieId);
@@ -225,8 +197,7 @@ function App() {
           console.log(res.data);
         })
         .catch((err) => {
-          // setOpenNotificationModal();
-          console.log(err);
+                    console.log(err);
         })
         .finally(() => {
           handleSearchSavedMovies();
@@ -245,9 +216,9 @@ function App() {
         .then((res) => {
           if (res.data.length === 0) {
             setFoundSavedMoviesData(res.data);
-            // setSavedMovies(res.data);
-            return;
+                        return;
           } else {
+            localStorage.getItem("savedMovies");
             console.log(res);
           }
 
@@ -324,8 +295,7 @@ function App() {
               setMoviesData(markAsSaved(localMoviesData));
             } else {
               localStorage.setItem("movies", JSON.stringify(moviesData));
-              // localStorage.setItem("movies", JSON.stringify(moviesData));
-              // localStorage.setItem("input", searchQueries.search);
+
             }
           }
         })
@@ -339,11 +309,6 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     return navigate("/");
-  //   }
-  // }, [isLoggedIn]);
 
   useEffect(() => {
     localStorage.getItem("input");
@@ -401,7 +366,6 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
-                  // redirectTo="/saved-movies"
                   loggedIn={isLoggedIn}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
@@ -439,7 +403,6 @@ function App() {
         onClose={setCloseMenu}
         name="register"
         loggedIn={isLoggedIn}
-        // location={location}
         infoTooltip={infoTooltip}
       />
     </div>

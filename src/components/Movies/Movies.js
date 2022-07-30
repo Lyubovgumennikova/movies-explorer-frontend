@@ -5,13 +5,9 @@ import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import MoviesCard from "../MoviesCard/MoviesCard";
 import Footer from "../Footer/Footer";
 import "./Movies.css";
-import Button from "../Button/Button";
-// import { useLocation } from "react-router-dom";
 import MenuButton from "../MenuButton/MenuButton";
-import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
 function Movies({
@@ -20,8 +16,8 @@ function Movies({
   onSaveMovie,
   onDeleteMovie,
   isNoMoviesFound,
-  isLoadingData,
-  resStatus,
+  isLoadingMoviesData,
+  // isLoadingData,
   onOpenMenu,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
@@ -42,8 +38,8 @@ function Movies({
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {isLoadingData && <Preloader />}
-      {!isLoadingData && isNoMoviesFound && (
+      {isLoadingMoviesData && <Preloader />}
+      {!isLoadingMoviesData && isNoMoviesFound && (
         <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>
       )}
       {isMoviesApiError && <p>{NOTIFICATION_TEXT_ERROR.MOVIES_ERROR}</p>}

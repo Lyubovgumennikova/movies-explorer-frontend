@@ -20,7 +20,7 @@ function Footer() {
             className="footer__navLink"
             href="https://praktikum.yandex.ru/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Яндекс.Практикум
           </a>

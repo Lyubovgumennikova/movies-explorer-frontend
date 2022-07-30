@@ -12,7 +12,7 @@ function Portfolio() {
           className="portfolio__link"
           href="https://github.com/Lyubovgumennikova/how-to-learn"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           <img className="portfolio__link" src={icon} alt="Кликни" />
         </a>
@@ -24,7 +24,7 @@ function Portfolio() {
           className="portfolio__link"
           href="https://github.com/Lyubovgumennikova/russian-travel"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           <img className="portfolio__link" src={icon} alt="Кликни" />
         </a>
@@ -36,7 +36,7 @@ function Portfolio() {
           className="portfolio__link"
           href="https://github.com/Lyubovgumennikova/express-mesto-gha"
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           <img className="portfolio__link" src={icon} alt="Кликни" />
         </a>

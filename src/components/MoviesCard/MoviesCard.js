@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import getValidUrl from "../../utils/getValidUrl";
 import "./MoviesCard.css";
 
@@ -66,7 +66,7 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
         target="_blank"
         aria-label={`Открыть трейлер фильма "${data.nameRU ||
           data.nameEN}" на youtube.com`}
-        rel="noreferrer"
+        rel="noopener noreferrer"
       >
         <img
           className="moviesCard__image"
