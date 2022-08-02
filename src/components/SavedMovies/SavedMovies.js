@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
@@ -23,16 +23,9 @@ function SavedMovies({
     logo: "header__logo",
   };
   const location = useLocation();
-    // const [savedMovies, setSavedMovies] = useState([]);
-
   const handleSubmit = (data) => {
     handleSearchSavedMovies(data);
   };
-
-  useEffect(() => {
-    handleSearchSavedMovies();
-    // localStorage.getItem("savedMovies");
-  }, [])
 
   return (
     <main className="savedMovies">

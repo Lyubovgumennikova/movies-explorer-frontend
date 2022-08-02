@@ -22,27 +22,17 @@ function MoviesCardList({
   const [isShowButtonActive, setIsShowButtonActive] = useState(false);
   const ZERO_NUMBER = 0;
 
-  const addStep = (PAGE_SIZE) => {
-    if (PAGE_SIZE >= 1280) {
-      return 3;
-    }
-    return 2;
-  };
-
   useEffect(() => {
     if (locationPathname === "/movies") {
       if (PAGE_SIZE >= 1280) setNumberOfItems(index + 12);
       else if (PAGE_SIZE <= 635) setNumberOfItems(index + 5);
       else setNumberOfItems(index + 8);
     } else if (locationPathname === "/saved-movies") {
-      data.forEach((movie) =>{
+      data.forEach((movie) => {
         if (movie.owner === currentUser._id) {
-                      setNumberOfItems(data.length);
-
+          setNumberOfItems(data.length);
         }
-      })
-
-      // else  setNumberOfItems(null);
+      });
     }
 
     const newArray = [];
@@ -59,8 +49,10 @@ function MoviesCardList({
 
   const handleShowButtonClick = () => {
     if (PAGE_SIZE >= 1280) {
+      setIndex(3);
       setVisibleData(data.slice(ZERO_NUMBER, visibleData.length + 3));
     } else {
+      setIndex(2);
       setVisibleData(data.slice(ZERO_NUMBER, visibleData.length + 2));
     }
     if (visibleData.length >= data.length - index) {

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
 import Input from "../Input/Input";
 import "./SearchForm.css";
 import icon from "../../images/icon__movie.svg";
@@ -8,12 +7,8 @@ import Button from "../Button/Button";
 import { useFormWithValidation } from "../../utils/FormValidation";
 
 function SearchForm({ onSubmit }) {
-  const [checkboxStatus, seеСheckboxStatus] = useState(false);
-  const {
-    values,
-    handleChange,
-    resetForm,
-  } = useFormWithValidation({});
+  const { values, handleChange} = useFormWithValidation({});
+  const checked = localStorage.getItem("checked");
 
   const FORM_STYLES = {
     form: "searchForm",
@@ -34,10 +29,14 @@ function SearchForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("seachfirm");
     onSubmit(values);
-    // resetForm();
   };
+
+  useEffect(() => {
+    if (checked) {
+      onSubmit(values);
+    }
+  }, [checked]);
 
   return (
     <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
@@ -50,9 +49,7 @@ function SearchForm({ onSubmit }) {
         onChange={handleChange}
         value={values.search}
         required
-        // error={errors.search}
       />
-
       <Input
         type="checkbox"
         id="shortfilm"
@@ -60,9 +57,7 @@ function SearchForm({ onSubmit }) {
         label="Короткометражки"
         styleSettings={FORM_STYLES_CHECKBOX}
         onChange={handleChange}
-        // value={checkboxStatus}
-        checked={checkboxStatus}
-        onclick={values.shortfilm}
+        onclick={localStorage.setItem("checked", values.shortfilm)}
       />
       <Button
         type="submit"

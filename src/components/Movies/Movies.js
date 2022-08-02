@@ -17,7 +17,6 @@ function Movies({
   onDeleteMovie,
   isNoMoviesFound,
   isLoadingMoviesData,
-  // isLoadingData,
   onOpenMenu,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);

@@ -35,7 +35,6 @@ function App() {
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
-  // const [checkboxStatus, seеСheckboxStatus] = useState(true);
 
   const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
 
@@ -63,7 +62,6 @@ function App() {
   };
 
   const handleRegister = (data) => {
-    // setIsLoggedIn(true);
     mainApi
       .register(data.name, data.email, data.password)
       .then((res) => {
@@ -155,11 +153,11 @@ function App() {
         localStorage.setItem("checked", searchQueries.shortfilm)
       );
 
-            setMoviesData(markAsSaved(filteredMovies));
+      setMoviesData(markAsSaved(filteredMovies));
     }
   };
 
-    const getInitialSavedMoviesIds = () => {
+  const getInitialSavedMoviesIds = () => {
     const initialSavedMoviesIds = [];
     foundSavedMoviesData.forEach((savedMovie) => {
       initialSavedMoviesIds.push(savedMovie.movieId);
@@ -187,8 +185,6 @@ function App() {
   };
 
   const handleSaveMovie = (data) => {
-    const cardLiked = moviesData.find((card) => card.id === data.movieId);
-
     const token = localStorage.getItem("jwt");
     if (token) {
       mainApi
@@ -197,7 +193,7 @@ function App() {
           console.log(res.data);
         })
         .catch((err) => {
-                    console.log(err);
+          console.log(err);
         })
         .finally(() => {
           handleSearchSavedMovies();
@@ -216,7 +212,7 @@ function App() {
         .then((res) => {
           if (res.data.length === 0) {
             setFoundSavedMoviesData(res.data);
-                        return;
+            return;
           } else {
             localStorage.getItem("savedMovies");
             console.log(res);
@@ -287,7 +283,6 @@ function App() {
             localStorage.getItem("filtered-movies")
           );
 
-
           if (renderedPrevMovies) {
             setMoviesData(markAsSaved(renderedPrevMovies));
           } else {
@@ -295,7 +290,6 @@ function App() {
               setMoviesData(markAsSaved(localMoviesData));
             } else {
               localStorage.setItem("movies", JSON.stringify(moviesData));
-
             }
           }
         })
@@ -308,7 +302,6 @@ function App() {
         });
     }
   }, [isLoggedIn]);
-
 
   useEffect(() => {
     localStorage.getItem("input");
@@ -325,7 +318,7 @@ function App() {
             element={
               <Register
                 onRegister={handleRegister}
-                // loggedIn={isLoggedIn}
+                loggedIn={isLoggedIn}
                 isSubmitted={isSubmitted}
                 regResStatus={regResStatus}
               />
@@ -346,17 +339,15 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
-                  // redirectTo="/"
                   isLoadingMoviesData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
                   onDeleteMovie={handleDeleteMovie}
                   moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
-                  // loggedIn={isLoggedIn}
+                  loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
                   isSubmitted={isSubmitted}
-                  // handleSubmit={handleSubmit}
                 />
               </PrivateRoute>
             }
@@ -384,7 +375,7 @@ function App() {
                 <Profile
                   redirectTo="/"
                   component={Profile}
-                  // loggedIn={isLoggedIn}
+                  loggedIn={isLoggedIn}
                   onUpdateUser={handleUpdateUser}
                   onSignOut={handleSignOut}
                   onOpenMenu={handleOpenMenuClick}
