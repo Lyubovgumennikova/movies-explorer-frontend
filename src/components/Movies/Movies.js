@@ -17,6 +17,7 @@ function Movies({
   onDeleteMovie,
   isNoMoviesFound,
   isLoadingMoviesData,
+  resStatus,
   onOpenMenu,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
@@ -29,6 +30,23 @@ function Movies({
   const handleSubmit = (data) => {
     onSubmit(data);
   };
+
+  const handleErrors = () => {
+    if (resStatus) {
+      switch (resStatus) {
+        case 200:
+          setIsMoviesApiError(false);
+          break;
+        default:
+          setIsMoviesApiError(true);
+          break;
+      };
+    };
+  };
+
+  React.useEffect(() => {
+    handleErrors();
+  }, [resStatus])
 
   return (
     <main className="movies">

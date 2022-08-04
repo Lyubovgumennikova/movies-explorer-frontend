@@ -1,47 +1,47 @@
-// FilterCheckbox
-// const FilterCheckbox = (searchQueries, moviesData) => {
-//   const { search = '', shortfilm = false } = searchQueries;
+import React, { useState } from 'react';
 
-//   const filterKeyword = (movie) => {
-//     return JSON.stringify(movie).toLowerCase().includes(search.toLowerCase())
-//   }
+function FilterCheckbox(props) {
 
-//   const filterShortfilm = (movie) => {
-//     return movie.duration <= 40;
-//   }
+  const [onFocus, setOnFocus] = useState(false);
 
-//   if (shortfilm) {
-//     return moviesData.filter(filterShortfilm).filter(filterKeyword);
-//   } else {
-//     return moviesData.filter(filterKeyword);
-//   }
-// }
+  const handleFocus = () => {
+    setOnFocus(true);
+  };
+
+  const handleBlur = () => {
+    setOnFocus(false);
+  };
+
+  return (
+    <label
+      className={onFocus ? `${props.labelClassName} ${props.onFocusClassName}` : props.labelClassName}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
+      <input
 
 
 
+        // onChange={handleChange}
 
-// export default FilterCheckbox;
+        // onclick={localStorage.setItem("checked", values.shortfilm)}
 
-// const FilterCheckbox = (searchQueries, moviesData) => {
-//   const { search = '', checked } = searchQueries;
 
-//   const filterKeyword = (movie) => {
-//     return JSON.stringify(movie).toLowerCase().includes(search.toLowerCase())
-//   }
+        className="searchForm__checkbox_input"
+        type="checkbox"
+        id="shortfilm"
+        name="shortfilm"
+        required={props.settings.required}
+        onChange={props.onChange}
+        value={props.value}
+        checked={props.value || ''}
+      />
+      <span
+        className="searchForm__checkbox_slider"
+      />
+      {props.settings.labelText}
+    </label>
+  )
+}
 
-  // const filterShortfilm = (movie) => {
-  //   return movie.duration <= 40;
-  // }
-
-    // return moviesData.filter(filterShortfilm).filter(filterKeyword);
-
-    // return moviesData.filter(filterKeyword);
-
-  // if (checked) {
-  //   return moviesData.filter(filterShortfilm).filter(filterKeyword);
-  // } else {
-  //   return moviesData.filter(filterKeyword);
-  // }
-// }
-
-// export default FilterCheckbox;
+export default FilterCheckbox;

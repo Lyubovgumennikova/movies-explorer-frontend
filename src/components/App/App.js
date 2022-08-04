@@ -33,6 +33,8 @@ function App() {
   const [isLoadingMoviesData, setIsLoadingMoviesData] = useState(true); //плейсхолдер
   const [isNoMoviesFound, setIsNoMoviesFound] = useState(false); // не найдено
 
+  const [isSavedMoviesEmpty, setIsSavedMoviesEmpty] = useState(false); //пустой
+
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
 
@@ -41,6 +43,7 @@ function App() {
   const [regResStatus, setRegResResStatus] = useState(null);
   const [logResStatus, setLogResStatus] = useState(null);
   const [profResStatus, setProfResStatus] = useState(null);
+  const [moviesResStatus, setMoviesResStatus] = useState(null);
 
   let navigate = useNavigate();
 
@@ -56,7 +59,9 @@ function App() {
         if (!res) return;
         setCurrentUser(res.data);
         setIsLoggedIn(true);
-        navigate("/movies", { replace: false });
+
+        navigate("/profile");
+              // navigate("/movies", { replace: false });
       })
       .catch((err) => console.log(err));
   };
@@ -148,9 +153,8 @@ function App() {
 
       localStorage.setItem(
         "filtered-movies",
-        JSON.stringify(markAsSaved(filteredMovies)),
-        localStorage.setItem("input", searchQueries.search),
-        localStorage.setItem("checked", searchQueries.shortfilm)
+        JSON.stringify(markAsSaved(filteredMovies))
+        // localStorage.setItem("input", searchQueries.search),
       );
 
       setMoviesData(markAsSaved(filteredMovies));
@@ -211,10 +215,12 @@ function App() {
         .getSavedMovies(token)
         .then((res) => {
           if (res.data.length === 0) {
+            setIsSavedMoviesEmpty(true);
             setFoundSavedMoviesData(res.data);
+            console.log(res);
             return;
           } else {
-            localStorage.getItem("savedMovies");
+            setIsSavedMoviesEmpty(false);
             console.log(res);
           }
 
@@ -231,6 +237,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          setMoviesResStatus(err);
         });
     }
   };
@@ -278,6 +285,8 @@ function App() {
       moviesApi
         .getMoviesData()
         .then((moviesData) => {
+          // setMoviesApiResStatus(res.status);
+
           const localMoviesData = JSON.parse(localStorage.getItem("movies"));
           const renderedPrevMovies = JSON.parse(
             localStorage.getItem("filtered-movies")
@@ -294,19 +303,24 @@ function App() {
           }
         })
 
-        .catch((
-          err //console.log(err)
-        ) => setIsErrorsModale(true))
+        .catch((err) => {
+          console.log(err);
+          setMoviesResStatus(err);
+          setIsErrorsModale(true);
+        })
         .finally(() => {
           setIsLoadingMoviesData(false);
         });
     }
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    localStorage.getItem("input");
-    localStorage.getItem("checked");
-  }, []);
+  // useEffect(() => {
+  //   const input = localStorage.getItem("input");
+  //   const checked = localStorage.getItem("checked");
+  //   // const searchQueries = JSON.parse("searchQueries:" +{ input, checked });
+  //   // console.log(searchQueries);
+  //    localStorage.setItem("searchQueries:"+input,  checked);
+  // }, []);
 
   return (
     <div className="page">
@@ -348,6 +362,7 @@ function App() {
                   loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
                   isSubmitted={isSubmitted}
+                  resStatus={moviesResStatus}
                 />
               </PrivateRoute>
             }
@@ -361,6 +376,7 @@ function App() {
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
                   isLoadingMoviesData={isLoadingMoviesData}
+                  isSavedMoviesEmpty={isSavedMoviesEmpty}
                   isNoMoviesFound={isNoMoviesFound}
                   handleSearchSavedMovies={handleSearchSavedMovies}
                   onDeleteMovie={handleDeleteMovie}

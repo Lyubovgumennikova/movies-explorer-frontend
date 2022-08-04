@@ -39,7 +39,7 @@
   opacity: 0.8;
 }
 
-.form__submit-button_disabled {
+.form__submit-button:disabled {
   background: #ffffff;
   /* border: 1px solid #000000; */
   box-sizing: border-box;

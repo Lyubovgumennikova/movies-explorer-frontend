@@ -23,11 +23,12 @@ function Input({
         name={name}
         type={type}
         id={name}
+        aria-label={props.ariaLabel}
         placeholder={placeholder}
         className={styleSettings.input}
         minLength={minLength}
         maxLength={maxLength}
-        value={props.value}
+        value={props.value || ''}
         onChange={props.onChange}
         required={styleSettings.required}
         pattern={pattern}

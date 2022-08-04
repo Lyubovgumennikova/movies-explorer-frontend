@@ -15,9 +15,9 @@ function Profile({
   onUpdateUser,
   onSignOut,
   profResStatus,
-  isSubmitted,
 }) {
   const [formIsValid, setFormIsValid] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
   const [isRegistrationError, setIsRegistrationError] = useState(false);
   const [registrationErrorText, setRegistrationErrorText] = useState("");
 
@@ -35,7 +35,7 @@ function Profile({
     label: "profile__label",
     input: "profile__textInput",
     button: `${
-      !isValid
+      !isValid || !isEdited
         ? "profile__form_submit-button profile__form_submit-button_disabled"
         : "profile__form_submit-button "
     }`,
@@ -98,6 +98,7 @@ function Profile({
 
   useEffect(() => {
     setFormIsValid(isValid);
+    setIsEdited(true);
   }, [isValid, values]);
 
   useEffect(() => {
@@ -105,6 +106,7 @@ function Profile({
       currentUser.name === values.name &&
       currentUser.email === values.email
     ) {
+      setIsEdited(false);
       setFormIsValid(false);
     }
   }, [currentUser, values]);
@@ -125,7 +127,6 @@ function Profile({
         styleSettings={FOPM_STYLES}
         buttonText="Редактировать"
         onSubmit={handleSubmit}
-        isSubmitted={isSubmitted}
         formIsValid={formIsValid}
       >
         <Input
