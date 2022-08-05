@@ -10,6 +10,7 @@ function Form({
   formIsValid,
   isUserData,
   styleSettings,
+  isLoadingData
 }) {
   return (
     <form className={styleSettings.form} onSubmit={onSubmit} noValidate>
@@ -17,7 +18,7 @@ function Form({
       {children}
       <button
         type="submit"
-        disabled={!formIsValid || isUserData}
+        disabled={!formIsValid || isUserData || isLoadingData}
         className={styleSettings.button}
       >
         {isSubmitted ? "Выполняется..." : buttonText}

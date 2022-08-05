@@ -38,6 +38,7 @@ function App() {
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   // const [savedMovies, setSavedMovies] = useState([]);
+  const [isLoadingSignin, setIsLoadingSignin] = React.useState(false)
 
   const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
 
@@ -68,6 +69,7 @@ function App() {
   };
 
   const handleRegister = (data) => {
+    setIsLoadingData(true);
     mainApi
       .register(data.name, data.email, data.password)
       .then((res) => {
@@ -83,10 +85,12 @@ function App() {
       })
       .finally(() => {
         setIsLoggedIn(false);
+        setIsLoadingData(false);
       });
   };
 
   const handleLogin = (data) => {
+    setIsLoadingData(true);
     mainApi
       .authorize(data.email, data.password)
       .then((res) => {
@@ -106,6 +110,7 @@ function App() {
       })
       .finally(() => {
         setInfoTooltip(false);
+        setIsLoadingData(false);
       });
   };
 
@@ -292,6 +297,7 @@ function App() {
           // setMoviesApiResStatus(res.status);
 
           const localMoviesData = JSON.parse(localStorage.getItem("movies"));
+
           const renderedPrevMovies = JSON.parse(
             localStorage.getItem("filtered-movies")
           );
@@ -335,6 +341,8 @@ function App() {
   //   // console.log(searchQueries);
   //    localStorage.setItem("searchQueries:"+input,  checked);
   // }, []);
+  const { pathname } = useLocation();
+  // const routePathMain = matchPath("/*", pathname);
 
   return (
     <div className="page">
@@ -349,6 +357,7 @@ function App() {
                 loggedIn={isLoggedIn}
                 isSubmitted={isSubmitted}
                 regResStatus={regResStatus}
+                isLoadingData={isLoadingData}
               />
             }
           />
@@ -374,6 +383,7 @@ function App() {
                   onDeleteMovie={handleDeleteMovie}
                   moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
+                  handleSearchSavedMovies={handleSearchSavedMovies}
                   // loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
                   isSubmitted={isSubmitted}
@@ -415,8 +425,10 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/*" element={<NotFound replace />} />
+
+          {/* <Route path="/*" element={<NotFound replace />} /> */}
         </Routes>
+
       </CurrentUserContext.Provider>
 
       {menuIsOpen && <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />}
@@ -427,6 +439,7 @@ function App() {
         loggedIn={isLoggedIn}
         infoTooltip={infoTooltip}
       />
+      {/* <Router path="/*" element={<NotFound replace />} /> */}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import "./Register.css";
 import { useFormWithValidation } from "../../utils/FormValidation";
 import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Register({ onRegister, isSubmitted, regResStatus, isLoggedIn }) {
+function Register({ onRegister, isSubmitted, regResStatus, isLoggedIn, isLoadingData }) {
   const {
     values,
     errors,
@@ -83,6 +83,7 @@ function Register({ onRegister, isSubmitted, regResStatus, isLoggedIn }) {
         isSubmitted={isSubmitted}
         onSubmit={handleSubmit}
         formIsValid={isValid}
+        isLoadingData={isLoadingData}
         errors={errors}
       >
         <Input

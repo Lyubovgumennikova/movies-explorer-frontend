@@ -8,7 +8,7 @@ import "../Input/Input.css";
 import { useFormWithValidation } from "../../utils/FormValidation";
 import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Login({ onLogin, logResStatus }) {
+function Login({ onLogin, logResStatus, isLoadingData }) {
   const {
     values,
     errors,
@@ -88,6 +88,7 @@ function Login({ onLogin, logResStatus }) {
         onSubmit={handleSubmit}
         formIsValid={isValid}
         errors={errors}
+        isLoadingData={isLoadingData}
       >
         <Input
           required
