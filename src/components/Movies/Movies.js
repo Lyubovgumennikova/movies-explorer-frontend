@@ -16,12 +16,12 @@ function Movies({
   onSaveMovie,
   onDeleteMovie,
   isNoMoviesFound,
-  isLoadingMoviesData,
+  isLoadingData,
   resStatus,
   onOpenMenu,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
-  const location = useLocation();
+  let location = useLocation();
 
   const FOPM_STYLES = {
     logo: "header__logo",
@@ -55,8 +55,8 @@ function Movies({
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
       <SearchForm onSubmit={handleSubmit} />
-      {isLoadingMoviesData && <Preloader />}
-      {!isLoadingMoviesData && isNoMoviesFound && (
+      {isLoadingData && <Preloader />}
+      {!isLoadingData && isNoMoviesFound && (
         <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>
       )}
       {isMoviesApiError && <p>{NOTIFICATION_TEXT_ERROR.MOVIES_ERROR}</p>}

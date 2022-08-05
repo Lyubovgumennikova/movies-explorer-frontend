@@ -22,6 +22,7 @@ import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   const [infoTooltip, setInfoTooltip] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -36,7 +37,7 @@ function App() {
   const [isSavedMoviesEmpty, setIsSavedMoviesEmpty] = useState(false); //пустой
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
-  const [savedMovies, setSavedMovies] = useState([]);
+  // const [savedMovies, setSavedMovies] = useState([]);
 
   const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
 
@@ -45,7 +46,7 @@ function App() {
   const [profResStatus, setProfResStatus] = useState(null);
   const [moviesResStatus, setMoviesResStatus] = useState(null);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
@@ -60,8 +61,8 @@ function App() {
         setCurrentUser(res.data);
         setIsLoggedIn(true);
 
-        navigate("/profile");
-              // navigate("/movies", { replace: false });
+        // navigate("/profile");
+        navigate("/movies", { replace: false });
       })
       .catch((err) => console.log(err));
   };
@@ -135,7 +136,6 @@ function App() {
     setIsLoggedIn(false);
     setMoviesData([]);
     setCurrentUser({});
-    setSavedMovies([]);
     setFoundSavedMoviesData([]);
     localStorage.clear();
     navigate("/");
@@ -153,8 +153,8 @@ function App() {
 
       localStorage.setItem(
         "filtered-movies",
-        JSON.stringify(markAsSaved(filteredMovies))
-        // localStorage.setItem("input", searchQueries.search),
+        JSON.stringify(markAsSaved(filteredMovies)),
+        localStorage.setItem("input", searchQueries.search),
       );
 
       setMoviesData(markAsSaved(filteredMovies));
@@ -207,7 +207,10 @@ function App() {
     }
   };
 
-  const handleSearchSavedMovies = (searchQueries = {}) => {
+  const handleSearchSavedMovies = (
+    searchQueries = {},
+    isAfterDelete = false
+  ) => {
     const token = localStorage.getItem("jwt");
 
     if (token) {
@@ -217,7 +220,6 @@ function App() {
           if (res.data.length === 0) {
             setIsSavedMoviesEmpty(true);
             setFoundSavedMoviesData(res.data);
-            console.log(res);
             return;
           } else {
             setIsSavedMoviesEmpty(false);
@@ -258,8 +260,10 @@ function App() {
       mainApi
         .deleteMovie(data, token)
         .then(() => {
-          const deleteMovies = savedMovies.filter((c) => c._id !== data._id);
-          setSavedMovies(deleteMovies);
+          const deleteMovies = foundSavedMoviesData.filter(
+            (c) => c._id !== data._id
+          );
+          setFoundSavedMoviesData(deleteMovies);
         })
         .catch((err) => console.log(err))
         .finally(() => {
@@ -281,7 +285,7 @@ function App() {
 
     const token = localStorage.getItem("jwt");
     if (token) {
-      setIsLoadingMoviesData(true);
+      // setIsLoadingMoviesData(true);
       moviesApi
         .getMoviesData()
         .then((moviesData) => {
@@ -314,6 +318,16 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  React.useEffect(() => {
+    const handleWindowLoad = () => {
+      setIsLoadingData(false);
+    };
+
+    window.addEventListener("load", handleWindowLoad);
+
+    return () => window.removeEventListener("load", handleWindowLoad);
+  }, []);
+
   // useEffect(() => {
   //   const input = localStorage.getItem("input");
   //   const checked = localStorage.getItem("checked");
@@ -345,6 +359,7 @@ function App() {
                 onLogin={handleLogin}
                 isSubmitted={isSubmitted}
                 logResStatus={logResStatus}
+                isLoadingData={isLoadingData}
               />
             }
           />
@@ -353,13 +368,13 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <Movies
-                  isLoadingMoviesData={isLoadingMoviesData}
+                  isLoadingData={isLoadingMoviesData}
                   onSubmit={handleSearchMoviesData}
                   onSaveMovie={handleSaveMovie}
                   onDeleteMovie={handleDeleteMovie}
                   moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
-                  loggedIn={isLoggedIn}
+                  // loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
                   isSubmitted={isSubmitted}
                   resStatus={moviesResStatus}
@@ -372,10 +387,10 @@ function App() {
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
-                  loggedIn={isLoggedIn}
+                  // loggedIn={isLoggedIn}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
-                  isLoadingMoviesData={isLoadingMoviesData}
+                  isLoadingData={isLoadingMoviesData}
                   isSavedMoviesEmpty={isSavedMoviesEmpty}
                   isNoMoviesFound={isNoMoviesFound}
                   handleSearchSavedMovies={handleSearchSavedMovies}

@@ -31,15 +31,15 @@ function FilterCheckbox(props) {
         type="checkbox"
         id="shortfilm"
         name="shortfilm"
-        required={props.settings.required}
+        required={props.styleSettings.required}
         onChange={props.onChange}
         value={props.value}
-        checked={props.value || ''}
+        checked={props.value}
       />
       <span
         className="searchForm__checkbox_slider"
       />
-      {props.settings.labelText}
+      {props.styleSettings.labelText}
     </label>
   )
 }
