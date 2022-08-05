@@ -63,7 +63,7 @@ function App() {
         setIsLoggedIn(true);
 
         // navigate("/profile");
-        navigate("/movies", { replace: false });
+        // navigate("/movies", { replace: false });
       })
       .catch((err) => console.log(err));
   };
@@ -326,7 +326,8 @@ function App() {
 
   React.useEffect(() => {
     const handleWindowLoad = () => {
-      setIsLoadingData(false);
+      // setIsLoadingData(false);
+      setIsLoggedIn(true);
     };
 
     window.addEventListener("load", handleWindowLoad);
@@ -412,9 +413,9 @@ function App() {
           <Route
             path="/profile"
             element={
-              <PrivateRoute loggedIn={isLoggedIn}>
+              <PrivateRoute loggedIn={isLoggedIn} replace>
                 <Profile
-                  redirectTo="/"
+                  // redirectTo="/profile"
                   component={Profile}
                   loggedIn={isLoggedIn}
                   onUpdateUser={handleUpdateUser}
@@ -425,12 +426,9 @@ function App() {
               </PrivateRoute>
             }
           />
-
-          {/* <Route path="/*" element={<NotFound replace />} /> */}
+          <Route path="*" element={<NotFound replace />} />
         </Routes>
-
       </CurrentUserContext.Provider>
-
       {menuIsOpen && <Menu isOpen={menuIsOpen} onClose={setCloseMenu} />}
       <InfoTooltip
         isOpen={isErrorsModale}
@@ -439,8 +437,7 @@ function App() {
         loggedIn={isLoggedIn}
         infoTooltip={infoTooltip}
       />
-      {/* <Router path="/*" element={<NotFound replace />} /> */}
-    </div>
+      </div>
   );
 }
 
