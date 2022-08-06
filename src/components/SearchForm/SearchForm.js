@@ -20,10 +20,10 @@ function SearchForm({ onSubmit }) {
   const [formIsValid, setFormIsValid] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-  // const [searchData, setSearchData] = useState({
-  //   search: "",
-  //   shortfilm: false,
-  // });
+  const [searchData, setSearchData] = useState({
+    search: "",
+    shortfilm: false,
+  });
   // const checked = localStorage.getItem("checked");
   const input = localStorage.getItem("input");
 
@@ -43,6 +43,7 @@ function SearchForm({ onSubmit }) {
         ? "searchForm__checkbox_input"
         : "searchForm__checkbox_input:checked"
     }`,
+    // input: "searchForm__checkbox_input",
     error: "searchForm__checkbox_slider",
     label: "searchForm__checkbox-label",
     focus: "searchForm__checkbox-label_focus",
@@ -52,36 +53,43 @@ function SearchForm({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(values);
-    // setSearchData(values)
-    // console.log(searchData);
-    resetForm();
+    resetForm(searchData);
   };
 
+  // useEffect(() => {
+  //   const renderedPrevMovies = JSON.parse(
+  //     localStorage.getItem("filtered-movies")
+  //   );
+
+  //   if (!renderedPrevMovies) return;
+
+
+  //   // localStorage.setItem("searchQueri;lkhgf", JSON.stringify(searchData));
+
+  //   onSubmit(values);
+  // }, [isValid, values]);
+
   useEffect(() => {
-    const renderedPrevMovies = JSON.parse(
-      localStorage.getItem("filtered-movies")
-    );
-
-    if (!renderedPrevMovies) return;
-
-
-    // localStorage.setItem("searchQueri;lkhgf", JSON.stringify(searchData));
-
-    onSubmit(values);
-  }, [isValid, values]);
-
-  useEffect(() => {
-    // setFormIsValid(isValid);
+    setSearchData({
+      search: values.search,
+      shortfilm: values.shortfilm
+    })
+    localStorage.setItem("searchQueri", JSON.stringify(searchData));
     // onSubmit(values);
     setIsChecked(true);
-  }, [isValid, values]);
+    console.log(searchData);
+  }, [values]);
 
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     resetForm(currentUser);
-  //   }
-  // }, [currentUser, resetForm]);
+  useEffect(() => {
+    const renderedPrev = localStorage.getItem("searchQueri")
+    const checked = localStorage.getItem("checked")
+    checked(renderedPrev)
+    if (renderedPrev) {
+      // resetForm(renderedPrev);
+    }
+    console.log(renderedPrev);
+  }, []);
 
   // useEffect(() => {
   //   setFormIsValid(isValid);
@@ -125,9 +133,9 @@ function SearchForm({ onSubmit }) {
         onChange={handleChange}
         value={values.shortfilm}
 
-        // checked={values.shortfilm}
-        // onclick={handleCheced}
-        // onclick={localStorage.setItem("checked", values.shortfilm)}
+        // checked={isChecked}
+        // onclick={isChecked}
+        onclick={localStorage.setItem("checked", values.shortfilm)}
       />
       <Button
         type="submit"

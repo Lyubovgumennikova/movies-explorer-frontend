@@ -146,6 +146,8 @@ function App() {
     navigate("/");
   }
 
+  // const [isChecked, setIsChecked] = useState(false);
+
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
     if (localMoviesData) {
@@ -166,9 +168,14 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    handleSearchMoviesData();
+  }, []);
+
   const getInitialSavedMoviesIds = () => {
     const initialSavedMoviesIds = [];
     foundSavedMoviesData.forEach((savedMovie) => {
+
       initialSavedMoviesIds.push(savedMovie.movieId);
     });
 
@@ -214,11 +221,12 @@ function App() {
 
   const handleSearchSavedMovies = (searchQueries = {}) => {
     const token = localStorage.getItem("jwt");
-    localStorage.setItem("searchQueries", JSON.stringify(searchQueries ));
+    // localStorage.setItem("searchQueries", JSON.stringify(searchQueries ));
     if (token) {
       mainApi
         .getSavedMovies(token)
         .then((res) => {
+          // if (!res.data.owner === currentUser._id) return;
           if (res.data.length === 0) {
             setIsSavedMoviesEmpty(true);
             setFoundSavedMoviesData(res.data);
@@ -229,7 +237,7 @@ function App() {
           }
 
           const savedMovies = res.data.reverse();
-
+// if (savedMovie.owner === currentUser._id)
           const filteredSavedMovies = searchFilter(searchQueries, savedMovies);
 
           if (filteredSavedMovies.length === 0) {
@@ -237,6 +245,7 @@ function App() {
           } else {
             setIsNoMoviesFound(false);
           }
+          // if (savedMovie.owner === currentUser._id)
           setFoundSavedMoviesData(filteredSavedMovies);
         })
         .catch((err) => {
@@ -376,6 +385,7 @@ function App() {
                   isNoMoviesFound={isNoMoviesFound}
                   isSubmitted={isSubmitted}
                   resStatus={moviesResStatus}
+                  checked={handleSearchMoviesData}
                 />
               </PrivateRoute>
             }

@@ -40,6 +40,7 @@ function MoviesCardList({
       if (i < numberOfItems) newArray.push(data[i]);
     }
     setVisibleData(newArray);
+
     if (data.length <= numberOfItems) {
       setIsShowButtonActive(false);
     } else {

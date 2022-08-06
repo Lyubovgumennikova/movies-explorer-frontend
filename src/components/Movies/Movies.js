@@ -19,6 +19,7 @@ function Movies({
   isLoadingData,
   resStatus,
   onOpenMenu,
+  checked,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
   let location = useLocation();
@@ -54,7 +55,7 @@ function Movies({
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-    <SearchForm onSubmit={handleSubmit}  />
+    <SearchForm onSubmit={handleSubmit}  checked={checked} />
       {isLoadingData && <Preloader />}
       {!isLoadingData && isNoMoviesFound && (
         <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>
