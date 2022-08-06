@@ -32,6 +32,7 @@ function Input({
         onChange={props.onChange}
         required={styleSettings.required}
         pattern={pattern}
+        checked={props.checked}
       />
       <span role="status" aria-live="polite" className={styleSettings.error}>
         {props.error}

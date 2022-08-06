@@ -38,7 +38,7 @@ function App() {
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
   // const [savedMovies, setSavedMovies] = useState([]);
-  const [isLoadingSignin, setIsLoadingSignin] = React.useState(false)
+  const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
   const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
 
@@ -159,7 +159,7 @@ function App() {
       localStorage.setItem(
         "filtered-movies",
         JSON.stringify(markAsSaved(filteredMovies)),
-        localStorage.setItem("input", searchQueries.search),
+        localStorage.setItem("input", searchQueries.search)
       );
 
       setMoviesData(markAsSaved(filteredMovies));
@@ -212,12 +212,9 @@ function App() {
     }
   };
 
-  const handleSearchSavedMovies = (
-    searchQueries = {},
-    isAfterDelete = false
-  ) => {
+  const handleSearchSavedMovies = (searchQueries = {}) => {
     const token = localStorage.getItem("jwt");
-
+    localStorage.setItem("searchQueries", JSON.stringify(searchQueries ));
     if (token) {
       mainApi
         .getSavedMovies(token)
@@ -290,7 +287,7 @@ function App() {
 
     const token = localStorage.getItem("jwt");
     if (token) {
-      // setIsLoadingMoviesData(true);
+      setIsLoadingMoviesData(true);
       moviesApi
         .getMoviesData()
         .then((moviesData) => {
@@ -326,8 +323,8 @@ function App() {
 
   React.useEffect(() => {
     const handleWindowLoad = () => {
-      // setIsLoadingData(false);
-      setIsLoggedIn(true);
+      setIsLoadingData(false);
+      // setIsLoggedIn(true);
     };
 
     window.addEventListener("load", handleWindowLoad);
@@ -437,7 +434,7 @@ function App() {
         loggedIn={isLoggedIn}
         infoTooltip={infoTooltip}
       />
-      </div>
+    </div>
   );
 }
 

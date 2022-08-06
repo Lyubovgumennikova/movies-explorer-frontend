@@ -261,19 +261,65 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
   // //   setIsEdited(true);
   // // }, [isValid, values]);
 
-
+  // return (
+  //   <form
+  //     className={FORM_STYLES.form}
+  //     onSubmit={handleSubmit}
+  //     formIsValid={isValid}
+  //   >
+  //     <Input
+  //       placeholder="Фильм"
+  //       type="text"
+  //       id="search"
+  //       name="search"
+  //       ariaLabel="найти"
+  //       styleSettings={FORM_STYLES}
+  //       onChange={handleChange}
+  //       value={values.search}
+  //       // value={values.name || ""}
+  //       // required
+  //     />
+  //     <Input
+  //       type="checkbox"
+  //       id="checkbox"
+  //       name="shortfilm"
+  //       label="Короткометражки"
+  //       styleSettings={FORM_STYLES_CHECKBOX}
+  //       onChange={handleChange}
+  //       value={values.shortfilm}
+  //       onclick={handleCheced}
+  //       // onclick={localStorage.setItem("checked", values.shortfilm)}
+  //       // onclick={handleSubmit}
+  //     />
+  //     <Button
+  //       type="submit"
+  //       title="Найти"
+  //       styleSettings={FORM_STYLES}
+  //       // disabled={isLoadingData}
+  //       disabled={isValid}
+  //       buttonText={
+  //         <img
+  //           src={icon}
+  //           className="searchForm__submitButton_icon"
+  //           alt="Найти"
+  //         />
+  //       }
+  //     />
+  //   </form>
 
   const [searchData, setSearchData] = useState({
     search: "",
     shortfilm: false,
   });
 
+  const [isChecked, setIsChecked] = useState(false)
+
   const [searchD, setSearchD] = useState({
     search: "",
     shortfilm: false,
   });
 
-  const checked = localStorage.getItem("checked");
+  // const checked = localStorage.getItem("checked");
   const input = localStorage.getItem("input");
 
   const FORM_STYLES = {
@@ -287,7 +333,8 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
 
   const FORM_STYLES_CHECKBOX = {
     group: "searchForm__checkbox",
-    input: "searchForm__checkbox_input",
+    input: `${isChecked ? "searchForm__checkbox_input" : "searchForm__checkbox_input:checked"}`,
+    // input: "searchForm__checkbox_input",
     error: "searchForm__checkbox_slider", //slider
     label: "searchForm__checkbox-label",
     focus: "searchForm__checkbox-label_focus",
@@ -299,19 +346,20 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
     e.preventDefault();
     onSubmit(values);
     console.log(searchData);
-    resetForm(searchData);
+    resetForm();
   };
 
   useEffect(() => {
-    const searchDjjhg = localStorage.getItem("searchQueries");
-    console.log(searchDjjhg);
-    if (!searchDjjhg) return;
-
-    // if (searchDjjhg) {
-
-        setSearchData(JSON.parse(searchDjjhg));
-
-
+    // const searchQueries = localStorage.getItem("searchQueries");
+    // console.log(searchQueries);
+    // if (searchQueries) {
+    //   try {
+    //     setSearchData(JSON.parse(searchQueries));
+    //   } catch (err) {
+    //     localStorage.removeItem("searchQueries");
+    //   }
+    // } else {
+    // }
     const checked = values.shortfilm || false;
     const search = values.search || "";
     setSearchData({
@@ -319,7 +367,17 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
       shortfilm: checked,
     });
 
-    localStorage.setItem("searchQueries", JSON.stringify(searchData));
+    setSearchD({
+      search: values.search,
+      shortfilm: values.shortfilm,
+    });
+
+    console.log(searchD);
+    console.log(isChecked);
+//
+    // localStorage.setItem("searchQueries", JSON.stringify(searchQueries ));
+
+    localStorage.setItem("searchQueri;lkhgf", JSON.stringify(searchData));
     // setSearchData({
     //   // search: input,
     //   search: localStorage.getItem("input"),
@@ -329,12 +387,12 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
 
     // localStorage.setItem("searchQueries", JSON.stringify(searchData));
     // const Queries = JSON.parse(localStorage.getItem("searchQueries"));
-    const Queries = JSON.parse(localStorage.getItem("searchQueries"));
+    // const Queries = JSON.parse(localStorage.getItem("searchQueries"));
     // if (Queries.search === null) {
     //   return;
     // }
-    console.log(Queries);
-      onSubmit(Queries);
+    // console.log(Queries);
+      // onSubmit(Queries);
 
     // if (values)
     // setSearchD({
@@ -345,16 +403,24 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
     // //   // resetForm(searchQueries);
     // //   console.log(searchQueries);
     // resetForm(searchData);
+    onSubmit(searchData);
     console.log(searchData);
     //   // }
   }, [values]);
 
-  useEffect(() => {
-    if (searchData) {
-      resetForm(searchData);
-    }
-  }, [ resetForm]);
 
+  const Queries = JSON.parse(localStorage.getItem("searchQueries"));
+  useEffect(() => {
+
+    if (Queries) {
+      resetForm(Queries);
+    }
+  }, []);
+
+  useEffect(() => {
+    // setFormIsValid(isValid);
+    setIsChecked(true);
+  }, [isValid, values]);
 
   return (
     <form
@@ -383,6 +449,7 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
         styleSettings={FORM_STYLES_CHECKBOX}
         onChange={handleChange}
         value={values.shortfilm}
+        // checked={values.shortfilm}
         // onclick={handleCheced}
         // onclick={localStorage.setItem("checked", values.shortfilm)}
       />
