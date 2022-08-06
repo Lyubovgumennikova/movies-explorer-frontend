@@ -159,7 +159,7 @@ function App() {
       localStorage.setItem(
         "filtered-movies",
         JSON.stringify(markAsSaved(filteredMovies)),
-        localStorage.setItem("input", searchQueries.search)
+        // localStorage.setItem("input", searchQueries.search)
       );
 
       setMoviesData(markAsSaved(filteredMovies));
@@ -331,6 +331,22 @@ function App() {
 
     return () => window.removeEventListener("load", handleWindowLoad);
   }, []);
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     mainApi.getUserData()
+  //     .then((res) => {
+  //     //console.log(res)
+  //       if (res) {
+  //         setLoggedIn(true);
+  //           navigate({ replace: false });
+  //       }
+  //     })
+  //     .catch(() => {
+  //       setLoggedIn(false);
+  //     });
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   const input = localStorage.getItem("input");

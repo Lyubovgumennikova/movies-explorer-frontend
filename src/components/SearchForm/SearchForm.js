@@ -378,32 +378,8 @@ function SearchForm({ onSubmit, handleSearchSavedMovies }) {
     // localStorage.setItem("searchQueries", JSON.stringify(searchQueries ));
 
     localStorage.setItem("searchQueri;lkhgf", JSON.stringify(searchData));
-    // setSearchData({
-    //   // search: input,
-    //   search: localStorage.getItem("input"),
-    //   shortfilm: localStorage.getItem("checked"),
-    //   // shortfilm: checked,
-    // });
 
-    // localStorage.setItem("searchQueries", JSON.stringify(searchData));
-    // const Queries = JSON.parse(localStorage.getItem("searchQueries"));
-    // const Queries = JSON.parse(localStorage.getItem("searchQueries"));
-    // if (Queries.search === null) {
-    //   return;
-    // }
-    // console.log(Queries);
-      // onSubmit(Queries);
-
-    // if (values)
-    // setSearchD({
-    //   search: localStorage.getItem("input"),
-    //   shortfilm: checked,
-    // });
-    // //   // onSubmit(Queries)
-    // //   // resetForm(searchQueries);
-    // //   console.log(searchQueries);
-    // resetForm(searchData);
-    onSubmit(searchData);
+    onSubmit(values);
     console.log(searchData);
     //   // }
   }, [values]);
