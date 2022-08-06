@@ -332,33 +332,7 @@ function App() {
     return () => window.removeEventListener("load", handleWindowLoad);
   }, []);
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     mainApi.getUserData()
-  //     .then((res) => {
-  //     //console.log(res)
-  //       if (res) {
-  //         setLoggedIn(true);
-  //           navigate({ replace: false });
-  //       }
-  //     })
-  //     .catch(() => {
-  //       setLoggedIn(false);
-  //     });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   const input = localStorage.getItem("input");
-  //   const checked = localStorage.getItem("checked");
-  //   // const searchQueries = JSON.parse("searchQueries:" +{ input, checked });
-  //   // console.log(searchQueries);
-  //    localStorage.setItem("searchQueries:"+input,  checked);
-  // }, []);
-  const { pathname } = useLocation();
-  // const routePathMain = matchPath("/*", pathname);
-
-  return (
+   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
