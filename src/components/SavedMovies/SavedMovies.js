@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
@@ -16,6 +16,8 @@ function SavedMovies({
   handleSearchSavedMovies,
   isNoMoviesFound,
   isLoadingData,
+  handleSaveMovie,
+  resStatus,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
 
@@ -23,6 +25,23 @@ function SavedMovies({
     logo: "header__logo",
   };
   let location = useLocation();
+
+  const handleErrors = () => {
+    if (resStatus) {
+      switch (resStatus) {
+        case 200:
+          setIsMoviesApiError(false);
+          break;
+        default:
+          setIsMoviesApiError(true);
+          break;
+      };
+    };
+  };
+
+  useEffect(() => {
+    handleErrors();
+  }, [resStatus])
 
   const handleSubmit = (data) => {
     handleSearchSavedMovies(data);
@@ -34,7 +53,7 @@ function SavedMovies({
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-      <SearchForm onSubmit={handleSubmit} />
+      <SearchForm onSubmit={handleSubmit} handleSaveMovie={handleSaveMovie} />
       {!isLoadingData && isNoMoviesFound && (
         <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>
       )}

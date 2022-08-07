@@ -4,28 +4,10 @@ import "./SearchForm.css";
 import icon from "../../images/icon__movie.svg";
 
 import Button from "../Button/Button";
-import { useFormWithValidation } from "../../utils/FormValidation";
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import Form from "../Form/Form";
 
-function SearchForm({ onSubmit }) {
-  const {
-    values,
-    errors,
-    isValid,
-    handleChange,
-    resetForm,
-  } = useFormWithValidation({});
-
-  const [formIsValid, setFormIsValid] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-
-  const [searchData, setSearchData] = useState({
-    search: "",
-    shortfilm: false,
-  });
-  // const checked = localStorage.getItem("checked");
-  const input = localStorage.getItem("input");
+function SearchForm({ onSubmit, handleSaveMovie }) {
+  const [shortCards, setShortCards] = useState(false);
+  const [query, setQuery] = useState("");
 
   const FORM_STYLES = {
     form: "searchForm",
@@ -38,12 +20,7 @@ function SearchForm({ onSubmit }) {
 
   const FORM_STYLES_CHECKBOX = {
     group: "searchForm__checkbox",
-    input: `${
-      isChecked
-        ? "searchForm__checkbox_input"
-        : "searchForm__checkbox_input:checked"
-    }`,
-    // input: "searchForm__checkbox_input",
+    input: "searchForm__checkbox_input",
     error: "searchForm__checkbox_slider",
     label: "searchForm__checkbox-label",
     focus: "searchForm__checkbox-label_focus",
@@ -52,67 +29,50 @@ function SearchForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(values);
-    resetForm(searchData);
+    const input = localStorage.getItem("all_query");
+    const checked = localStorage.getItem("all_short_movies");
+    const searchData = {
+      search: input,
+      shortfilm: !checked,
+    };
+    onSubmit(searchData);
   };
 
-  // useEffect(() => {
-  //   const renderedPrevMovies = JSON.parse(
-  //     localStorage.getItem("filtered-movies")
-  //   );
+  const updateQuery = (query) => {
+    query = query.toLowerCase();
+    setQuery(query);
+    localStorage.setItem("all_query", query);
+  };
 
-  //   if (!renderedPrevMovies) return;
-
-
-  //   // localStorage.setItem("searchQueri;lkhgf", JSON.stringify(searchData));
-
-  //   onSubmit(values);
-  // }, [isValid, values]);
+  const updateShortMovies = (shortCards) => {
+    setShortCards(shortCards);
+    localStorage.setItem("all_short_movies", JSON.stringify(shortCards));
+  };
 
   useEffect(() => {
-    setSearchData({
-      search: values.search,
-      shortfilm: values.shortfilm
-    })
-    localStorage.setItem("searchQueri", JSON.stringify(searchData));
-    // onSubmit(values);
-    setIsChecked(true);
-    console.log(searchData);
-  }, [values]);
-
+    const input = localStorage.getItem("all_query");
+    const checked = localStorage.getItem("all_short_movies");
+    const searchData = {
+      search: input,
+      shortfilm: checked,
+    };
+    onSubmit(searchData);
+  }, [shortCards]);
 
   useEffect(() => {
-    const renderedPrev = localStorage.getItem("searchQueri")
-    const checked = localStorage.getItem("checked")
-    checked(renderedPrev)
-    if (renderedPrev) {
-      // resetForm(renderedPrev);
-    }
-    console.log(renderedPrev);
+    handleSaveMovie(
+      JSON.parse(localStorage.getItem("filtered-movies") || "[]")
+    );
+
+    updateQuery(localStorage.getItem("all_query") || "");
+
+    updateShortMovies(
+      JSON.parse(localStorage.getItem("all_short_movies") || "false")
+    );
   }, []);
 
-  // useEffect(() => {
-  //   setFormIsValid(isValid);
-  //   setIsEdited(true);
-  // }, [isValid, values]);
-
-  // useEffect(() => {
-  //   if (
-  //     currentUser.name === values.name &&
-  //     currentUser.email === values.email
-  //   ) {
-  //     setIsEdited(false);
-  //     setFormIsValid(false);
-  //   }
-  // }, [currentUser, values]);
-
-
   return (
-    <form
-      className={FORM_STYLES.form}
-      onSubmit={handleSubmit}
-      formIsValid={formIsValid}
-    >
+    <form className={FORM_STYLES.form} onSubmit={handleSubmit}>
       <Input
         placeholder="Фильм"
         type="text"
@@ -120,8 +80,8 @@ function SearchForm({ onSubmit }) {
         name="search"
         ariaLabel="найти"
         styleSettings={FORM_STYLES}
-        onChange={handleChange}
-        value={values.search}
+        value={query}
+        onChange={(event) => updateQuery(event.target.value)}
       />
 
       <Input
@@ -130,19 +90,14 @@ function SearchForm({ onSubmit }) {
         name="shortfilm"
         label="Короткометражки"
         styleSettings={FORM_STYLES_CHECKBOX}
-        onChange={handleChange}
-        value={values.shortfilm}
-
-        // checked={isChecked}
-        // onclick={isChecked}
-        onclick={localStorage.setItem("checked", values.shortfilm)}
+        value={shortCards}
+        checked={shortCards}
+        onChange={() => updateShortMovies(!shortCards)}
       />
       <Button
         type="submit"
         title="Найти"
         styleSettings={FORM_STYLES}
-        // disabled={isLoadingData}
-        disabled={resetForm}
         buttonText={
           <img
             src={icon}

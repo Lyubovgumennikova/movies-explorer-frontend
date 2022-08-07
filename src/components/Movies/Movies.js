@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
@@ -19,7 +19,7 @@ function Movies({
   isLoadingData,
   resStatus,
   onOpenMenu,
-  checked,
+  handleSaveMovie,
 }) {
   const [isMoviesApiError, setIsMoviesApiError] = useState(false);
   let location = useLocation();
@@ -45,7 +45,7 @@ function Movies({
     };
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleErrors();
   }, [resStatus])
 
@@ -55,7 +55,7 @@ function Movies({
         <AuthNavigation />
         <MenuButton onOpenMenu={onOpenMenu} />
       </Header>
-    <SearchForm onSubmit={handleSubmit}  checked={checked} />
+    <SearchForm onSubmit={handleSubmit}  handleSaveMovie={handleSaveMovie} />
       {isLoadingData && <Preloader />}
       {!isLoadingData && isNoMoviesFound && (
         <p>{NOTIFICATION_TEXT_ERROR.NO_MOVIES_TEXT}</p>

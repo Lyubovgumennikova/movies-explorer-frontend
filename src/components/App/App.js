@@ -4,7 +4,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Main from "../Main/Main";
 import moviesApi from "../../utils/MoviesApi";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
@@ -12,7 +12,7 @@ import searchFilter from "../../utils/searchFilter";
 
 import "./App.css";
 
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
 import Menu from "../Menu/Menu";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
@@ -26,7 +26,6 @@ function App() {
 
   const [infoTooltip, setInfoTooltip] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
   const [moviesData, setMoviesData] = useState([]);
@@ -37,8 +36,6 @@ function App() {
   const [isSavedMoviesEmpty, setIsSavedMoviesEmpty] = useState(false); //пустой
 
   const [isErrorsModale, setIsErrorsModale] = useState(false);
-  // const [savedMovies, setSavedMovies] = useState([]);
-  const [isLoadingSignin, setIsLoadingSignin] = React.useState(false);
 
   const [foundSavedMoviesData, setFoundSavedMoviesData] = useState([]);
 
@@ -61,9 +58,6 @@ function App() {
         if (!res) return;
         setCurrentUser(res.data);
         setIsLoggedIn(true);
-
-        // navigate("/profile");
-        // navigate("/movies", { replace: false });
       })
       .catch((err) => console.log(err));
   };
@@ -146,8 +140,6 @@ function App() {
     navigate("/");
   }
 
-  // const [isChecked, setIsChecked] = useState(false);
-
   const handleSearchMoviesData = (searchQueries = {}) => {
     const localMoviesData = JSON.parse(localStorage.getItem("movies"));
     if (localMoviesData) {
@@ -160,8 +152,7 @@ function App() {
 
       localStorage.setItem(
         "filtered-movies",
-        JSON.stringify(markAsSaved(filteredMovies)),
-        // localStorage.setItem("input", searchQueries.search)
+        JSON.stringify(markAsSaved(filteredMovies))
       );
 
       setMoviesData(markAsSaved(filteredMovies));
@@ -175,7 +166,6 @@ function App() {
   const getInitialSavedMoviesIds = () => {
     const initialSavedMoviesIds = [];
     foundSavedMoviesData.forEach((savedMovie) => {
-
       initialSavedMoviesIds.push(savedMovie.movieId);
     });
 
@@ -221,12 +211,10 @@ function App() {
 
   const handleSearchSavedMovies = (searchQueries = {}) => {
     const token = localStorage.getItem("jwt");
-    // localStorage.setItem("searchQueries", JSON.stringify(searchQueries ));
     if (token) {
       mainApi
         .getSavedMovies(token)
         .then((res) => {
-          // if (!res.data.owner === currentUser._id) return;
           if (res.data.length === 0) {
             setIsSavedMoviesEmpty(true);
             setFoundSavedMoviesData(res.data);
@@ -237,7 +225,7 @@ function App() {
           }
 
           const savedMovies = res.data.reverse();
-// if (savedMovie.owner === currentUser._id)
+
           const filteredSavedMovies = searchFilter(searchQueries, savedMovies);
 
           if (filteredSavedMovies.length === 0) {
@@ -245,7 +233,7 @@ function App() {
           } else {
             setIsNoMoviesFound(false);
           }
-          // if (savedMovie.owner === currentUser._id)
+
           setFoundSavedMoviesData(filteredSavedMovies);
         })
         .catch((err) => {
@@ -300,8 +288,6 @@ function App() {
       moviesApi
         .getMoviesData()
         .then((moviesData) => {
-          // setMoviesApiResStatus(res.status);
-
           const localMoviesData = JSON.parse(localStorage.getItem("movies"));
 
           const renderedPrevMovies = JSON.parse(
@@ -341,35 +327,53 @@ function App() {
     return () => window.removeEventListener("load", handleWindowLoad);
   }, []);
 
-   return (
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi
+        .getContent()
+        .then((res) => {
+          //console.log(res)
+          if (res) {
+            setIsLoggedIn(true);
+            navigate({ replace: false });
+          }
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+        });
+    }
+  }, []);
+
+  return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
           <Route exact path="/" element={<Main loggedIn={isLoggedIn} />} />
           <Route
+            exact
             path="/signup"
             element={
               <Register
                 onRegister={handleRegister}
                 loggedIn={isLoggedIn}
-                isSubmitted={isSubmitted}
                 regResStatus={regResStatus}
                 isLoadingData={isLoadingData}
               />
             }
           />
           <Route
+            exact
             path="/signin"
             element={
               <Login
                 onLogin={handleLogin}
-                isSubmitted={isSubmitted}
                 logResStatus={logResStatus}
                 isLoadingData={isLoadingData}
               />
             }
           />
           <Route
+            exact
             path="/movies"
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
@@ -381,21 +385,20 @@ function App() {
                   moviesData={markAsSaved(moviesData)}
                   onOpenMenu={handleOpenMenuClick}
                   handleSearchSavedMovies={handleSearchSavedMovies}
-                  // loggedIn={isLoggedIn}
                   isNoMoviesFound={isNoMoviesFound}
-                  isSubmitted={isSubmitted}
                   resStatus={moviesResStatus}
                   checked={handleSearchMoviesData}
+                  handleSaveMovie={handleSaveMovie}
                 />
               </PrivateRoute>
             }
           />
           <Route
+            exact
             path="/saved-movies"
             element={
               <PrivateRoute loggedIn={isLoggedIn}>
                 <SavedMovies
-                  // loggedIn={isLoggedIn}
                   savedMovies={foundSavedMoviesData}
                   onOpenMenu={handleOpenMenuClick}
                   isLoadingData={isLoadingMoviesData}
@@ -403,16 +406,17 @@ function App() {
                   isNoMoviesFound={isNoMoviesFound}
                   handleSearchSavedMovies={handleSearchSavedMovies}
                   onDeleteMovie={handleDeleteMovie}
+                  handleSaveMovie={handleSaveMovie}
                 />
               </PrivateRoute>
             }
           />
           <Route
+            exact
             path="/profile"
             element={
               <PrivateRoute loggedIn={isLoggedIn} replace>
                 <Profile
-                  // redirectTo="/profile"
                   component={Profile}
                   loggedIn={isLoggedIn}
                   onUpdateUser={handleUpdateUser}

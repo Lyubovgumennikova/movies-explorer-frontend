@@ -9,7 +9,7 @@ function MoviesCard({ data, locationPathname, onSaveMovie, onDeleteMovie }) {
   const DELETE_BUTTON_LABEL = "moviesCard__button_delete";
   const ADD_BUTTON_LABEL = "moviesCard__button_active";
   const BUTTON_LABEL = "moviesCard__button";
-
+// eslint-disable-next-line
   const [movieData, setMovieData] = useState({
     country: data.country || "Нет данных",
     director: data.director || "Нет данных",
