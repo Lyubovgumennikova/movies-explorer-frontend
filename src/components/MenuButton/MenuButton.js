@@ -5,23 +5,17 @@ import icon from "../../images/icon__menu_open.svg";
 
 const MUNU_BUTTON_LABEL = "открыть меню";
 const FOPM_STYLES = {
-  // input:  `${isValid
-  //     ? "profile__text-field"
-  //     : "profile__text-field_valid"
-  // }`,
   button: "menuButton",
 };
 
-function MenuButton({onOpenMenu}) {
+function MenuButton({ onOpenMenu }) {
   return (
     <Button
-    type = "button"
+      type="button"
       title={MUNU_BUTTON_LABEL}
       styleSettings={FOPM_STYLES}
       onClick={onOpenMenu}
-      buttonText={
-        <img src={icon} className="menuButton" alt="Открыть" />
-      }
+      buttonText={<img src={icon} className="menuButton" alt="Открыть" />}
     />
   );
 }

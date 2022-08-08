@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Button from "../Button/Button";
 import "./MoviesCardList.css";
-import Preloader from "../Preloader/Preloader";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function MoviesCardList({
   locationPathname,
   data,
   onSaveMovie,
   onDeleteMovie,
-  // moviesData,
-  isLoadingData,
 }) {
+  const currentUser = useContext(CurrentUserContext);
   const FORM_STYLES = {
     button: "moviesCardList__button",
   };
@@ -19,29 +18,47 @@ function MoviesCardList({
   const PAGE_SIZE = document.documentElement.clientWidth;
   const [index, setIndex] = useState(0);
   const [visibleData, setVisibleData] = useState([]);
-  // const [numberOfItems, setNumberOfItems]= useState(0);
-
-
+  const [numberOfItems, setNumberOfItems] = useState(0);
+  const [isShowButtonActive, setIsShowButtonActive] = useState(false);
+  const ZERO_NUMBER = 0;
 
   useEffect(() => {
-    const numberOfItems = index + 5;
-    // const numberOfItems = () => {
-    //   if (PAGE_SIZE >= 1280) { setIndex(index + 8)
-    //   // } else if (1280 > PAGE_SIZE >= 768)
-    //   // setIndex(index + 5)
-    //   } else  setIndex(index + 3)
-    // };
+    if (locationPathname === "/movies") {
+      if (PAGE_SIZE >= 1280) setNumberOfItems(index + 12);
+      else if (PAGE_SIZE <= 635) setNumberOfItems(index + 5);
+      else setNumberOfItems(index + 8);
+    } else if (locationPathname === "/saved-movies") {
+      data.forEach((movie) => {
+        if (movie.owner === currentUser._id) {
+          setNumberOfItems(data.length);
+        }
+      });
+    }
 
     const newArray = [];
     for (let i = 0; i < data.length; i++) {
       if (i < numberOfItems) newArray.push(data[i]);
     }
     setVisibleData(newArray);
-  }, [data, index]);
+
+    if (data.length <= numberOfItems) {
+      setIsShowButtonActive(false);
+    } else {
+      setIsShowButtonActive(true);
+    }
+  }, [data, numberOfItems]);
 
   const handleShowButtonClick = () => {
-    if (PAGE_SIZE >= 1280) setIndex(index + 3);
-    else setIndex(index + 2);
+    if (PAGE_SIZE >= 1280) {
+      setIndex(3);
+      setVisibleData(data.slice(ZERO_NUMBER, visibleData.length + 3));
+    } else {
+      setIndex(2);
+      setVisibleData(data.slice(ZERO_NUMBER, visibleData.length + 2));
+    }
+    if (visibleData.length >= data.length - index) {
+      setIsShowButtonActive(false);
+    }
   };
 
   return (
@@ -53,12 +70,12 @@ function MoviesCardList({
               data={item}
               locationPathname={locationPathname}
               onSaveMovie={onSaveMovie}
-              onDeletedMovie={onDeleteMovie}
+              onDeleteMovie={onDeleteMovie}
             />
           </li>
         ))}
       </ul>
-      {locationPathname === "/movies" ? (
+      {locationPathname === "/movies" && isShowButtonActive ? (
         <Button
           onClick={handleShowButtonClick}
           styleSettings={FORM_STYLES}

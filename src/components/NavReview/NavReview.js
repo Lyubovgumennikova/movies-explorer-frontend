@@ -7,7 +7,7 @@ function NavReview({ styleSettings }) {
         className={styleSettings.link}
         href="https://www.facebook.com/"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
       >
         Facebook
       </a>
@@ -15,7 +15,7 @@ function NavReview({ styleSettings }) {
         className={styleSettings.link}
         href="https://github.com/"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
       >
         Github
       </a>

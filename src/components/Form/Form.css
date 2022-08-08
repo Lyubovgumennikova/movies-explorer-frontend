@@ -7,7 +7,7 @@
 .form__title {
   margin: 40px 0;
   margin-top: 22px;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-weight: 500;
   font-style: normal;
   font-size: 24px;
@@ -15,14 +15,16 @@
   color: #000000;
 }
 
-.form__submit-button, .profile__form_submit-button {
+.form__submit-button,
+.profile__form_submit-button {
   padding: 14px;
   border: 0;
+  /* border: 1px solid #000000; */
   width: 100%;
   /* max-height: 45px; */
   margin-top: auto;
   justify-self: end;
-  background: #3456F3;
+  background: #3456f3;
   border-radius: 3px;
   font-family: "Inter", Arial, sans-serif;
   font-style: normal;
@@ -30,15 +32,15 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .form__submit-button:hover {
   opacity: 0.8;
 }
 
-.form__submit-button_disabled {
-  background: #FFFFFF;
+.form__submit-button:disabled {
+  background: #ffffff;
   /* border: 1px solid #000000; */
   box-sizing: border-box;
   border-radius: 2px;
@@ -58,7 +60,7 @@
   }
 
   .form__submit-button {
-      font-size: 14px;
-      line-height: 17px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }

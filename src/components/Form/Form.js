@@ -1,37 +1,25 @@
-import React, { useState } from "react";
-import "./Form.css"
+import React from "react";
+import "./Form.css";
 
 function Form({
-  name,
   children,
   buttonText,
   isSubmitted,
   onSubmit,
   title,
   formIsValid,
-  isLoadingData,
+  isUserData,
   styleSettings,
-  validationMessage,
-  isValid,
-  values,
-
-  ...props
+  isLoadingData
 }) {
-
-
   return (
-    <form className= {styleSettings.form}   onSubmit={onSubmit}  >
+    <form className={styleSettings.form} onSubmit={onSubmit} noValidate>
       <h1 className="form__title">{title}</h1>
       {children}
       <button
         type="submit"
-        disabled={!formIsValid || isLoadingData}
-        className={`${
-          formIsValid
-            ? `form__submit-button`
-            : `form__submit-button form__submit-button_disabled`
-        }`}
-        // className= {styleSettings.button}
+        disabled={!formIsValid || isUserData || isLoadingData}
+        className={styleSettings.button}
       >
         {isSubmitted ? "Выполняется..." : buttonText}
       </button>
@@ -40,4 +28,3 @@ function Form({
 }
 
 export default Form;
-//noValidate

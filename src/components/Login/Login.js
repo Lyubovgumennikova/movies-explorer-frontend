@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
 import NewInput from "../NewInput/NewInput";
 import "./Login.css";
 import "../Input/Input.css";
-import { Navigate, useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/FormValidation";
+import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Login({ onLogin, isSubmitted, setIsSubmitted }) {
+function Login({ onLogin, logResStatus, isLoadingData }) {
   const {
     values,
     errors,
@@ -17,46 +17,78 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
     resetForm,
   } = useFormWithValidation({});
 
-  let navigate = useNavigate();
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
+  const [registrationErrorText, setRegistrationErrorText] = useState("");
 
   const FORM_STYLES = {
     form: "form",
     label: "input__label",
     input: `${isValid ? "text-field__input" : "text-field__input_valid"}`,
-    button: "form__submit-button",
+    button: `${
+      isValid
+        ? "form__submit-button"
+        : "form__submit-button form__submit-button_disabled"
+    }`,
     link: "login__input-text_link",
     error: "message__error",
     logo: "header__logo header__logo_entrance",
     required: true,
   };
 
-  // const styldata = {
-  //   regexp: "[a-zA-Z -]{2,30}",
-  //   customErrorMessage:
-  //     "Поле name может содержать только латиницу, пробел или дефис: a-zA-Z -",
-  // };
+  const errorHandler = () => {
+    if (logResStatus) {
+      switch (logResStatus) {
+        case 401:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.LOGIN_ERRORS_TEXTS);
+          break;
+        case 400:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.LOGIN_UNAUTHORIZED);
+          break;
+        case 500:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.INTERNAL_SERVER_ERROR
+          );
+          break;
+        case 200:
+          setIsRegistrationError(false);
+          setRegistrationErrorText("");
+          resetForm();
+          break;
+        default:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.REGISTRATION_ERRORS_TEXTS
+          );
+          break;
+      }
+    }
+  };
 
   function handleSubmit(e) {
     console.log("логинсубмит");
     e.preventDefault();
     onLogin(values);
-    // resetForm();
-    // navigate("/movies");
   }
+
+  useEffect(() => {
+    errorHandler();
+  }, [logResStatus]);
 
   return (
     <div className="login">
-      {/* <Header styleSettings={FORM_STYLES} /> */}
+      <Header styleSettings={FORM_STYLES} />
       <Form
         name="Login"
         title="Рады видеть!"
         buttonText="Войти"
         styleSettings={FORM_STYLES}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
         onSubmit={handleSubmit}
         formIsValid={isValid}
         errors={errors}
+        isLoadingData={isLoadingData}
       >
         <Input
           required
@@ -64,13 +96,10 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           name="email"
           label="E-mail"
           styleSettings={FORM_STYLES}
-          // minLength="5"
           maxLength="30"
           onChange={handleChange}
           value={values.email}
           error={errors.email}
-          // regexp={/^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i}
-          // styldata={styldata}
         />
         <Input
           required
@@ -82,10 +111,10 @@ function Login({ onLogin, isSubmitted, setIsSubmitted }) {
           onChange={handleChange}
           value={values.password}
           error={errors.password}
-          // regexp={"[a-zA-Z -]{2,30}"}
-          // styldata={styldata}
-          pattern="[a-zA-Z -]{2,30}"
         />
+        {isRegistrationError && (
+          <p className="notifyAboutError_text">{registrationErrorText}</p>
+        )}
       </Form>
       <NewInput
         styleSettings={FORM_STYLES}

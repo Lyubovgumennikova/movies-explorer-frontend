@@ -65,12 +65,16 @@
   opacity: 0.8;
 }
 
+.searchForm__submitButton:disabled {
+  cursor: not-allowed;
+}
+
 .searchForm__checkbox {
   display: flex;
   align-items: center;
 }
 
-.searchForm__checkbox_label {
+.searchForm__checkbox-label {
   font-family: "Inter", Arial, sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -81,6 +85,10 @@
   position: relative;
   width: 167px;
   cursor: pointer;
+}
+
+.searchForm__checkbox-label_focus {
+  outline: 2px solid #000000;
 }
 
 .searchForm__checkbox_input {

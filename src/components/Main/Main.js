@@ -9,16 +9,19 @@ import Header from '../Header/Header';
 import Navigation from "../Navigation/Navigation";
 import Footer from '../Footer/Footer';
 import "./Main.css"
+import AuthNavigation from "../AuthNavigation/AuthNavigation";
+import MenuButton from "../MenuButton/MenuButton";
 
-function Main() {
+function Main({loggedIn, onOpenMenu }) {
   const FOPM_STYLES = {
     logo: "header__logo",
   };
   return (
     <main className="main">
-      {/* <Header styleSettings={FOPM_STYLES}> */}
-      {/* <Navigation /> */}
-      {/* </Header> */}
+      <Header styleSettings={FOPM_STYLES}>
+          {loggedIn ? (<AuthNavigation />) : (<Navigation />) }
+          <MenuButton onOpenMenu={onOpenMenu} />
+      </Header>
       <Promo>
         <NavTab />
       </Promo>

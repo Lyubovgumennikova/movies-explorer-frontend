@@ -1,6 +1,6 @@
 import React from "react";
 import NavReview from "../NavReview/NavReview";
-import "./Footer.css"
+import "./Footer.css";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -16,15 +16,15 @@ function Footer() {
       <div className="footer__container ">
         <p className="footer__navLink_data">&#169;{year}</p>
         <nav className="footer__link-dox">
-        <a
-          className="footer__navLink"
-          href="https://praktikum.yandex.ru/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Яндекс.Практикум
-        </a>
-        <NavReview styleSettings={FOOTER_STYLES}/>
+          <a
+            className="footer__navLink"
+            href="https://praktikum.yandex.ru/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Яндекс.Практикум
+          </a>
+          <NavReview styleSettings={FOOTER_STYLES} />
         </nav>
       </div>
     </footer>

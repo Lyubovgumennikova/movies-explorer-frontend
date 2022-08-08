@@ -1,16 +1,27 @@
-// import CurrentUserContext from '../../contexts/CurrentUserContext';
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../Header/Header";
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
 import Form from "../Form/Form";
 import Input from "../Input/Input";
-import NewInput from "../NewInput/NewInput";
 import "./Profile.css";
 import MenuButton from "../MenuButton/MenuButton";
 import { useFormWithValidation } from "../../utils/FormValidation";
+import Button from "../Button/Button";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import NOTIFICATION_TEXT_ERROR from "../../constants/NotificationText";
 
-function Profile({ onOpenMenu, onUpdateUser }) {
-  // const currentUserData = React.useContext(CurrentUserContext);
+function Profile({
+  onOpenMenu,
+  onUpdateUser,
+  onSignOut,
+  profResStatus,
+}) {
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+  const [isRegistrationError, setIsRegistrationError] = useState(false);
+  const [registrationErrorText, setRegistrationErrorText] = useState("");
+
+  const currentUser = useContext(CurrentUserContext);
   const {
     values,
     errors,
@@ -22,48 +33,117 @@ function Profile({ onOpenMenu, onUpdateUser }) {
   const FOPM_STYLES = {
     form: "profile__form",
     label: "profile__label",
-    input: `${isValid ? "profile__textInput" : "profile__textInput_valid"}`,
-    button: "profile__form_submit-button",
-    // button: "form__submit-button",
+    input: "profile__textInput",
+    button: `${
+      !isValid || !isEdited
+        ? "profile__form_submit-button profile__form_submit-button_disabled"
+        : "profile__form_submit-button "
+    }`,
     link: "profile__text_link",
     error: "message__error",
     logo: "header__logo",
   };
 
+  const FOPM_STYLES_BUTTON = {
+    button: "profile__reset-button",
+  };
+
+  const TITLE_TEXT = `Привет, ${currentUser.name || ""}!`;
+
+  const errorHandler = () => {
+    if (profResStatus) {
+      switch (profResStatus) {
+        case 404:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.PROFILE_ERRORS_TEXTS
+          );
+          break;
+        case 400:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(NOTIFICATION_TEXT_ERROR.LOGIN_UNAUTHORIZED);
+          break;
+        case 500:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.INTERNAL_SERVER_ERROR
+          );
+          break;
+        case 200:
+          setIsRegistrationError(false);
+          setRegistrationErrorText("");
+          resetForm();
+          break;
+        default:
+          setIsRegistrationError(true);
+          setRegistrationErrorText(
+            NOTIFICATION_TEXT_ERROR.PROFILE_SUCCESS_TEXT
+          );
+          break;
+      }
+    }
+  };
+
   function handleSubmit(e) {
-    console.log("профсамбит");
     e.preventDefault();
     onUpdateUser(values);
-    resetForm();
+    resetForm(currentUser);
   }
+
+  useEffect(() => {
+    if (currentUser) {
+      resetForm(currentUser);
+    }
+  }, [currentUser, resetForm]);
+
+  useEffect(() => {
+    setFormIsValid(isValid);
+    setIsEdited(true);
+  }, [isValid, values]);
+
+  useEffect(() => {
+    if (
+      currentUser.name === values.name &&
+      currentUser.email === values.email
+    ) {
+      setIsEdited(false);
+      setFormIsValid(false);
+    }
+  }, [currentUser, values]);
+
+  useEffect(() => {
+    errorHandler();
+  });
 
   return (
     <div className="profile">
-      {/* <Header styleSettings={FOPM_STYLES}> */}
-        {/* <AuthNavigation /> */}
-        {/* <MenuButton onOpenMenu={onOpenMenu} /> */}
-      {/* </Header> */}
-      {/* <h1 className="form__title">"Привет, {name}!"</h1> */}
+      <Header styleSettings={FOPM_STYLES}>
+        <AuthNavigation />
+        <MenuButton onOpenMenu={onOpenMenu} />
+      </Header>
       <Form
-        name="Login"
-        title="Привет, {name}!"
+        name="profile"
+        title={TITLE_TEXT}
         styleSettings={FOPM_STYLES}
         buttonText="Редактировать"
         onSubmit={handleSubmit}
-        formIsValid={isValid}
+        formIsValid={formIsValid}
       >
         <Input
           required
           type="name"
-          name="username"
+          name="name"
           label="Имя"
           styleSettings={FOPM_STYLES}
           maxLength="30"
+          minLength="2"
           onChange={handleChange}
-          value={values.username}
-          error={errors.username}
+          value={values.name || ""}
+          error={errors.name}
+          pattern="[a-zA-Zа-яёА-ЯЁ -]{2,30}"
+          customErrorMessage="Поле должно сотовлять не менее 2-х символов и содержать только латиницу, кириллицу, пробел или дефис."
         />
-        <hr class="portfolio__line" />
+        <hr className="portfolio__line" />
         <Input
           required
           type="email"
@@ -71,14 +151,17 @@ function Profile({ onOpenMenu, onUpdateUser }) {
           label="E-mail"
           styleSettings={FOPM_STYLES}
           onChange={handleChange}
-          value={values.email}
+          value={values.email || ""}
           error={errors.email}
         />
+        {isRegistrationError && (
+          <p className="notifyAboutError_text">{registrationErrorText}</p>
+        )}
       </Form>
-      <NewInput
-        styleSettings={FOPM_STYLES}
-        linkText="Выйти из аккаунта"
-        linkPath="/"
+      <Button
+        styleSettings={FOPM_STYLES_BUTTON}
+        buttonText="Выйти из аккаунта"
+        onClick={onSignOut}
       />
     </div>
   );
